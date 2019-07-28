@@ -30,16 +30,16 @@ int main()
     {
         int n;
         cin >> n;
-        int xi = (-1)*INT_MAX, xx = INT_MAX;
-        int yi = (-1)*INT_MAX, yx = INT_MAX;
+        int xi = -100000, xx = 100000;
+        int yi = -100000, yx = 100000;
         while (n--) 
        	{
             int x, y, r, u, l, d;
             cin >> x >> y >> r >> u >> l >> d;
-            if (!r) xi = max(xi, x);
-            if (!u) yx = min(yx, y);
-            if (!l) xx = min(xx, x);
-            if (!d) yi = max(yi, y);
+            if(r==0)	if(x>xi) xi=x;
+			if(u==0)	if(y<yx) yx=y;
+			if(l==0)	if(x<xx) xx=x;
+			if(d==0)	if(y>yi) yi=y;
         }
         
         if (xi <= xx && yi <= yx)
