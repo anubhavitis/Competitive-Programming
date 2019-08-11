@@ -22,5 +22,28 @@ int main()
     #endif
 
     IOS()
-    
+    int n;
+    string s,ans="0000000000";
+    cin>>n>>s;
+    for (int i = 0; i < n; ++i)
+    {
+    	if(s[i]=='L')
+    		for (int j = 0; j < 10; ++j)
+				if(ans[j]=='0')
+				{
+					ans[j]='1';
+					break;
+				}
+		if(s[i]=='R')
+    		for (int j = 9; j >=0; --j)
+				if(ans[j]=='0')
+				{
+					ans[j]='1';
+					break;
+				}
+		if(s[i]>='0' && s[i]<='9')
+			ans[s[i]-48]='0';
+    }
+	cout<<ans<<"\n";
+
 }
