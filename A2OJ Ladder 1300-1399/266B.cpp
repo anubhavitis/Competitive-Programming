@@ -22,12 +22,5 @@ int main()
     #endif
 
     IOS()
-    int n,m;	
-    cin>>n>>m;
-    if( m>( n*(n+1) )/2 ) m%=(n*(n+1))/2;
-
-    int i;
-    for (i = 1; i < n+1; ++i)	if( ( i*(i+1) )/2>m ) break;
-    m-=(i*(i-1))/2;
-	cout<<m<<"\n";
+    
 }
