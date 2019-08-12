@@ -22,3 +22,46 @@ int main()
     #endif
 
     IOS()
+    int t;
+    cin>>t;
+    while(t--)
+    {
+    	int n,m,k;
+    	cin>>n>>m>>k;
+    	int a[n];
+    	for (int i = 0; i < n; ++i)
+    	{
+    		cin>>a[i];
+    	}
+    	string ans="YES\n";
+    	for (int i = 0; i < n-1; ++i)
+    	{
+    		if(a[i+1]-a[i]==k) continue;
+    		else if(a[i+1]-a[i]<k)
+    		{
+    			if(a[i+1]-k<0)
+    				m+=a[i];
+    			else
+    				m+=a[i]-a[i+1]+k;
+    			deb(m)
+    			continue;
+    		}
+    		else
+    		{
+    			if(a[i+1]-a[i]-k<=m)
+    			{
+    				m-=a[i+1]-a[i]-k;
+    				deb(m)
+    				continue;
+    			}
+    			else
+    			{
+    				ans="NO\n";
+    				break;
+    			}
+
+    		}
+    	}
+    	cout<<ans;
+    }
+}
