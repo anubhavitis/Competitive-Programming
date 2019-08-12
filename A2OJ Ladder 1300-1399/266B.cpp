@@ -22,5 +22,24 @@ int main()
     #endif
 
     IOS()
-    
+    int n,t;
+    cin>>n>>t;
+    string s;
+    cin>>s;
+    char temp;
+    for (int ii = 0; ii < t; ++ii)
+	{
+		for (int i = 1; i < n; ++i)
+		{
+			if(s[i]=='G' && s[i-1]=='B')
+			{	
+				temp=s[i];
+				s[i]=s[i-1];
+				s[i-1]=temp;
+				i++;
+			}
+		}
+	}
+    cout<<s<<"\n";
+
 }
