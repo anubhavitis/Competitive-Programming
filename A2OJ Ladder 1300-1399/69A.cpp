@@ -22,5 +22,15 @@ int main()
     #endif
 
     IOS()
-    
+    int n,sx=0,sy=0,sz=0,x,y,z;
+    cin>>n;
+    while(n--)
+    {
+    	cin>>x>>y>>z;
+    	sx+=x;
+    	sy+=y;
+    	sz+=z;
+    }
+    if(!sz && !sx && !sy) cout<<"YES\n";
+    else cout<<"NO\n";
 }
