@@ -22,17 +22,5 @@ int main()
     #endif
 
     IOS()
-    int t;
-    cin>>t;
-    string s;
-    int sum=0;
-    while(t--)
-    {
-    	cin>>s;
-	
-		if( (s[0]=='+' && s[1]=='+') || (s[2]=='+' && s[1]=='+')) sum++;
-		else sum--;
-    }
-    cout<<sum<<"\n";
-
- }
+    
+}
