@@ -17,32 +17,37 @@ int main()
 {
     //Skipped in presense of online judge.
     #ifndef ONLINE_JUDGE
-    freopen("input.txt","r",stdin);
-    freopen("output.txt","w",stdout);
-    freopen("error.txt","w",stderr);
+    freopen("/home/zeddie/Documents/input.txt","r",stdin);
+    freopen("/home/zeddie/Documents/output.txt","w",stdout);
+    freopen("/home/zeddie/Documents/error.txt","w",stderr);
     #endif
 
    IOS()
-   string s,t;
-   cin>>s;
-   cin>>t;
-   int ns,nt;
-   ns=s.length();
-   nt=t.length();
-   int si=0,S=0,i,j=0;
-   for (i = 0; i < ns && j<nt; i++)
-   {
-   		if(s[i]==t[j])
-   		{
-   			S=max(si,S);
-   			si=0;
-   			j++;
-   		}
-   		else 
-   		{
-   			si++;
-   		}
-   }
-   if(i<ns) S=max(ns-i,S);
-   cout<<S e()
+   int test=1;
+   //cin>>test;
+   while(test--)
+	{
+	   string s,t;
+	   cin>>s;
+	   cin>>t;
+	   int ns,nt;
+	   ns=s.length();
+	   nt=t.length();
+	   int si=0,S=0,i,j=0;
+	   for (i = 0; i < ns && j<nt; i++)
+	   {
+	   		if(s[i]==t[j])
+	   		{
+	   			S=max(si,S);
+	   			si=0;
+	   			j++;
+	   		}
+	   		else 
+	   		{
+	   			si++;
+	   		}
+	   }
+	   if(i<ns) S=max(ns-i,S);
+	   cout<<S e()
+	}
 }

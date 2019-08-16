@@ -34,25 +34,13 @@ int primeFactors(int n)
 
 }  
 
-int gcd(int a, int b)
-{
-    if(a>b)
-    {
-        a=a+b;
-        b=a-b;
-        a=a-b;
-    }
-    if(a==0) return b;
-    return gcd(a,b%a);
-}
-
 int main()
 {
     //Skipped in presense of online judge.
     #ifndef ONLINE_JUDGE
-    freopen("input.txt","r",stdin);
-    freopen("output.txt","w",stdout);
-    freopen("error.txt","w",stderr);
+    freopen("/home/zeddie/Documents/input.txt","r",stdin);
+    freopen("/home/zeddie/Documents/output.txt","w",stdout);
+    freopen("/home/zeddie/Documents/error.txt","w",stderr);
     #endif
 
     IOS()
@@ -64,7 +52,7 @@ int main()
     for (int i = 1; i < n; ++i)
     {
         cin>>a[i];
-        g=gcd(a[i],g);
+        g=__gcd(a[i],g);
     }
     deb(g)
     cout<<pow(2,primeFactors(g)) e()

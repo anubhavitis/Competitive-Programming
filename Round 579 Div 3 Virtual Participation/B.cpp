@@ -43,7 +43,7 @@ int main()
                 if(a[i-1]!=a[i] || a[4*n -i]!= a[4*n-1-i] )
                 {
                     area=-1;
-                    break;
+                    break;  
                 }
                 if(a[i]*a[4*n-i-1]!=area){ area=-1; break;}
             }
