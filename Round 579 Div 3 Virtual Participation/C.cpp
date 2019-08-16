@@ -25,22 +25,8 @@ int main()
     IOS()
     int q;
     cin>>q;
-    while(q--)	
+    while(q--)
     {
-        int n;
-        cin>>n;
-        int a[4*n];
-        for (int i = 0; i < 4*n; ++i)
-           {
-               cin>>a[i];
-           }   
-        sort(a,a+4*n);
-        int area=a[0]*a[4*n-1];
-        for (int i = 3; i <= (4*n-1)/2; i+=2)
-        {
-            if(a[i]*a[4*n-i-1]!=area){ area=-1; break;}
-        }
-        if(area==-1) cout<<"NO\n";
-        else cout<<"YES\n";
+
     }
 }
