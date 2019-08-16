@@ -36,10 +36,17 @@ int main()
            }   
         sort(a,a+4*n);
         int area=a[0]*a[4*n-1];
-        for (int i = 3; i <= (4*n-1)/2; i+=2)
-        {
-            if(a[i]*a[4*n-i-1]!=area){ area=-1; break;}
-        }
+        if(a[0]!=a[1] || a[4*n-1]!=a[4*n -2] ) area=-1;
+        else
+            for (int i = 3; i <= (4*n-1)/2; i+=2)
+            {
+                if(a[i-1]!=a[i] || a[4*n -i]!= a[4*n-1-i] )
+                {
+                    area=-1;
+                    break;
+                }
+                if(a[i]*a[4*n-i-1]!=area){ area=-1; break;}
+            }
         if(area==-1) cout<<"NO\n";
         else cout<<"YES\n";
     }

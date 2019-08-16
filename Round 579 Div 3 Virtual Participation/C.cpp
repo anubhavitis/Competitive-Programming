@@ -12,6 +12,7 @@
 #define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
 
 using namespace std;
+
 int primeFactors(int n)  
 {  
     int c=0;
@@ -28,8 +29,11 @@ int primeFactors(int n)
         }
     if (n > 2)  
         c++;
+    
     return c;  
+
 }  
+
 int gcd(int a, int b)
 {
     if(a>b)
