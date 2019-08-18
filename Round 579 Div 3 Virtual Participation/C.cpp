@@ -8,31 +8,9 @@
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define deb(x) cerr<<#x<<" "<<x<<"\n";
-#define e() <<"\n";
 #define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
 
 using namespace std;
-
-int primeFactors(int n)  
-{  
-    int c=0;
-    while (n % 2 == 0)  
-    {  
-        c++;
-        n = n/2;  
-    }  
-    for (int i = 3; i <= sqrt(n); i = i + 2)  
-        while (n % i == 0)  
-        {  
-            c++;
-            n = n/i;  
-        }
-    if (n > 2)  
-        c++;
-    
-    return c;  
-
-}  
 
 int main()
 {
@@ -46,15 +24,21 @@ int main()
     IOS()
     int n;
     cin>>n;
-    int a[n];
-    cin>>a[0];
-    int g=a[0];
-    for (int i = 1; i < n; ++i)
+    ll x;
+    ll g=0;
+    for (int i = 0; i < n; ++i)
     {
-        cin>>a[i];
-        g=__gcd(a[i],g);
+        cin>>x;
+        g=__gcd(g,x);
     }
+
+    ll c=0;
     deb(g)
-    cout<<pow(2,primeFactors(g)) e()
+    for (ll i = 1; i*i<=g; ++i)
+    {
+        if(g%i==0) c++;
+        if(g%i==0 and g/i!=i) c++;
+    }
+    cout<<c<<"\n";
 
 }
