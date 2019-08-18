@@ -14,20 +14,15 @@ using namespace std;
 
 void solve()
 {
-	int n,m,mxn=0,mxm=0,temp;
+	int n;
 	cin>>n;
+	int a[n];
 	for (int i = 0; i < n; ++i)
 	{
-		cin>>temp;
-		mxn=max(mxn,temp);
+		cin>>a[n];
 	}
-	cin>>m;
-	for (int i = 0; i < m; ++i)
-	{
-		cin>>temp;
-		mxm=max(mxm,temp);
-	}
-	cout<<mxn<<" "<<mxm<<"\n";
+	sort(a,a+n);
+	
 }
 
 int main()
