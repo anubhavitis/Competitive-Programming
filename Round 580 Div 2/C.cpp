@@ -14,34 +14,23 @@ using namespace std;
 
 void solve()
 {
-	int ni;
-	cin>>ni;
-	std::vector<int> p,n,z;
-	int temp;
-	for (int i = 0; i < ni; ++i)
+	int n;
+	cin>>n;
+	if(n%2==0) { cout<<"NO\n"; return ; }
+	cout<<"YES\n";
+	int a[2*n];
+	for (int i = 0,j=0; i < 2*n; ++i)
 	{
-		cin>>temp;
-		if(temp>0) p.pb(temp);
-		else if(temp<0) n.pb(temp);
-		else z.pb(temp);
+		a[j]=++i;
+		j+=n;
+		j%=(2*n);
+		a[j]=i+1;
+		j--;
 	}
-	ll c=0;
-	for (std::vector<int>::iterator i = p.begin(); i != p.end(); ++i)
+	for (int i = 0; i < 2*n; ++i)
 	{
-		c+=(*i-1);
+		cout<<a[i]<<" ";
 	}
-	for (std::vector<int>::iterator i =	n.begin(); i !=n .end(); ++i)
-	{
-		c+=(*i*(-1)-1);	
-	}
-	c+=z.size();
-	if(n.size()%2)
-	{
-		if(z.size()==0) c+=2;
-	}
-	cout<<c<<"\n";
-
-
 }
 
 int main()
