@@ -14,7 +14,20 @@ using namespace std;
 
 void solve()
 {
-
+	int n,m,mxn=0,mxm=0,temp;
+	cin>>n;
+	for (int i = 0; i < n; ++i)
+	{
+		cin>>temp;
+		mxn=max(mxn,temp);
+	}
+	cin>>m;
+	for (int i = 0; i < n; ++i)
+	{
+		cin>>temp;
+		mxm=max(mxm,temp);
+	}
+	cout<<mxn<<" "<<mxm<<"\n";
 }
 
 int main()
