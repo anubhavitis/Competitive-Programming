@@ -13,29 +13,31 @@
 
 using namespace std;
 
+int p[1000001]={};
+void prime()
+{
+    p[0]=p[1]=1;
+    for (int i = 2; i*i<= 1000000; ++i)
+    {
+        if( p[i]==0 )
+            for(int j=i*i;j<=1000000; j+=i)
+                p[j]=1;
+    }
+}
+
 void solve()
 {
-  int m,n;
-  cin>>n>>m;
-  char a[n][m];
-  for (int i = 0; i < n; ++i)
-    for (int j = 0; j < m; ++j)
-      cin>>a[i][j];
-  int c=0;
-  for (int i = 0; i < n; ++i)
-  {
-    for (int j = 0; j < m; ++j)
+    ll n,temp;
+    cin>>n;
+    prime();
+    unsigned ll a[n];
+    for (int i = 0; i < n; ++i)
     {
-      if(a[i][j]=='W')
-      {
-        if(a[i-1][j]=='P' and i>0) c++;
-        else if(a[i+1][j]=='P' and i<n-1  ) c++;
-        else if(a[i][j+1]=='P' and j<m-1) c++;
-        else if(a[i][j-1]=='P' and j>0) c++;
-      }
+        cin>>a[i];
+        temp=sqrt(a[i]);
+        if( temp*temp == a[i] && p[temp]==0) { cout<<"YES\n"; continue; }
+        cout<<"NO\n";
     }
-  }
-  cout<<c;  
 }
 
 int main()
