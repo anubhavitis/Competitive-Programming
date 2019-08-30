@@ -15,7 +15,16 @@ using namespace std;
 
 void solve()
 {
-  
+  int n;
+  cin>>n;
+  int e=0,o=0,temp;
+  for (int i = 0; i < n; ++i)
+  {
+    cin>>temp;
+    if(temp%2==0) e++;
+    else o++;
+  }
+  cout<<min(e,o);
 }
 
 int main()
