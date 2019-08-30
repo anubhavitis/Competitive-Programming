@@ -15,8 +15,29 @@ using namespace std;
 
 void solve()
 {
-    int n;
-    cin>>n;
+    ll n,m;
+    cin>>n>>m;
+    ll temp=n/m;
+    ll ans=0;
+    if((m%10)%2==0 and (m%10)!=0)
+    {
+      ans=40*(temp/10);
+    }
+    else if((m%10)==5)
+    {
+      ans=25*(temp/10);
+    }
+    else if((m%10)%2!=0)
+    {
+      ans=45*(temp/10);
+    }
+    temp%=10;
+    m%=10;
+    for (int i = 1; i <=temp; ++i)
+    {
+      ans+=(m*i)%10;
+    }
+    cout<<ans<<"\n";
 }
 
 int main()
