@@ -17,6 +17,19 @@ void solve()
 {
     int n;
     cin>>n;
+    int temp,ans=0;
+    std::vector<int> v;
+    std::vector<int>::iterator it;
+    for (int i = 0; i < n; ++i)
+    {
+      cin>>temp;
+      it=ub(all(v),temp);
+      if(it==v.end()) { v.pb(temp); continue;}
+      ans+=v.end()-it;
+      v.erase(it,v.end());
+      v.pb(temp);
+    }
+    cout<<ans<<"\n";
 }
 
 int main()
