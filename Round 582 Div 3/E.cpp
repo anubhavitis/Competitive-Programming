@@ -12,41 +12,44 @@
 #define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
 
 using namespace std;
-
+string x,y;
+bool check(string s)
+{
+  for (int i = 0; i < s.length()-1; ++i)
+  {
+    string a;
+    a+=s[i];
+    a+=s[i+1];
+    if(a==x || a==y) return false;
+  }
+  cout<<"YES\n"<<s;
+  return true;
+}
 void solve()
 { 
-  int n, k;
-  cin >> n >> k;
-  vector<int> a(n);
-  for (int i = 0; i < n; ++i) {
-    cin >> a[i];
-  }
-  int cnt,dup;
-  map < int, std::vector<int> > dp;
-  for (int i = 0; i < n; ++i)
+  std::vector<char> v;
+  v.pb('a');v.pb('b');v.pb('c');
+  int n;
+  cin>>n>>x>>y;
+  do
   {
-    dup=a[i];
-    cnt=0;
-    while(dup)
+    string s;
+    for (int i = 0; i < 3*n; ++i)
     {
-      dp[dup].pb(cnt);
-      cnt++;
-      dup/=2;
+      s+=v[i%3];
     }
+    if(check(s)) return;
+    s="";
+    for (int i = 0; i < 3; ++i)
+    {
+      for (int j = 0; j < n; ++j)
+      {
+        s+=v[i];
+      }
+    }
+    if(check(s)) return;
   }
-  string tt= string(5, "abc");
-  deb(tt)
-  int ans=INT_MAX;
-  for(auto i : dp)
-  {
-    int key=i.first;
-    std::vector<int> v=i.second;
-
-    if(v.size()<k) continue;
-    sort(all(v));
-    ans=min(ans,accumulate(v.begin(),v.begin()+k,0));
-  }
-  cout<<ans;
+  while(next_permutation(all(v)));
 }
 int main()
 {
