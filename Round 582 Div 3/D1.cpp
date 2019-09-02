@@ -14,10 +14,38 @@
 using namespace std;
 
 void solve()
-{
-    
-}
+{ 
+  int n, k;
+  cin >> n >> k;
+  vector<int> a(n);
+  for (int i = 0; i < n; ++i) {
+    cin >> a[i];
+  }
+  int cnt,dup;
+  map < int, std::vector<int> > dp;
+  for (int i = 0; i < n; ++i)
+  {
+    dup=a[i];
+    cnt=0;
+    while(dup)
+    {
+      dp[dup].pb(cnt);
+      cnt++;
+      dup/=2;
+    }
+  }
+  int ans=INT_MAX;
+  for(auto i : dp)
+  {
+    int key=i.first;
+    std::vector<int> v=i.second;
 
+    if(v.size()<k) continue;
+    sort(all(v));
+    ans=min(ans,accumulate(v.begin(),v.begin()+k,0));
+  }
+  cout<<ans;
+}
 int main()
 {
   //Skipped in presense of online judge.
