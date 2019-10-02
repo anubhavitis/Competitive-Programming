@@ -1,0 +1,54 @@
+//Mark XIV
+#include<bits/stdc++.h>
+
+#define ll long long int
+#define M 1000000007
+#define mp make_pair
+#define pb push_back
+#define lb lower_bound
+#define ub upper_bound
+#define all(x) x.begin(), x.end()
+#define deb(x) cerr<<#x<<" "<<x<<"\n";
+#define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
+
+using namespace std;
+
+void solve()
+{
+  int n;
+  cin>>n;
+  int a[12]={};
+  unsigned ll temp;
+  for (int i = 0; i < n; ++i)
+  {
+    cin>>temp;
+    if(temp>2048) continue;
+    int j;
+    for (j=0; temp>=1 ; temp>>=1,j++);
+    a[j-1]++;
+  }
+  for (int i = 0; i < 11; ++i)
+  {
+    a[i+1]+=a[i]/2;
+  }
+  if(a[11]) cout<<"YES\n";
+  else cout<<"NO\n";
+}
+
+int main()
+{
+  //Skipped in presense of online judge.
+  #ifndef ONLINE_JUDGE
+  freopen("/home/zeddie/Documents/input.txt","r",stdin);
+  freopen("/home/zeddie/Documents/output.txt","w",stdout);
+  freopen("/home/zeddie/Documents/error.txt","w",stderr);
+  #endif
+
+  IOS()
+  ll t=1;
+  cin>>t;
+  while(t--)
+  {
+    solve();
+  }
+}
