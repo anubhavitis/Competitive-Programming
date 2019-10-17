@@ -15,24 +15,8 @@ using namespace std;
 
 void solve()
 {
-  int a,b,c;
-  cin>>a>>b>>c;
-  int ans=0;
-  if(min(a,b/2) <= min(b,c/2))
-  {
-    ans+=3*min(b,c/2);
-    b-=min(b,c/2);
+  
 
-    ans+=3*min(a,b/2);
-  }
-  else
-  {
-    ans+=3*min(b/2,a);
-    b-=2*min(b/2,a);
-
-    ans+=3*min(b,c/2);
-  }
-  cout<<ans<<"\n";
 }
 
 int main()
@@ -46,7 +30,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  //cin>>t;
   while(t--)
   {
     deb('\n')
