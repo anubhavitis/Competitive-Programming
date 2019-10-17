@@ -12,9 +12,38 @@
 #define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
 
 using namespace std;
-
+ll power(ll A, ll B, ll C) 
+{ 
+    if (A == 0) 
+        return 0; 
+    if (B == 0) 
+        return 1; 
+  
+    ll y; 
+    if (B % 2 == 0) { 
+        y = power(A, B / 2, C); 
+        y = (y * y) % C; 
+    } 
+  
+    else { 
+        y = A % C; 
+        y = (y * power(A, B - 1, C) % C) % C; 
+    } 
+  
+    return (ll)((y + C) % C); 
+} 
 void solve()
 {
+  ll n,m;
+  cin>>n>>m;
+
+  if(m==1)
+  {
+    cout<<n%M<<"\n";
+    return;
+  }
+
+  ll ans=power(3,n,M);
   
 
 }

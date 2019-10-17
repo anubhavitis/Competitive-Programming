@@ -17,22 +17,22 @@ void solve()
 {
   int a,b,c;
   cin>>a>>b>>c;
-  int ans=0;
-  if(min(a,b/2) <= min(b,c/2))
-  {
-    ans+=3*min(b,c/2);
-    b-=min(b,c/2);
+  int A=a,B=b,C=c;
+  int ans=0,ans2=0;
+  
+  ans+=3*min(b,c/2);
+  b-=min(b,c/2);
 
-    ans+=3*min(a,b/2);
-  }
-  else
-  {
-    ans+=3*min(b/2,a);
-    b-=2*min(b/2,a);
+  ans+=3*min(a,b/2);
 
-    ans+=3*min(b,c/2);
-  }
-  cout<<ans<<"\n";
+
+
+  ans2+=3*min(B/2,A);
+  B-=2*min(B/2,A);
+
+  ans2+=3*min(B,C/2);
+  
+  cout<<max(ans,ans2)<<"\n";
 }
 
 int main()
