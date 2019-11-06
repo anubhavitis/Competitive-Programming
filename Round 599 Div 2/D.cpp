@@ -15,18 +15,18 @@ using namespace std;
 
 void solve()
 {
-  int n;
-  cin>>n;
-  string s,t;
-  cin>>s>>t;
-  std::vector<int> v;
-  for (int i = 0; i < n; ++i)
-    if(s[i]!=t[i]) v.pb(i);
-  if(v.size()!=2) { cout<<"No"; return;}
-  if(v.size()==2)
-      if(s[v[0]]==s[v[1]] and t[v[0]]==t[v[1]])
-        { cout<<"Yes"; return;}
-  cout<<"No";
+  int n,m;
+  cin>>n>>m;
+  bool a[n]={};
+  std::vector<int> v[n+1];
+  int x,y;
+  for (int i = 0; i < m; ++i)
+  {
+    cin>>x>>y;
+    v[x].pb(y);
+    v[y].pb(x);
+  }
+  int cnt=0;
 
 
 }
