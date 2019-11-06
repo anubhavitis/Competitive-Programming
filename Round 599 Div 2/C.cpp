@@ -15,18 +15,18 @@ using namespace std;
 
 void solve()
 {
-  int n;
+  ll n;
   cin>>n;
-  string s,t;
-  cin>>s>>t;
-  std::vector<int> v;
-  for (int i = 0; i < n; ++i)
-    if(s[i]!=t[i]) v.pb(i);
-  if(v.size()!=2) { cout<<"No"; return;}
-  if(v.size()==2)
-    if(s[v[0]]==s[v[1]] and t[v[0]]==t[v[1]])
-      { cout<<"Yes"; return;}
-
+  ll ans=n;
+  for (ll i=2; i<=sqrt(n); i++) 
+  { 
+      if (n%i == 0) 
+      { 
+          ans=__gcd(ans,i);
+          if(n/i!=i) ans=__gcd(ans,n/i);
+      } 
+  }
+  cout<<ans;
 
 }
 
@@ -41,7 +41,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  //cin>>t;
   while(t--)
   {
     deb('\n')
