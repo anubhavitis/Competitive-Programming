@@ -27,8 +27,8 @@ int main()
 {
   //Skipped in presense of online judge.
   #ifndef ONLINE_JUDGE
-  freopen("/home/zeddie/Documents/input.txt","r",stdin);
-  freopen("/home/zeddie/Documents/output.txt","w",stdout);
+  freopen("/home/zeddie/Desktop/JOEY/input10.txt","r",stdin);
+  freopen("/home/zeddie/Desktop/JOEY/output10.txt","w",stdout);
   freopen("/home/zeddie/Documents/error.txt","w",stderr);
   #endif
 
