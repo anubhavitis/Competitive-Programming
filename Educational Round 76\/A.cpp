@@ -15,12 +15,9 @@ using namespace std;
 
 void solve()
 {
-  ll n;
-  cin>>n;
-  ll a[n];
-  for (int i = 0; i < n; ++i)
-    cin>>a[i] , a[i]=a[i]/n*n+(a[i]%n<=i?i:i+n) ;
-  cout<<distance(a,min_element(a,a+n))+1;
+  
+
+
 }
 
 int main()
@@ -34,7 +31,7 @@ int main()
 
   IOS()
   ll t=1;
-  //cin>>t;
+  cin>>t;
   while(t--)
   {
     deb('\n')
