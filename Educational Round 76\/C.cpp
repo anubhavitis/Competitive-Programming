@@ -15,10 +15,24 @@ using namespace std;
 
 void solve()
 {
-  int n,x,a,b;
-  cin>>n>>x>>a>>b;
-  int ans=min(n-1,abs(a-b) +x);
-  cout<<ans;
+    int n;
+    cin>>n;
+    map<int, std::vector<int> > m;
+    int temp;
+    for (int i = 0; i < n; ++i)
+    {
+      cin>>temp;
+      m[temp].pb(i);
+    }
+    int ans=INT_MAX;
+    for(auto i:m)
+    {
+      std::vector<int> v=i.second;
+      for(int j=0;j<v.size()-1;++j)
+        ans=min( ans, abs(v[j]-v[j+1]) );
+    }
+    if(ans==INT_MAX) cout<<"-1";
+    else cout<<ans+1;
 
 
 }

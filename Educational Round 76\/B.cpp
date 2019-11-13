@@ -15,11 +15,13 @@ using namespace std;
 
 void solve()
 {
-  int n,x,a,b;
-  cin>>n>>x>>a>>b;
-  int ans=min(n-1,abs(a-b) +x);
-  cout<<ans;
+  int x,y;
+  cin>>x>>y;
 
+  if(x==1 and y!=1) cout<<"NO";
+  else if(x==3 and y>3) cout<<"NO";
+  else if(x==2 and y>3) cout<<"NO";
+  else cout<<"YES";
 
 }
 
