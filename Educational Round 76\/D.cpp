@@ -10,21 +10,36 @@
 #define all(x) x.begin(), x.end()
 #define deb(x) cerr<<#x<<" "<<x<<"\n";
 #define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
-
+  
 using namespace std;
 
 void solve()
 {
   int n;
   cin>>n;
-  int a[i];
+  int a[n];
   for (int i = 0; i < n; ++i) cin>>a[i];
+    
   int m;
   cin>>m;
-  int p[n],s[n];
-  for (int i = 0; i < m; ++i) cin>>p[i]>>s[i];
+  int p[m],s[m];
+  int dps[n+1]={}
+  for (int i = 0; i < m; ++i)
+  {
+    cin>>p[i]>>s[i];
+    dps[s[i]]=max(dps[s[i]],p[i]);
+  }
+  for(int i=n-1;i>=0;--i)
+    dps[i]=max(dps[i],dps[i+1]);
 
+  int ans=0,h1=0,cnt=0;
+  int l=0,r=n-1;
+  for (int i = 0; i < n; ++i)
+  {
     
+  }
+
+
 
 
 }

@@ -15,30 +15,7 @@ using namespace std;
 
 void solve()
 {
-  int n;
-  cin>>n;
 
-  int a[n];
-  for (int i = 0; i < n; ++i)
-  {
-    cin>>a[i];
-  }
-  int temp;
-  for (int i = 0; i < n; ++i)
-  {
-    cin>>temp;
-    a[i]-=temp;
-  }
-  std::vector<int> v;
-  if(a[0]!=0) v.pb(a[0]);
-  for (int i = 1; i < n; ++i)
-  {
-    if(a[i]!=a[i-1] and a[i]!=0) v.pb(a[i]);
-  }
-  for(auto i:v) cerr<<i<<" ";
-  if(v.size()==1 and v[0]<0) cout<<"YES";
-  else if(v.size()==0) cout<<"YES";
-  else cout<<"NO";
 }
 
 int main()
@@ -55,8 +32,8 @@ int main()
   cin>>t;
   while(t--)
   {
+    deb('\n')
     solve();
     cout<<"\n";
-    deb('\n')
   }
 }
