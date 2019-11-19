@@ -15,26 +15,12 @@ using namespace std;
 
 void solve()
 {
-  int n;
-  cin>>n;
-
-  int cnt=0;
-  int ncnt=0;
-  int temp;
-  set<int> s;
-  for (int i = 0; i < n; ++i)
-  {
-      cin>>temp;
-      if(s.find(temp)!=s.end())
-        { cout<<"-1"; return; }
-      if(temp<0 and s.find((-1)*temp)==s.end() )
-        { cout<<"-1"; return; }
-
-      s.insert(temp);
-  }
-  cout<<"1\n"<<n;
-
-
+  int a,b;
+  cin>>a>>b;
+  if(a==b) { cout<<"0"; return; }
+  int dif=abs(b-a);
+  int ans=dif/5 + (dif%5)/2 + (dif%5)%2;
+  cout<<ans;
 }
 
 int main()
@@ -48,11 +34,11 @@ int main()
 
   IOS()
   ll t=1;
-  //cin>>t;
+  cin>>t;
   while(t--)
   {
-    deb('\n')
     solve();
     cout<<"\n";
+    deb('\n')
   }
 }
