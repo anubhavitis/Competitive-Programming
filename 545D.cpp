@@ -15,23 +15,20 @@ using namespace std;
 
 void solve()
 {
-  int n,m;
-  cin>>n>>m;
+  int n;
+  cin>>n;
   int a[n];
-  std::vector<pair<int,int> > v;
-  std::map<int, std::vector<int> > myp;
   for (int i = 0; i < n; ++i)
   {
     cin>>a[i];
-    myp[a[i]].pb(i+1);
   }
-
-  if(n==2 or m<n) { cout<<"-1\n"; return; }
-  
-  if(n==3)
+  sort(a,a+n);
+  int ans=0,p=0;
+  for (auto i:a)
   {
-    
+    if(i>=p) { ans ++; p+=i;}  
   }
+  cout<<ans;
 }
 
 int main()
@@ -45,11 +42,11 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  //cin>>t;
   while(t--)
   {
     solve();
-    //cout<<"\n";
+    cout<<"\n";
     deb('\n')
   }
 }
