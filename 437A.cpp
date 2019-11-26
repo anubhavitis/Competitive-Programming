@@ -29,12 +29,22 @@ void solve()
     for (int j = 0; j < 4; ++j)
     {
       if(i==j) continue;
-      if(a[i]>a[j]/2 and a[i]<2*a[j]) f=false;
+      if( a[i]>ceil(a[j]/2.0) ) f=false;
     }
-    if(f) ans+=('A'+i);
+    if(f) { ans+=('A'+i); continue;}
+    for (int j = 0; j < 4; ++j)
+    {
+      if(i==j) continue;
+      if( a[i]<2*a[j] ) f=false;
+    }
+    
   }
   if(ans.size()!=1) cout<<'C'; 
   else cout<<ans;
+  for (int i = 0; i < 4; ++i)
+  {
+    cerr<<a[i]<<" ";
+  }
 }
 
 int main()
