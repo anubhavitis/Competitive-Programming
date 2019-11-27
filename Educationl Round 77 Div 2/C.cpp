@@ -15,10 +15,7 @@ using namespace std;
 
 void solve()
 {
-  int c,s;
-  cin>>c>>s;
-  ll sum=(s%c)*((s/c +1)*(s/c +1))+ (c-s%c)*((s/c)*(s/c));
-  cout<<sum;
+  
 }
 
 int main()
