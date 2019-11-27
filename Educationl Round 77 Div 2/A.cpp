@@ -15,27 +15,10 @@ using namespace std;
 
 void solve()
 {
-  string s;
-  int n;
-  cin>>s>>n;
-  int l,r,k;
-  while(n--)
-  {
-    cin>>l>>r>>k;
-    k%=r-l+1;
-    string ss;
-    for(int i=0;i<l-1;++i) ss+=s[i];
-      deb(ss)
-    for(int i=k;i>0;--i) ss+=s[r-i];
-      deb(ss)
-    for(int i=l-1;i<=r-k-1;++i) ss+=s[i];
-      deb(ss)
-    for(int i=r;i<s.length();++i) ss+=s[i];  
-      deb(ss)
-    s=ss;
-  }
-  deb(s)
-  cout<<s;
+  int c,s;
+  cin>>c>>s;
+  ll sum=(s%c)*((s/c +1)*(s/c +1))+ (c-s%c)*((s/c)*(s/c));
+  cout<<sum;
 }
 
 int main()
@@ -49,7 +32,7 @@ int main()
 
   IOS()
   ll t=1;
-  //cin>>t;
+  cin>>t;
   while(t--)
   {
     solve();
