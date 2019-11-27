@@ -25,19 +25,14 @@ void solve()
   }
   for (int i = 0; i < 4; ++i)
   {
-    bool f=true;
+    bool f1=true,f2=true;
     for (int j = 0; j < 4; ++j)
     {
       if(i==j) continue;
-      if( a[i]>ceil(a[j]/2.0) ) f=false;
+      if( a[i] > a[j]/2 ) f1=false;
+      if( a[i] < a[j]*2 ) f2=false;
     }
-    if(f) { ans+=('A'+i); continue;}
-    for (int j = 0; j < 4; ++j)
-    {
-      if(i==j) continue;
-      if( a[i]<2*a[j] ) f=false;
-    }
-    
+    if(f1 or f2) ans+=('A'+i);
   }
   if(ans.size()!=1) cout<<'C'; 
   else cout<<ans;
