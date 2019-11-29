@@ -15,17 +15,7 @@ using namespace std;
 
 void solve()
 {
-  int r,b,k;
-  cin>>r>>b>>k;
-  if(r>b)
-  {
-    int c=b;
-    b=r;
-    r=c;
-  }
-
-  if(b/r<k) cout<<"OBEY";
-  else cout<<"REBEL";
+  
 }
 
 int main()
@@ -39,7 +29,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  //cin>>t;
   while(t--)
   {
     solve();
