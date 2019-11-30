@@ -17,29 +17,28 @@ void solve()
 {
   string s;
   cin>>s;
-  int l=s.size();
-  int x=0,y=l-1;
-  int ans=0;
+  int x=0,y=s.size()-1;
   
-  for (;x < l; ++x)
-    if(s[x]!='[') ans++;
-    else break;
-  for (;y>=0;--y)
-    if(s[y]!=']') ans++;
-    else break;
-  
+  while(s[x]!='[' and x<=y) x++;
+  if(x==y+1) { cout<<"-1"; return; }
+  while(s[y]!=']' and y>x) y--;
+  if(y<=x) { cout<<"-1"; return; }
+  x++;y--;
   deb(x)deb(y)
-  int cx=x+1,cy=y-1;
-  while(s[cx]!=':') cx++,ans++;
-  while(s[cy]!=':') cy--,ans++;
 
-  deb(cx) deb(cy) 
-  for (int i = cx+1; i < cy; ++i)
-    if(s[i]!='|') ans++,deb(i)
+  while(s[x]!=':' and x<=y) x++;
+  if(x==y+1) { cout<<"-1"; return; }
+  while(s[y]!=':' and y>x) y--;
+  if(y<=x) { cout<<"-1"; return; }
+  x++;y--;
+  deb(x)deb(y)
 
-  if(x>=y or cx>=cy) cout<<"-1";
-  else cout<<ans;
-  
+  int ans=0;
+  while(x<=y) if(s[x++]=='|') ans++;
+
+  cout<<ans+4;
+
+
 }
 
 int main()
