@@ -15,33 +15,31 @@ using namespace std;
 
 void solve()
 {
-  int n;
   string s;
-  int a[n]={};
-  for (int i = 0; i < n; ++i)
-  {
-    cin>>s;
-    for(auto c:s)
-      if(c=='(') a[i]++;
-      else a[i]--;
-  }
-  std::map<int, int> po,ne;
-  for (int i = 0; i < n; ++i)
-  {
-    if(a[i]>=0) po[a[i]]++;
-    else ne[a[i]]++;
-  }
-
+  cin>>s;
+  int l=s.size();
+  int x=0,y=l-1;
   int ans=0;
-  for(auto i:ne)
-    ans+=min(i.second,po[(-1)*i.first]);
-  if(po[0]>1) ans+=po[0]/2;
+  
+  for (;x < l; ++x)
+    if(s[x]!='[') ans++;
+    else break;
+  for (;y>=0;--y)
+    if(s[y]!=']') ans++;
+    else break;
+  
+  deb(x)deb(y)
+  int cx=x+1,cy=y-1;
+  while(s[cx]!=':') cx++,ans++;
+  while(s[cy]!=':') cy--,ans++;
 
-  // for(auto i:po) cerr<<i.first<<" "<<i.second<<"\n";
-  // for(auto i:ne) cerr<<i.first<<" "<<i.second<<"\n";
+  deb(cx) deb(cy) 
+  for (int i = cx+1; i < cy; ++i)
+    if(s[i]!='|') ans++,deb(i)
 
-  cout<<ans;
-
+  if(x>=y or cx>=cy) cout<<"-1";
+  else cout<<ans;
+  
 }
 
 int main()
