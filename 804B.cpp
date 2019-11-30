@@ -15,7 +15,23 @@ using namespace std;
 
 void solve()
 {
-  
+  string s;
+  cin>>s; 
+
+  int cb=0,ans=0;
+  for (int i = s.size()-1; i >=0; --i)
+  {
+    if(s[i]=='b') cb++;
+    else
+    {
+      ans+=cb;
+      cb*=2;
+
+      ans%=M;
+      cb%=M;
+    }
+  }
+  cout<<ans;
 }
 
 int main()
