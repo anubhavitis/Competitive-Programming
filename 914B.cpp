@@ -17,19 +17,19 @@ void solve()
 {
   int n;
   cin>>n;
-  int a[n],m=-1;
+  int m[100001]={};
+  int temp;
   for (int i = 0; i < n; ++i)
-    cin>>a[i];
-  sort( a, a+n, rev());
-
-  int cx,x,i=0;
-  while(i<n)
   {
-    x=a[i++];
-    cx=1;
-    while(a[i++]==x)  cx++;
-    if(cx%2) { cout<<"Conan"; return; }
+    cin>>temp;
+    m[temp]++;
   }
+  for (int i = 0; i < 100001; ++i)
+    if(m[i]%2)
+    {
+      cout<<"Conan";
+      return;
+    }
   cout<<"Agasa";
 }
 
