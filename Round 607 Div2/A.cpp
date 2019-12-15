@@ -15,7 +15,22 @@ using namespace std;
 
 void solve()
 {
-  
+  string s;
+  cin>>s;
+  int l=s.size();
+  if(s[l-2]=='p' and s[l-1]=='o') { cout<<"FILIPINO"; return;}
+  if(s[l-2]=='s' and s[l-1]=='u') 
+  {  
+    if(s[l-4]=='d' and s[l-3]=='e')
+    { 
+      cout<<"JAPANESE"; return;
+    }
+    else if(s[l-4]=='m' and s[l-3]=='a')
+    { 
+      cout<<"JAPANESE"; return;
+    }
+  }
+  cout<<"KOREAN";
 }
 
 int main()
@@ -29,7 +44,7 @@ int main()
 
   IOS()
   ll t=1;
-  //cin>>t;
+  cin>>t;
   while(t--)
   {
     solve();
