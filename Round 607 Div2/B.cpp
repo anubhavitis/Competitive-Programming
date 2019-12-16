@@ -18,40 +18,20 @@ void solve()
   string s1,s2;
   cin>>s1>>s2;
   
-  for(int i=0; i<min(s1.size(),s2.size()); ++i)
+  for (int i = 0; i < s1.size(); ++i)
   {
-    if(s1[i]<s2[i]) { cout<<s1; return; }
-    int same=-1,small=-1;
-
-    for(int j=s1.size()-1; j>i;--j)
-      if(s1[j]<s2[i]) small=j;
-      else if(s1[j]==s2[i]) same=j;
-    if(s1[i]==s2[i] and small==-1) continue;
-    if(s1[i]==s2[i] and small!=-1)
-    {
-      swap(s1[i],s1[small]);
-      cout<<s1;
-      return;
-    }
-    if(small!=-1)
-    {
-      swap(s1[i],s1[small]);
-      cout<<s1;
-      return;
-    }
-    if(small==-1 and same!=-1)
-    {
-      swap(s1[i],s1[same]);
-      if(s1.size()>s2.size()) { cout<<"---"; return; }
-      for(int x=i+1;x<s1.size(); ++x)
-        if(s1[x]<s2[x]) { cout<<s1; return; }
-        else if(s1[x]>s2[x]) { cout<<"---"; return;}
-      cout<<"---"; return;
-    }
-
+    int np=i;
+    for(int j=s1.size()-1;j!=i;--j)
+      if(s1[j]<s1[np]) np=j;
+      
+    if(np!=i)                             
+      { 
+        swap(s1[np],s1[i]);
+        break;
+      }
   }
-  if(s1.size()<s2.size()) { cout<<s1; return; }
-  cout<<"---";
+  if(s1<s2) cout<<s1;
+  else cout<<"---";
 
 }
 
