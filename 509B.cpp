@@ -23,11 +23,11 @@ void solve()
 
   sort(all(b));
   int m2=ub(all(b),b[0])-b.begin();
-  if(k<n-m2-1) { cout<<"NO"; return; }
+  if(k<b[n-1]-b[m2]+1) { cout<<"NO"; return; }
   cout<<"YES\n";
   for(auto i:a)
   {
-    for (int j = 0; j < i; ++j) cout<<max(1,j-m2+1)<<" ";
+    for (int j = 0; j < i; ++j) cout<<max(1,j-b[m2]+2)<<" ";
     cout<<"\n";
   }
 
