@@ -15,40 +15,7 @@ using namespace std;
 
 void solve()
 {
-  int n;
-  cin>>n;
-
-  int a[n]={},b[n]={},z=0;
-  map<int,int> m;
-  string s;
-  for (int i = 0; i < n; ++i)
-  {
-    cin>>s;
-    for(auto j:s)
-    {
-      if(j==')' and b[i]==0) a[i]--;
-
-      if(j=='(') b[i]++;
-      else if(j==')' and b[i]) b[i]--;
-
-    }
-    if(a[i] and b[i] ) continue;
-    if(a[i]) m[a[i]]++;
-    if(b[i]) m[b[i]]++;
-    if(a[i]==b[i]) z++;
-  }
-
-  int cnt=0;
-  for( auto i: m)
-  {
-    if(i.first>0) break;
-    int p=abs(i.first);
-
-    cnt+=min(i.second,m[p]);
-  }
-  cnt+=z/2;
-  cout<<cnt;
-
+  
 }
 
 int main()
