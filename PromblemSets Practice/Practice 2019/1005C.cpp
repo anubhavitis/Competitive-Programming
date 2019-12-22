@@ -15,7 +15,30 @@ using namespace std;
 
 void solve()
 {
-  
+  int n;
+  cin>>n;
+  int temp;
+  std::map<int, int> m;
+  for (int i = 0; i < n; ++i)
+  {
+    cin>>temp;
+    m[temp]++;
+  }
+  int cnt=0;
+  for(auto i:m)
+  {
+    int s=i.first;
+    int x=2,f=1;
+    for(int i=1;i<31;++i,x=x<<1)
+    {
+      if(x<s) continue;
+      if(x-s==s and m[s]>1) { f=0; break;}
+      if(x-s!=s and m[x-s]) { f=0; break; }
+    }
+    
+    if(f) cnt+=m[s],deb(s)
+  }
+  cout<<cnt;
 }
 
 int main()
