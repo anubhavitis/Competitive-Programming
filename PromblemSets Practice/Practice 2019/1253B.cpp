@@ -18,21 +18,33 @@ void solve()
   int n;
   cin>>n;
   int a[n];
-  map<int,int> m,p;
+  map<int,int> m;
   for(int i=0;i<n;++i)
   {
     cin>>a[i];
     if(a[i]<0 and m[abs(a[i])]<=0) { cout<<"-1"; return;} 
-    
-    if(a[i]>0) m[i]++;
-    else m[(-1)*i]--;
+    if(a[i]>0 and m[abs(a[i])]>0) { cout<<"-1"; return;} 
+
+    if(a[i]>0) m[a[i]]++;
+    else m[abs(a[i])]--;
   }
+
   for(auto i:m) if(i.second!=0) { cout<<"-1"; return;} 
-  int i=0;
-  while(i<n)
+  int cnt=0,px=0;
+  std::vector<int> v;
+  map<int,int> mym;
+  for (int i = 0; i < n; ++i)
   {
-    
+    if(a[i]>0 and mym[a[i]]>0) { cout<<"-1"; return;}
+
+    if(a[i]>0) cnt++,mym[a[i]]++;
+    else cnt--;
+    px++;
+    if(cnt==0) { v.pb(px); px=0; mym.clear();}
   }
+  cout<<v.size()<<"\n";
+  for(auto i:v)
+    cout<<i<<" ";
 }
 
 int main()
