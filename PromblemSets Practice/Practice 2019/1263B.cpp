@@ -15,24 +15,37 @@ using namespace std;
 
 void solve()
 {
-  int n;
+  int n,temp,a[10000]={};
   cin>>n;
-  int a[n];
-  map<int,int> m,p;
-  for(int i=0;i<n;++i)
+  std::vector<int> v;
+  for (int i = 0; i < n; ++i)
   {
-    cin>>a[i];
-    if(a[i]<0 and m[abs(a[i])]<=0) { cout<<"-1"; return;} 
-    
-    if(a[i]>0) m[i]++;
-    else m[(-1)*i]--;
+    cin>>temp;
+    a[temp]++;
+    v.pb(temp);
   }
-  for(auto i:m) if(i.second!=0) { cout<<"-1"; return;} 
-  int i=0;
-  while(i<n)
+
+  int ans=0;
+  for (int i = 0; i < v.size(); ++i)
   {
-    
+    if( a[v[i]] > 1 )
+    {
+      a[v[i]]--;
+      int y=v[i]/10;
+      for (int j = 0; j < 10; ++j)
+        if(a[j+y*10]==0)
+        {
+          a[j+y*10]++;
+          ans++;
+          v[i]=j+y*10;
+          break;
+        }
+    }
   }
+
+  cout<<ans<<"\n";
+  for(auto i:v)
+    cout<<setw(4)<<setfill('0')<<i<<"\n";
 }
 
 int main()
@@ -46,11 +59,11 @@ int main()
 
   IOS()
   ll t=1;
-  //cin>>t;
+  cin>>t;
   while(t--)
   {
     solve();
-    cout<<"\n";
+    //cout<<"\n";
     deb('\n')
   }
 }

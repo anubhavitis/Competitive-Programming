@@ -15,24 +15,21 @@ using namespace std;
 
 void solve()
 {
-  int n;
-  cin>>n;
-  int a[n];
-  map<int,int> m,p;
-  for(int i=0;i<n;++i)
+  int n,k1,k2;
+  cin>>n>>k1>>k2;
+  int m1=-1,m2=-1,temp;
+  for (int i = 0; i < k1; ++i)
   {
-    cin>>a[i];
-    if(a[i]<0 and m[abs(a[i])]<=0) { cout<<"-1"; return;} 
-    
-    if(a[i]>0) m[i]++;
-    else m[(-1)*i]--;
+    cin>>temp;
+    m1=max(temp,m1);
   }
-  for(auto i:m) if(i.second!=0) { cout<<"-1"; return;} 
-  int i=0;
-  while(i<n)
+  for (int i = 0; i < k2; ++i)
   {
-    
+    cin>>temp;
+    m2=max(temp,m2);
   }
+  if(m1>m2) cout<<"YES";
+  else cout<<"NO";
 }
 
 int main()
@@ -46,7 +43,7 @@ int main()
 
   IOS()
   ll t=1;
-  //cin>>t;
+  cin>>t;
   while(t--)
   {
     solve();

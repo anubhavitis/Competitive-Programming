@@ -17,22 +17,19 @@ void solve()
 {
   int n;
   cin>>n;
-  int a[n];
-  map<int,int> m,p;
-  for(int i=0;i<n;++i)
+  int a[n],b[n];
+  for (int i = 0; i < n; ++i)
   {
     cin>>a[i];
-    if(a[i]<0 and m[abs(a[i])]<=0) { cout<<"-1"; return;} 
-    
-    if(a[i]>0) m[i]++;
-    else m[(-1)*i]--;
   }
-  for(auto i:m) if(i.second!=0) { cout<<"-1"; return;} 
-  int i=0;
-  while(i<n)
-  {
-    
-  }
+  int key=-1;
+  for (int i = 1; i < n; ++i)
+    if(abs(a[i]-a[i-1])>1)
+      { key=i; break;}
+  if(key==-1) cout<<"NO";
+  else  cout<<"YES\n"<<key<<" "<<key+1;
+
+
 }
 
 int main()
@@ -46,7 +43,7 @@ int main()
 
   IOS()
   ll t=1;
-  //cin>>t;
+  cin>>t;
   while(t--)
   {
     solve();
