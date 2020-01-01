@@ -15,42 +15,35 @@ using namespace std;
 
 void solve()
 {
-  set< pair<int,int> > s;
-  s.insert(mp(2,3));
-  s.insert(mp(2,4));
-  s.insert(mp(2,5));
-  s.insert(mp(3,4));
-  cerr<<s[0].first<<" "<<s[0].second<<"\n";
-  for(auto i:s) cerr<<i.first<<" "<<i.second<<"\n";
-  // int n;
-  // cin>>n;
-  // int a[n];
-  // std::map<int, int> m;
-  // for (int i = 0; i < n; ++i)
-  // {
-  //   cin>>a[i];
-  //   m[a[i]]=i+1;
-  // }
-  // stack<int> si,se;
-  // sort(a,a+n);
-  // for(int i=n-1;i>=0;--i) si.push(a[i]);
+  int n;
+  cin>>n;
+  int a[n];
+  std::map<int, int> m;
+  for (int i = 0; i < n; ++i)
+  {
+    cin>>a[i];
+    m[a[i]]=i+1;
+  }
+  stack<int> si,se;
+  sort(a,a+n);
+  for(int i=n-1;i>=0;--i) si.push(a[i]);
 
-  // string s;
-  // cin>>s;
-  // for(auto i:s)
-  // {
-  //   if(i=='0')
-  //   {
-  //     cout<<m[si.top()]<<" ";
-  //     se.push(si.top());
-  //     si.pop();
-  //   }
-  //   else
-  //   {
-  //     cout<<m[se.top()]<<" ";
-  //     se.pop();
-  //   }
-  // }
+  string s;
+  cin>>s;
+  for(auto i:s)
+  {
+    if(i=='0')
+    {
+      cout<<m[si.top()]<<" ";
+      se.push(si.top());
+      si.pop();
+    }
+    else
+    {
+      cout<<m[se.top()]<<" ";
+      se.pop();
+    }
+  }
 
 }
 
