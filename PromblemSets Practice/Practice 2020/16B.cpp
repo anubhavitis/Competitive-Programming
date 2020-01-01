@@ -23,15 +23,17 @@ void solve()
   for (int i = 0; i < mo; ++i)
   {
     cin>>x>>y;
-    m[y]=x;
-    v.pb(y);
+    if(m[y]==0) v.pb(y);
+    m[y]+=x;
   }
 
   sort(all(v),big(int));
   ll ans=0;
+  // for(auto i:v ) cerr<<i<<" ";
   for(auto i:v)
   {
     ans+=min(n,m[i])*i;
+    deb(ans)
     n-=m[i];
     if(n<=0) break;
   }
