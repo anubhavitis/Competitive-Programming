@@ -15,7 +15,21 @@ using namespace std;
 
 void solve()
 {
-  
+  string s;
+  cin>>s;
+  int i,j,pi=-1;
+  ll ans=0;
+  if(s.length()<4) { cout<<"0"; return; }
+  for(int ii=0;ii<s.length()-3;++ii)
+  {
+    if(s[ii+0]=='b' and s[ii+1]=='e' and s[ii+2]=='a' and s[ii+3]=='r')
+    {
+      i=ii,j=ii+3;
+      ans+=(ii-pi)*(s.length()-j);
+      pi=ii;
+    }
+  }
+  cout<<ans;
 }
 
 int main()
