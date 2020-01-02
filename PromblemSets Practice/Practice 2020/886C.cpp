@@ -13,20 +13,22 @@
 #define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
 
 int temp;
+
 using namespace std;
 
 void solve()
 {
-  int n,k;
-  cin>>n>>k;
+  int n;
+  cin>>n;
 
-  int p[n],c[n];
-  set<int> s;
-  for (int i = 0; i < n; ++i) cin>>p[i];
-  for (int i = 0; i < n; ++i) cin>>c[i];
-
-
-  
+  set<int> mset;
+  deb(temp)
+  for (int i = 0; i < n; ++i)
+  {
+    cin>>temp;
+    mset.insert(temp);
+  }
+  cout<<n-mset.size()+1;
 }
 
 int main()

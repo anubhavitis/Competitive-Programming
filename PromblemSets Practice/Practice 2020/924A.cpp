@@ -17,15 +17,18 @@ using namespace std;
 
 void solve()
 {
-  int n,k;
-  cin>>n>>k;
-
-  int p[n],c[n];
-  set<int> s;
-  for (int i = 0; i < n; ++i) cin>>p[i];
-  for (int i = 0; i < n; ++i) cin>>c[i];
-
-
+  int n,m;
+  cin>>n>>m;
+  int a[n][m];
+  string s;
+  for (int i = 0; i < n; ++i)
+  {
+   cin>>s;
+   int j=0;
+   for(auto i:s)
+    if(i=='#') a[i][j++]=1;
+    else a[i][j++]=0;
+  } 
   
 }
 
