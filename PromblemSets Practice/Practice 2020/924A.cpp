@@ -20,15 +20,25 @@ void solve()
   int n,m;
   cin>>n>>m;
   int a[n][m];
-  string s;
+  string s[n];
   for (int i = 0; i < n; ++i)
   {
-   cin>>s;
+   cin>>s[i];
    int j=0;
-   for(auto i:s)
-    if(i=='#') a[i][j++]=1;
+   for(auto ii:s[i])
+    if(ii=='#') a[i][j++]=1;
     else a[i][j++]=0;
+  }
+  for (int j = 0; j < m; ++j)
+  {
+    std::vector<int> v;
+    for (int i = 0; i < n; ++i)
+      if(a[i][j]==1) v.pb(i);   
+    
+    for (int i = 1; i < v.size(); ++i)
+      if(s[v[0]]!=s[v[i]]) { cout<<"NO"; return; }
   } 
+  cout<<"YES";
   
 }
 
