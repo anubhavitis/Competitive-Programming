@@ -19,14 +19,28 @@ void solve()
 {
   int n,k;
   cin>>n>>k;
-
+  ll mx=0;
+  priority_queue <int, vector<int>, greater<int> > pq;
+  std::map<int, ll> m,ans;
   int p[n],c[n];
-  set<int> s;
   for (int i = 0; i < n; ++i) cin>>p[i];
-  for (int i = 0; i < n; ++i) cin>>c[i];
+  for (int i = 0; i < n; ++i) cin>>c[i],m[p[i]]=c[i];
 
-
-  
+  int ind=0;
+  for(auto i:m)
+  {
+    if(ind>k)
+    {
+      mx-=pq.top();
+      pq.pop();
+    }
+    mx+=i.second;
+    pq.push(i.second);
+    ans[i.first]=mx;
+    ind++;
+  }
+  for(auto i:p)
+    cout<<ans[i]<<" ";
 }
 
 int main()
