@@ -20,32 +20,20 @@ void solve()
 {
   int n,k; 
   cin>>n>>k;
-  int a[n];
-  map<int,vector<int> > m;
-  for(int i=0;i<n;++i) cin>>a[i],m[a[i]].pb(i+1);
-  vector< pair<int,int> > v;
-  int mi=INT_MAX,ind=0,t=0;
-  sort(a,a+n);
-  if(a[n-1]==a[0]) { cout<<"0 0"; return; }
-  while(t++<k)
+  int a[n],x=0;
+  for(int i=0;i<n;++i) cin>>a[i];
+  int ans[10001][2];
+  while(*max_element(a,a+n)-*min_element(a,a+n) and x<k)
   {
-    
-    // deb(mi)deb(ind)
-    v.pb(mp(m[a[n-1]].back(),m[a[0]].back()));
-    m[a[n-1]-1].pb(m[a[n-1]].back());
-    m[a[n-1]].pop_back();
-    a[n-1]--;
-    m[a[0]+1].pb(m[a[0]].back());
-    m[a[0]].pop_back();
-    a[0]++;
-    for(auto i:a) cerr<<i<<" ";deb(' ')
-    sort(a,a+n);
-    if(mi>a[n-1]-a[0]) mi=a[n-1]-a[0],ind=t;
-    deb(mi)
+    ans[x][0]=max_element(a,a+n)-a+1;
+    ans[x][1]=min_element(a,a+n)-a+1;
+    a[ans[x][0]-1]--;
+    a[ans[x++][1]-1]++;
+
   }
-  cout<<mi<<" "<<ind<<"\n";
-  for (int i = 0; i < ind; ++i)
-    cout<<v[i].first<<" "<<v[i].second<<"\n";
+  cout<<*max_element(a,a+n)-*min_element(a,a+n)<<" "<<x<<"\n";
+  for (int i = 0; i < x; ++i)
+    cout<<ans[i][0]<<" "<<ans[i][1]<<"\n";
   
 }
 
