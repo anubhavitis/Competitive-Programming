@@ -12,13 +12,39 @@
 #define deb(x) cerr<<#x<<" "<<x<<"\n";
 #define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
 
-int temp;
+int t1,t2;
 
 using namespace std;
 
 void solve()
 {
-  
+  int n,v;
+  cin>>n>>v;
+  map<int,int> m;
+  int ma=-1;
+  for (int i = 0; i < n; ++i)
+  {
+    cin>>t1>>t2;
+    ma=max(ma,t1);
+    m[t1]+=t2;
+  }
+  ll sum=0;
+  int day=1;
+  while(day<=ma+1)
+  {
+    t1=v;
+    t1-=min(m[day-1],v);
+    sum+=v-t1;
+    if(t1!=0)
+    {
+      t1=min(t1,m[day]);
+      m[day]-=t1;
+      sum+=t1;
+    }
+    day++;
+    deb(sum)
+  }
+  cout<<sum;
 }
 
 int main()
