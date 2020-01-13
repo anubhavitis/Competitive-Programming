@@ -37,25 +37,20 @@ void solve()
     m[p[i]]=i+1;
   }
   sort(p,p+n);
-
-  for(int i=0;i<n-1;++i)
+  int key=m[p[0]],ma=p[0].second;
+  for(int i=1;i<n;++i)
   {
-    if(p[i].first==p[i+1].first)
+    if(p[i].first==p[i-1].first)
     {
-      if(p[i].second>p[i+1].second)
-        cout<<m[p[i+1]]<<" "<<m[p[i]];
-      else
-        cout<<m[p[i]]<<" "<<m[p[i+1]];
-
+      cout<<m[p[i-1]]<< " " <<m[p[i]];
       return;
     }
-    for(int j=i+1;j<n and p[j].first<=p[i].second;++j)
-      if(p[j].second<=p[i].second)
-      {
-        cout<<m[p[j]]<<" "<<m[p[i]];
-        deb(1)
-        return;
-      }
+    if(p[i].second<=ma)
+    {
+      cout<<m[p[i]]<<" "<<key;
+      return;
+    }
+    else ma=max(ma,p[i].second),key=m[p[i]];
   }
   cout<<"-1 -1";
 }
