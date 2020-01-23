@@ -20,13 +20,13 @@ void solve()
 {
   int n;
   cin>>n;
-  map<int,int> m;
+  map<ll ,ll> m;
   for (int i = 0; i < n; ++i)
   {
     cin>>t1;
     m[t1]++;
   }
-  int ans=0;
+  ll ans=0;
   for(auto i:m)
   {
     if(i.first>0) ans+=m[i.first]*m[-i.first];
