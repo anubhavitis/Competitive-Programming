@@ -12,69 +12,7 @@
 #define deb(x) cerr<<#x<<" "<<x<<"\n";
 #define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
 
-int t1,t2;
-
 using namespace std;
-
-void solve()
-{
-  int q,x;
-  cin>>q>>x;
-  map<int,int> m;
-  int mex=0;
-  int top;cin>>top;
-  m[top]=10;
-  mex=(top>0)? 0:1;
-  cout<<mex<<endl;
-  while(q-->1)
-  {
-    cin>>top;
-    
-    if(top==mex)
-    {
-      m[mex]=10;
-      for(;m[mex]==10;mex++);
-      cout<<mex<<"\n";
-    }
-    else if(top>x)
-    {
-      int dup=top;
-      for(;dup>mex;dup-=x);
-      if(dup==mex)
-      {
-        m[mex]=10;
-        for(;m[mex]==10;mex++);
-        cout<<mex<<"\n";
-      }
-      else
-      {
-        if(m[top]==10)
-          for(;m[top]==10;top+=x);
-        m[top]=10;
-        cout<<mex<<"\n";
-      }
-    }
-    else if(top<x)
-    {
-      int dup=top;
-      for(;dup<mex;dup+=x);
-      if(dup==mex)
-      {
-        m[mex]=10;
-        for(;m[mex]==10;mex++);
-        cout<<mex<<"\n";
-      }
-      else
-      {
-        if(m[top]==10)
-          for(;m[top]==10;top+=x);
-        m[top]=10;
-        cout<<mex<<"\n";
-      }
-    }
-  }
-
-}
 
 int main()
 {
@@ -86,12 +24,15 @@ int main()
   #endif
 
   IOS()
-  ll t=1;
-  //cin>>t;
-  while(t--)
+  ll q,x,t;
+  cin>>q>>x;
+  ll cnt[x]={};
+  int mex=0;
+  while(q--)
   {
-    solve();
-    cout<<"\n";
-    deb('\n')
+    cin>>t;
+    cnt[t%x]++;
+    while(cnt[mex%x]>mex/x) mex++;
+    cout<<mex<<endl;
   }
 }
