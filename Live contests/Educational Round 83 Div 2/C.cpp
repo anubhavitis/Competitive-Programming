@@ -18,15 +18,20 @@ void solve()
 {
   int n,k;
   cin>>n>>k;
-  ll a[n],temp=0;
+  ll a[100]={},temp=0;
   vector <int> v;
-  rep(0,n,1)  cin>>a[i];
-  int i=1;
-  while(temp <= 10000000000000000)
+  rep(0,n,1)
   {
-    temp=pow(k,i);
-    
+    cin>>temp;
+    int pos=0;
+    while(temp)
+    {
+      a[pos++]+=temp%k;
+      temp/=k;
+    }
   }
+  rep(0,100,1) if(a[i]>1) {cout<<"NO\n"; return;}
+  cout<<"YES\n";
 }
 
 int main()
