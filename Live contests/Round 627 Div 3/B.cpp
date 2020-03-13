@@ -23,11 +23,17 @@ void solve()
   int f=0;
   rep(0,n,1)
   {
+    if(b[a[i]]>2)
+    {
+      if(a[i+1]==a[i]) f=1;
+      b[a[i]]--;
+    }
     if(b[a[i]]>1)
     {
       if(a[i+1]!=a[i]) f=1;
       b[a[i]]--;
     }
+    
   }
   if(f) cout<<"YES\n";
   else cout<<"NO\n";
