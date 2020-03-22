@@ -21,7 +21,6 @@ int maxpal(string s)
   s=s+'#'+s_;
   int n=s.size();
   vector<int> v(n,0);
-  int ma=0;
 
   rep(1,n,1)
   {
@@ -30,9 +29,8 @@ int maxpal(string s)
       j = v[j-1];
     if(s[j]==s[i]) j++;
     v[i]=j;
-    ma=max(ma,j);
   }
-  return ma;
+  return v.back();
 }
 void solve()
 {
