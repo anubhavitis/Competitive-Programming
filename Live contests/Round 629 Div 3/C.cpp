@@ -17,13 +17,21 @@ using namespace std;
 
 void solve()
 {
-  ll a,b;
-  cin>>a>>b;
-  ll ans;
-  if (a%b==0) ans=0;
-  else if(a<b) ans=b-a;
-  else ans=b-(a%b);
-  cout<<ans<<endl;
+  int n;
+  string s;
+  cin>>n>>s;
+  string a="1",b="1";
+  int f=1;
+  for(int i=1;i<n;++i)
+  {
+    if(s[i]=='0') a+='0',b+='0';
+    if( s[i]=='1' and f) a+='1',b+='0',f=0;
+    else if( s[i]=='1') a+='0',b+='1';
+    if(s[i]=='2' and f) a+='1',b+='1';
+    else if(s[i]=='2') a+='0',b+='2';
+
+  }
+  cout<<a<<"\n"<<b<<endl;
 }
 
 int main()

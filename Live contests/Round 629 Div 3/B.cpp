@@ -17,13 +17,24 @@ using namespace std;
 
 void solve()
 {
-  ll a,b;
-  cin>>a>>b;
-  ll ans;
-  if (a%b==0) ans=0;
-  else if(a<b) ans=b-a;
-  else ans=b-(a%b);
-  cout<<ans<<endl;
+  ll n,k;
+  cin>>n>>k;
+  ll ans=0,x=1,l=1,r=(n*(n-1))/2;
+  while(l<=r)
+  {
+    x=(l+r)/2;
+    if((x*(x+1))/2<k) ans=x,l=x+1;
+    else r=x-1;
+  }
+  x=ans;
+  k-=(x*(x+1))/2;
+  rep(i,0,n)
+  {
+    if(i==n-x-2) cout<<'b';
+    else if(i==n-k) cout<<'b';
+    else cout<<'a';
+  }
+  cout<<endl;
 }
 
 int main()
