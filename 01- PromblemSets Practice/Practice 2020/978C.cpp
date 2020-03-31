@@ -17,38 +17,19 @@ using namespace std;
 
 void solve()
 {
-  int n;
-  cin>>n;
-  int a[n],c[n]={};
-  rep(i,0,n) cin>>a[i];
-  int d=1,t=2;
-  c[0]=1;
-  int f=0,key=INT_MAX;
-  rep(i,1,n)
+  int n,m;
+  cin>>n>>m;
+  vector<ll> v(n),dup(n+1,0);
+  rep(i,1,n+1) cin>>v[i-1],dup[i]=dup[i-1]+v[i-1];
+  ll x;
+  rep(i,0,m)
   {
-    if(a[i]!=a[i-1]) swap(d,t);
-    else key=min(i-1,key);
-    if(d==2) f=1;
-    c[i]=d;
+    cin>>x;
+    int it=lb(all(dup),x)-dup.begin();
+    deb(it)
+    if(dup[it]>x) cout<<it<<" "<<x-dup[it-1]<<endl;
+    else cout<<it<<" "<<v[it-1]<<endl;
   }
-  if(a[0]!=a[n-1] and c[0]==c[n-1])
-  {
-    if(key!=INT_MAX)
-      rep(i,key+1,n)
-      {
-        if(c[i]==2) c[i]--;
-        else c[i]++;
-      }
-    else
-    c[n-1]=3;
-  }
-  if(c[n-1]==3) cout<<"3\n";
-  else if(f) cout<<"2\n";
-  else cout<<"1\n"; 
-
-  rep(i,0,n)cout<<c[i]<<" ";
-  cout<<endl;
-
 }
 
 int main()
@@ -62,7 +43,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  //cin>>t;
   while(t--)
     solve();
 }
