@@ -17,7 +17,11 @@ using namespace std;
 
 void solve()
 {
-  
+  int a,b;
+  cin>>a>>b;
+  if(a==0 or a==3 or a==8 or a==15 or a==24 or a==35 or a==48 or a==63 or a==1 or a==7 or a==31) cout<<"OUT";
+  else cout<<"IN";
+
 }
 
 int main()
@@ -31,8 +35,7 @@ int main()
 
   IOS()
   ll t=1;
-  cout<<"NO";
   //cin>>t;
-  // while(t--)
-  //   solve();
+  while(t--)
+    solve();
 }

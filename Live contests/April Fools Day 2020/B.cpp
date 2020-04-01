@@ -14,10 +14,17 @@
 #define rep(i,b,c) for(int i=b; i<c; ++i)
 
 using namespace std;
-
+int pri[]={2,3,5,7,11,13,17,19,23,29,31};
 void solve()
 {
-  
+  int n;
+  cin>>n;
+  for(auto i:pri) if(n%i==0)
+  {
+    cout<<i<<n/i;
+    break;
+  }
+
 }
 
 int main()
@@ -31,8 +38,7 @@ int main()
 
   IOS()
   ll t=1;
-  cout<<"NO";
   //cin>>t;
-  // while(t--)
-  //   solve();
+  while(t--)
+    solve();
 }

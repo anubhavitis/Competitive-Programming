@@ -17,7 +17,11 @@ using namespace std;
 
 void solve()
 {
-  
+  string s;
+  cin>>s;
+  if((s[s.size()-1]-'0')%2) cout<<1;
+  else cout<<0;
+
 }
 
 int main()
@@ -31,8 +35,7 @@ int main()
 
   IOS()
   ll t=1;
-  cout<<"NO";
   //cin>>t;
-  // while(t--)
-  //   solve();
+  while(t--)
+    solve();
 }
