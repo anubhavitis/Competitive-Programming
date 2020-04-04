@@ -17,34 +17,23 @@ using namespace std;
 
 void solve()
 {
-  int n,k;
-  string s;
-  cin>>n>>k>>s;
-
-  int cnt[k][26]={};
-  rep(i,0,n)  cnt[i%k][s[i]-'a']++;
-  int ans=0;
-  char ma[k];
-  rep(i,0,k/2)
-  {
-    int mx=-1,key=-1;
-    rep(j,0,26) if(mx<(cnt[i][j]+cnt[k-i-1][j])) 
-    {
-      mx=(cnt[i][j]+cnt[k-i-1][j]);
-      key=j;
-    }
-    ma[i]=ma[k-i-1]=(key+'a');
-  }
-  if(k%2)
-  {
-    int mx=-1,key=-1;
-    rep(j,0,26) if( mx<cnt[k/2][j] ) { mx=cnt[k/2][j]; key=j; }
-    ma[k/2]=(key+'a'); 
-  }
-  
+  int n,x;
+  cin>>n>>x;
+  int a[300]={};
+  int temp;
   rep(i,0,n)
-    if(s[i]!=ma[i%k] ) ans++;
-  cout<<ans<<endl;
+  {
+    cin>>temp;
+    a[temp]=1;
+  }
+  int i=0;
+  for(i=1;i<300;++i)
+  {
+    if(a[i]==0 and x==0) break;
+    if(a[i]==0) x--;
+
+  }
+  cout<<i-1<<endl;
 }
 
 int main()
@@ -58,7 +47,7 @@ int main()
 
   IOS()
   ll t=1;
-  //cin>>t;
+  cin>>t;
   while(t--)
     solve();
 }

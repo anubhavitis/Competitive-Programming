@@ -17,34 +17,41 @@ using namespace std;
 
 void solve()
 {
-  int n,k;
-  string s;
-  cin>>n>>k>>s;
-
-  int cnt[k][26]={};
-  rep(i,0,n)  cnt[i%k][s[i]-'a']++;
-  int ans=0;
-  char ma[k];
-  rep(i,0,k/2)
+  int n,m;
+  cin>>n>>m;
+  ll c[n];
+  rep(i,0,n) cin>>c[i];
+  map<int,vector<int> > mapi;
+  int x,y,pass[n]={};
+  rep(i,0,m)
   {
-    int mx=-1,key=-1;
-    rep(j,0,26) if(mx<(cnt[i][j]+cnt[k-i-1][j])) 
-    {
-      mx=(cnt[i][j]+cnt[k-i-1][j]);
-      key=j;
-    }
-    ma[i]=ma[k-i-1]=(key+'a');
+    cin>>x>>y;
+    mapi[x-1].pb(y-1);
+    mapi[y-1].pb(x-1);
   }
-  if(k%2)
-  {
-    int mx=-1,key=-1;
-    rep(j,0,26) if( mx<cnt[k/2][j] ) { mx=cnt[k/2][j]; key=j; }
-    ma[k/2]=(key+'a'); 
-  }
-  
+  ll cnt=0,mi=INT_MAX;
+  deb(mi)
+  queue<int> q;
   rep(i,0,n)
-    if(s[i]!=ma[i%k] ) ans++;
-  cout<<ans<<endl;
+  {
+    mi=INT_MAX;
+    if(pass[i]==1) continue;
+    pass[i]=1;
+    mi=min(mi,c[i]);
+    for(auto j:mapi[i]) 
+      if(pass[j]==0) q.push(j),pass[j]=1;
+    while(!q.empty())
+    {
+      int t=q.front();
+      mi=min(mi,c[t]);
+      for(auto j:mapi[t]) 
+      if(pass[j]==0) q.push(j),pass[j]=1;
+      q.pop();
+    }
+    cnt+=mi;
+  }
+  cout<<cnt;
+
 }
 
 int main()

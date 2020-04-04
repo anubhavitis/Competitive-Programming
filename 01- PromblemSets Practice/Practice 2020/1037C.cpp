@@ -17,34 +17,28 @@ using namespace std;
 
 void solve()
 {
-  int n,k;
-  string s;
-  cin>>n>>k>>s;
-
-  int cnt[k][26]={};
-  rep(i,0,n)  cnt[i%k][s[i]-'a']++;
+  int n;
+  string a,b;
+  cin>>n>>a>>b;
   int ans=0;
-  char ma[k];
-  rep(i,0,k/2)
+  // if(a[0]!=b[0] and (a[1]==b[1] or a[0]==a[1]) ) ans++,a[0]=b[0];
+  // if(a[n-1]!=b[n-1] and (a[n-2]==b[n-2] or a[n-1]==a[n-2]) ) ans++,a[n-1]=b[n-1];
+  rep(i,1,n-1)
   {
-    int mx=-1,key=-1;
-    rep(j,0,26) if(mx<(cnt[i][j]+cnt[k-i-1][j])) 
-    {
-      mx=(cnt[i][j]+cnt[k-i-1][j]);
-      key=j;
-    }
-    ma[i]=ma[k-i-1]=(key+'a');
+    if(a[i]==b[i]) continue;
+
+    if(a[i-1]!=b[i-1] and a[i-1]!=a[i]) a[i-1]=b[i-1];
+    else if(a[i+1]!=b[i+1] and a[i+1]!=a[i]) a[i+1]=b[i+1];
+    ans++;
+    a[i]=b[i];
   }
-  if(k%2)
+  if(n==2 and a[0]!=a[1] and a[0]!=b[0] and a[0]==b[1]) ans++;
+  else
   {
-    int mx=-1,key=-1;
-    rep(j,0,26) if( mx<cnt[k/2][j] ) { mx=cnt[k/2][j]; key=j; }
-    ma[k/2]=(key+'a'); 
+    if(a[0]!=b[0]) ans++,a[0]=b[0];
+    if(a[n-1]!=b[n-1]) ans++;
   }
-  
-  rep(i,0,n)
-    if(s[i]!=ma[i%k] ) ans++;
-  cout<<ans<<endl;
+  cout<<ans;
 }
 
 int main()
