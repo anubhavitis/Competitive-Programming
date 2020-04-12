@@ -19,25 +19,20 @@ void solve()
 {
   int n;
   cin>>n;
-  int x[n],y[n];
+  int x,y;
   int i;
-  rep(i,0,n) cin>>x[i]>>y[i];
-  if(y[0]>x[0]) {cout<<"NO\n"; return; }
-  rep(i,1,n)
+  int p=0,q=0,f=0;
+  rep(i,0,n)
   {
-    if(x[i]<x[i-1] or y[i]<y[i-1] or y[i]>x[i])
-    {
-      cout<<"NO\n";
-      return;
-    }
-    if(y[i]>y[i-1] and x[i]==x[i-1])
-    {
-    cout<<"NO\n";
-    return;
-    }
-    
+    cin>>x>>y;
+    if(x>=p and y>=q and y-q<=x-p) ;
+    else f=1;
+
+    p=x;
+    q=y;
   }
-  cout<<"YES\n";
+  if(f) cout<<"NO\n";
+  else cout<<"YES\n";
 }
 
 int main()
