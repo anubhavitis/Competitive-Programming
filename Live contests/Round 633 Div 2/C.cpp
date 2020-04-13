@@ -1,9 +1,8 @@
-//Mark XXIV
+//Mark XXV
 #include<bits/stdc++.h>
 
 #define big(x) greater<x>()
 #define ll long long int
-#define M 998244353
 #define mp make_pair
 #define pb push_back
 #define lb lower_bound
@@ -12,33 +11,39 @@
 #define deb(x) cerr<<#x<<" : "<<x<<"\n";
 #define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
 #define rep(i,b,c) for(i=b; i<c; ++i)
+
+#define M 998244353
+#define LINF 1e18
+#define INF INT_MAX
 int i,j;
 using namespace std;
 
 void solve()
 {
-  ll n,x,i;
-  cin>>n>>x;
+  int n;
+  cin>>n;
   ll a[n];
-  rep(i,0,n) cin>>a[i];
-  sort(a,a+n,big(int));
-  ll cnt=0;
-  rep(i,0,n) 
-    if(a[i]>x) 
-    { 
-      cnt+=a[i]-x;
-      a[i]=x; 
-    }
-    else
-    {
-      if(cnt>=x-a[i])
-      {
-        cnt-= x-a[i];
-        a[i]=x;
-      }
-      else break;
-    }
-  cout<<i<<endl;
+  rep(i,0,n)  cin>>a[i];
+  if(n==1) { cout<<"0\n"; return; }
+  ll mi=a[1]-a[0];
+  ll mx=a[0];
+  rep(i,1,n)
+  {
+    mi=min(mi,a[i]-mx);
+    mx=max(mx,a[i]);
+  }
+  deb(mi)
+  if(mi>=0) { cout<<"0\n"; return; }
+  mi*=-1;
+  int cnt=0;
+  ll dup=mi;
+  // deb(mi)
+  while(mi)
+  {
+    mi/=2;
+    cnt++;
+  }
+  cout<<cnt<<endl;
 }
 
 int main()
