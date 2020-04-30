@@ -21,32 +21,34 @@ using namespace std;
 
 void solve()
 {
-  ll a,b,q;
-  cin>>a>>b>>q;
-  if(a>b) swap(a,b);
-  ll lc=(a*b)/(__gcd(a,b));
-  rep(i,0,q)
+  int n,m;
+  cin>>n>>m;
+  set<int> v[n+1];
+  int x,y;
+
+  rep(i,0,m)
   {
-    ll l,r,ans,ans1,ans2,ans3;
-    cin>>l>>r;
-    if(r<b) { cout<<"0 "; continue; }
-    l=max(l,b);
-    r=max(r,b);
-    
-    ll first=(l/lc)*lc;
-    ll last= (r/lc)*lc;
-    ll cnt=r/lc-(l-1)/lc;
-    ans=r-l+1-b*max((ll)0,cnt-1);
-
-    if(first<l and first+b-1>=l and first ) ans-=(min(r,first+b-1)-l+1);
-  
-    if(last+b-1>r and last>=l) ans-=(r-last+1);
-    if(last>=l and last+b-1<=r) ans-=b;
-
-    cout<<ans<<" ";
-
+    cin>>x>>y;
+    v[x].insert(y);
+    v[y].insert(x);
   }
-  cout<<endl;
+  bool a[n+1]={};
+  std::vector<int> ans;
+  priority_queue <int, vector<int>, greater<int> > q;
+  q.push(1);
+
+  while(ans.size()<n)
+  { 
+    if(a[q.top()]==true) { q.pop(); continue; }
+    int tp=q.top();
+    a[tp]=true;
+    ans.pb(tp);
+    q.pop();
+
+    for(auto it:v[tp]) 
+      if(a[it]==false) q.push(it);
+  }
+  for(auto it:ans) cout<<it<<" ";
 }
 
 int main()
@@ -60,7 +62,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  //cin>>t;
   while(t--)
     solve();
 } 

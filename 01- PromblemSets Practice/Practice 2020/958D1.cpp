@@ -21,32 +21,30 @@ using namespace std;
 
 void solve()
 {
-  ll a,b,q;
-  cin>>a>>b>>q;
-  if(a>b) swap(a,b);
-  ll lc=(a*b)/(__gcd(a,b));
-  rep(i,0,q)
+  int m;
+  cin>>m;
+  double a[m];
+  map<double,int> mp;
+  string s;
+  int x,y,z;
+  rep(i,0,m)
   {
-    ll l,r,ans,ans1,ans2,ans3;
-    cin>>l>>r;
-    if(r<b) { cout<<"0 "; continue; }
-    l=max(l,b);
-    r=max(r,b);
-    
-    ll first=(l/lc)*lc;
-    ll last= (r/lc)*lc;
-    ll cnt=r/lc-(l-1)/lc;
-    ans=r-l+1-b*max((ll)0,cnt-1);
-
-    if(first<l and first+b-1>=l and first ) ans-=(min(r,first+b-1)-l+1);
-  
-    if(last+b-1>r and last>=l) ans-=(r-last+1);
-    if(last>=l and last+b-1<=r) ans-=b;
-
-    cout<<ans<<" ";
-
+    cin>>s;
+    string temp;
+    for(j=1;s[j]!='+';++j) temp+=s[j];
+    x=stoi(temp);
+    temp="";
+    j++;
+    while(s[j]!=')') temp+=s[j++];
+    y=stoi(temp);
+    temp="";
+    j+=2;
+    while(j<s.size()) temp+=s[j++];
+    z=stoi(temp);
+    a[i]=(x+y)/double(z);
+    mp[a[i]]++;
   }
-  cout<<endl;
+  for(auto i:a) cout<<mp[i]<<" ",cerr<<i<<" ";
 }
 
 int main()
@@ -60,7 +58,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  //cin>>t;
   while(t--)
     solve();
 } 
