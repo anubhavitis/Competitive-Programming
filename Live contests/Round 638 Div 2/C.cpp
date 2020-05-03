@@ -21,12 +21,26 @@ using namespace std;
 
 void solve()
 {
-  int n;
-  cin>>n;
-  ll sum=pow(2,n),sum2=0;
-  rep(i,1,n/2) sum+=pow(2,i);
-  rep(i,n/2,n) sum2+=pow(2,i);
-  cout<<sum-sum2<<endl;
+  int n,k;
+  string s;
+  cin>>n>>k>>s;
+  sort(all(s));
+
+  if(s[0]!=s[k-1] or k==n) { cout<< s[k-1]<<endl; return; }
+  if(s[0]==s[k-1])
+  {
+    cout<<s[0];
+    if(s[k]==s[n-1])
+    {
+      int t=n-k;
+      rep(i,0,t/k) cout<<s[k];
+      if(t%k) cout<<s[k];
+    }
+    else
+      rep(i,k,n) cout<<s[i];
+    cout<<endl;
+    return;
+  }
 }
 
 int main()

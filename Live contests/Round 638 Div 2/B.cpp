@@ -21,12 +21,32 @@ using namespace std;
 
 void solve()
 {
-  int n;
-  cin>>n;
-  ll sum=pow(2,n),sum2=0;
-  rep(i,1,n/2) sum+=pow(2,i);
-  rep(i,n/2,n) sum2+=pow(2,i);
-  cout<<sum-sum2<<endl;
+  int t,n,k;
+  cin>>n>>k;
+  int a[n+1]={};
+  vector<int> ar(n);
+  rep(i,0,n) cin>>ar[i],a[ar[i]]++;
+  vector<int> v;
+  rep(i,1,n+1) if(a[i]) v.pb(i);
+  if(v.size()>k) 
+  {
+    cout<<"-1\n";
+    return;
+  }
+  for(auto it:v) ar.insert(ar.begin(),it);
+  i=1;
+  j=k;
+  while(j!=ar.size())
+  {
+    if(ar[i-1]!=ar[j]) ar.insert(ar.begin()+j,ar[i-1]);
+    i++;
+    j++;
+  }
+  cout<<ar.size()<<endl;
+  for(auto it:ar) cout<<it<<" ";
+  cout<<endl;
+
+
 }
 
 int main()

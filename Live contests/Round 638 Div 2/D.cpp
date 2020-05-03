@@ -23,10 +23,19 @@ void solve()
 {
   int n;
   cin>>n;
-  ll sum=pow(2,n),sum2=0;
-  rep(i,1,n/2) sum+=pow(2,i);
-  rep(i,n/2,n) sum2+=pow(2,i);
-  cout<<sum-sum2<<endl;
+
+  int t=1;
+  vector<int> s;
+  while(((t<<1)-1)<n)
+  {
+    s.pb(t);
+    t<<=1;
+  }
+  s.pb(n-(t-1));
+  sort(all(s));
+  cout<<s.size()-1<<endl;
+  rep(i,1,s.size()) cout<<s[i]-s[i-1]<<" ";
+  cout<<endl;
 }
 
 int main()
