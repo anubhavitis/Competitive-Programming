@@ -16,42 +16,21 @@
 #define M 998244353
 #define LINF 1e18
 #define INF INT_MAX
-int i,j;
+unsigned ll i,j;
 using namespace std;
 
 
 void solve()
 {
-  ll n,k;
-  cin>>n>>k;    
-  int a[n];
-  rep(i,0,n) cin>>a[i];
-  int f1=0,f2=0;
-  if(n==1) 
-  {
-    if(a[0]==k) cout<<"yes\n";
-    else cout<<"no\n";
-    return;
-  }
-  if(n==2)
-  {
-    if(a[0]>a[1]) swap(a[0],a[1]);
-    if(a[0]==k and a[1]>=k) cout<<"yes\n";
-    else cout<<"no\n";
-    return;
-  }
-  rep(i,0,n-2)
-  {
-    int x=a[i],y=a[i+1],z=a[i+2];
-    if(x>y) swap(x,y);
-    if(y>z) swap(y,z);
-    if(x>y) swap(x,y);
+  unsigned ll n,k;
+  cin>>n;
+  if(n<3) {cout<<"0\n"; return;}
 
-    if(x==k or y==k or z==k) f1=1;
-    if(y>=k and z>=k) f2=1;
-  }
-  if(f1 and f2) cout<<"yes\n";
-  else cout<<"no\n";
+  unsigned ll ans=0;
+
+  for(i=3;i<=n;i+=2)
+    ans+=(4*i-4)*(i/2);
+  cout<<ans<<endl;
 }
 
 int main()

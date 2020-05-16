@@ -16,42 +16,38 @@
 #define M 998244353
 #define LINF 1e18
 #define INF INT_MAX
-int i,j;
+ll i,j;
 using namespace std;
 
-
+struct cmp{
+  bool operator() ( pair<int,int> x, pair<int,int> y)
+  {
+    if((x.second-x.first)==(y.second-y.first)) return x.first<y.first;
+    return (x.second-x.first)>(y.second-y.first);
+  }
+};
 void solve()
 {
-  ll n,k;
-  cin>>n>>k;    
-  int a[n];
-  rep(i,0,n) cin>>a[i];
-  int f1=0,f2=0;
-  if(n==1) 
-  {
-    if(a[0]==k) cout<<"yes\n";
-    else cout<<"no\n";
-    return;
-  }
-  if(n==2)
-  {
-    if(a[0]>a[1]) swap(a[0],a[1]);
-    if(a[0]==k and a[1]>=k) cout<<"yes\n";
-    else cout<<"no\n";
-    return;
-  }
-  rep(i,0,n-2)
-  {
-    int x=a[i],y=a[i+1],z=a[i+2];
-    if(x>y) swap(x,y);
-    if(y>z) swap(y,z);
-    if(x>y) swap(x,y);
+  int n;
+  cin>>n;
+  set<pair<int,int>,cmp> s;
+  i=1;
+  s.insert(mp(1,n));
+  int arr[n+1]={};
 
-    if(x==k or y==k or z==k) f1=1;
-    if(y>=k and z>=k) f2=1;
+  while(s.size())
+  {
+    pair<int,int> x=*(s.begin());
+    s.erase(s.begin());
+    // deb(s.size())
+    int mid=(x.first+x.second)/2;
+    arr[mid]=i++;
+    if(x.first  <= mid-1) s.insert(mp(x.first,mid-1));
+    if(x.second >= mid+1) s.insert(mp(mid+1,x.second));
   }
-  if(f1 and f2) cout<<"yes\n";
-  else cout<<"no\n";
+
+  rep(i,1,n+1) cout<<arr[i]<<" ";
+  cout<<endl;
 }
 
 int main()

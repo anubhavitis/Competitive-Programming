@@ -16,42 +16,36 @@
 #define M 998244353
 #define LINF 1e18
 #define INF INT_MAX
-int i,j;
+ll i,j;
 using namespace std;
-
 
 void solve()
 {
-  ll n,k;
-  cin>>n>>k;    
-  int a[n];
-  rep(i,0,n) cin>>a[i];
-  int f1=0,f2=0;
-  if(n==1) 
-  {
-    if(a[0]==k) cout<<"yes\n";
-    else cout<<"no\n";
-    return;
-  }
-  if(n==2)
-  {
-    if(a[0]>a[1]) swap(a[0],a[1]);
-    if(a[0]==k and a[1]>=k) cout<<"yes\n";
-    else cout<<"no\n";
-    return;
-  }
-  rep(i,0,n-2)
-  {
-    int x=a[i],y=a[i+1],z=a[i+2];
-    if(x>y) swap(x,y);
-    if(y>z) swap(y,z);
-    if(x>y) swap(x,y);
+  ll n,k,o=0;
+  cin>>n>>k;
+  string s;
+  cin>>s;
+  s="*"+s;
 
-    if(x==k or y==k or z==k) f1=1;
-    if(y>=k and z>=k) f2=1;
+  ll dp[n+1][2];
+  ll pref[n+1]={0};
+  memset(dp,0,sizeof(dp));
+
+  for(int i=1;i<=n;i++) pref[i]+=pref[i-1]+(s[i]=='1');
+  for(int i=1;i<=n;i++)
+  {
+      if(i<=k)
+      {
+          dp[i][1]=(s[i]=='0')+pref[i-1];
+          dp[i][0]=(s[i]=='1')+min(dp[i-1][0],dp[i-1][1]);
+          continue;
+      }
+      dp[i][1]=(s[i]=='0')+min(dp[i-k][1]+pref[i-1]-pref[i-k],pref[i-1]);
+      dp[i][0]=(s[i]=='1')+min(dp[i-1][0],dp[i-1][1]);
   }
-  if(f1 and f2) cout<<"yes\n";
-  else cout<<"no\n";
+  
+  cout<<min(dp[n][0],dp[n][1])<<"\n";
+
 }
 
 int main()

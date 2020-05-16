@@ -26,6 +26,9 @@ void solve()
   cin>>n>>k;    
   // int a[n];
   // rep(i,0,n) cin>>a[i];
+  if(n==1) cout<<"0\n";
+  else if(n==2) cout<<k<<endl;
+  else if(n>=3) cout<<(2*k)<<endl;
 
 }
 
