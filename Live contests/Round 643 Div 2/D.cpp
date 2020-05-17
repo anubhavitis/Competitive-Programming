@@ -21,29 +21,22 @@ using namespace std;
 
 void solve()
 {
-  ll n,k;
-  cin>>n>>k;
-  string s;
-  cin>>s;
-  s='-'+s;
-  int pre[n+1]={};
-  rep(i,1,n+1) pre[i]=pre[i-1]+(s[i]=='1');
+  int n,s;
+  cin>>n>>s;
 
-  int dp[n+1]={};
-
-  rep(i,1,n+1)
+  if(s>=2*n)
   {
-    if(i<=k) dp[i]= min((s[i]=='0') + pre[i-1],pre[i]);
-    else dp[i]= min((s[i]=='0') + pre[i-1]-pre[i-k] + dp[i-k],pre[i]);
+    cout<<"YES\n";
+    while(s)
+    {
+      cout<<s/n<<" ";
+      s-=s/n; 
+      n--;
+    }
+    cout<<"\n1\n";
+    return;
   }
-  int m=pre[n],ans=INF;
-  rep(i,1,n+1)
-  {
-    if(s[i]=='1') m--;
-    dp[i]+=m;
-    ans=min(ans,dp[i]);
-  }
-  cout<<ans<<endl;
+  cout<<"NO\n";
 
 }
 
@@ -58,7 +51,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  //cin>>t;
   while(t--)
     solve();
 }

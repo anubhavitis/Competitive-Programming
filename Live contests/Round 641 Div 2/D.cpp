@@ -38,7 +38,7 @@ void solve()
     if(a[0]>a[1]) swap(a[0],a[1]);
     if(a[0]==k and a[1]>=k) cout<<"yes\n";
     else cout<<"no\n";
-    return;
+    return; 
   }
   rep(i,0,n-2)
   {

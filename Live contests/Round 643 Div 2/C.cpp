@@ -16,35 +16,36 @@
 #define M 998244353
 #define LINF 1e18
 #define INF INT_MAX
-ll i,j;
+int i,j;
 using namespace std;
 
 void solve()
 {
-  ll n,k;
-  cin>>n>>k;
-  string s;
-  cin>>s;
-  s='-'+s;
-  int pre[n+1]={};
-  rep(i,1,n+1) pre[i]=pre[i-1]+(s[i]=='1');
+  int a,b,c,d;
+  cin>>a>>b>>c>>d;
 
-  int dp[n+1]={};
-
-  rep(i,1,n+1)
+  ll ans=0;
+  rep(i,a,b+1)
   {
-    if(i<=k) dp[i]= min((s[i]=='0') + pre[i-1],pre[i]);
-    else dp[i]= min((s[i]=='0') + pre[i-1]-pre[i-k] + dp[i-k],pre[i]);
-  }
-  int m=pre[n],ans=INF;
-  rep(i,1,n+1)
-  {
-    if(s[i]=='1') m--;
-    dp[i]+=m;
-    ans=min(ans,dp[i]);
+    int lz=d-c+1,ly=c-b+1;
+    int x=min(max(i+b-c,0),lz);
+    int y=min(max(i,0),lz);
+    if(x) ans+=(y*(y+1))/2-(x*(x-1))/2 + y*(ly-(y-x+1));
+    else
+    {
+      ans+=(y*(y+1))/2;
+      int z=c-i;
+      z+=y;
+      ans+=y*(d-z);
+    }
+    deb(x)deb(y)
+    deb(ans)
   }
   cout<<ans<<endl;
 
+  // ll ans=(d-c+1)*(c-b+1)*(b-a+1);
+
+  // int n=d-c+1
 }
 
 int main()
@@ -58,7 +59,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  // cin>>t;
   while(t--)
     solve();
 }

@@ -1,7 +1,7 @@
 //Mark XXVI
 #include<bits/stdc++.h>
 
-#define big(x) greater<x>()
+// #define big(x) greater<x>()
 #define ll long long int
 #define mp make_pair
 #define pb push_back
@@ -19,31 +19,43 @@
 ll i,j;
 using namespace std;
 
+
+int big(unsigned ll n)
+{
+  int t=0;
+  while(n)
+  {
+    if(t<(n%10)) t=n%10;
+    n/=10;
+  }
+  return t;
+}
+
+int small(unsigned ll n)
+{
+  unsigned ll t=9;
+  while(n)
+  {
+    t=min(t,n%10);
+    n/=10;
+  }
+  return t;
+}
+
 void solve()
 {
-  ll n,k;
+  unsigned ll n,k;
   cin>>n>>k;
-  string s;
-  cin>>s;
-  s='-'+s;
-  int pre[n+1]={};
-  rep(i,1,n+1) pre[i]=pre[i-1]+(s[i]=='1');
-
-  int dp[n+1]={};
-
-  rep(i,1,n+1)
+  k--;
+  while(k--)
   {
-    if(i<=k) dp[i]= min((s[i]=='0') + pre[i-1],pre[i]);
-    else dp[i]= min((s[i]=='0') + pre[i-1]-pre[i-k] + dp[i-k],pre[i]);
+    int x,y;
+    x=big(n);
+    y=small(n);
+    if(x==0 or y==0 ) break;
+    n+=x*y;
   }
-  int m=pre[n],ans=INF;
-  rep(i,1,n+1)
-  {
-    if(s[i]=='1') m--;
-    dp[i]+=m;
-    ans=min(ans,dp[i]);
-  }
-  cout<<ans<<endl;
+  cout<<n<<endl;
 
 }
 

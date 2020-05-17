@@ -21,30 +21,38 @@ using namespace std;
 
 void solve()
 {
-  ll n,k;
-  cin>>n>>k;
-  string s;
-  cin>>s;
-  s='-'+s;
-  int pre[n+1]={};
-  rep(i,1,n+1) pre[i]=pre[i-1]+(s[i]=='1');
+  int n;
+  cin>>n;
+  int arr[n];
+  rep(i,0,n) cin>>arr[i];
+  sort(arr,arr+n,big(int));
 
-  int dp[n+1]={};
-
-  rep(i,1,n+1)
+  int ans1=0;
+  i=0;
+  while(i<n)
   {
-    if(i<=k) dp[i]= min((s[i]=='0') + pre[i-1],pre[i]);
-    else dp[i]= min((s[i]=='0') + pre[i-1]-pre[i-k] + dp[i-k],pre[i]);
+    if(arr[i]>(n-i)) break;
+    i+=arr[i];
+    ans1++;
   }
-  int m=pre[n],ans=INF;
-  rep(i,1,n+1)
-  {
-    if(s[i]=='1') m--;
-    dp[i]+=m;
-    ans=min(ans,dp[i]);
-  }
-  cout<<ans<<endl;
+  sort(arr,arr+n);
 
+  int ans2=0;
+  i=0;
+  while(i<n)
+  {
+    j=1;
+    while(arr[i]!=j and i<n)
+    {
+      i++;
+      j++;
+    }
+    if(i==n) break;
+
+    ans2++;
+    i++;
+  }
+  cout<<max(ans1,ans2)<<endl;
 }
 
 int main()
