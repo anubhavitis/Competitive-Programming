@@ -8,6 +8,7 @@
 #define lb lower_bound
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
+#define PI 3.14159265
 #define deb(x) cerr<<#x<<" : "<<x<<"\n";
 #define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
 #define rep(i,b,c) for(i=b; i<c; ++i)
@@ -16,21 +17,50 @@
 #define M 998244353
 #define LINF 1e18
 #define INF INT_MAX
-int i,j;
 using namespace std;
+int i,j,n;
+
+int tree[2000001];
+
+void build( int arr[])  
+{  
+  rep(i,0,n) cerr<<arr[i]<<" "; cerr<<"\n";
+  for (int i=0; i<n; i++) tree[n+i] = arr[i]; 
+  for (int i = n - 1; i > 0; --i) tree[i] = tree[i<<1] + tree[i<<1 | 1];
+} 
+  
+void updateTreeNode(int p,int val)  
+{  
+  tree[p+n]+=val; 
+  p = p+n; 
+  
+  for (int i=p; i > 1; i >>= 1) tree[i>>1] = tree[i] + tree[i^1]; 
+} 
+  
+int query(int k,int t)  
+{  
+  
+} 
 
 void solve()
 {
-  int a,b,c,d;
-  cin>>a>>b>>c>>d;
+  int q;
+  cin>>n>>q;
+  int t,a[n]={};
+  rep(i,0,n) cin>>t,a[t]++;
+  build(a);
+  rep(i,0,2*n) cerr<<tree[i]<<" ";
 
-  int arr[1000001]={};
-  rep(i,a,b+1) arr[i+b]++,arr[i+c+1]--;
+  deb(query(3))
+  // while(q--)
+  // {
+  //   cin>>t;
+  //   if(t>0) updateTreeNode(t,1);
+  //   t*=(-1);
+  //   query
 
-  rep(i,1,1000001) arr[i]+=arr[i-1];
-  ll ans=0;
-  rep(i,c+1,1000001) ans+=(ll)arr[i]*min(d-c+1,i-c);
-  cout<<ans<<endl;
+  // }
+
 }
 
 int main()

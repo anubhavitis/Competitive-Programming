@@ -21,16 +21,18 @@ using namespace std;
 
 void solve()
 {
-  int a,b,c,d;
+  ll a,b,c,d;
   cin>>a>>b>>c>>d;
 
-  int arr[1000001]={};
-  rep(i,a,b+1) arr[i+b]++,arr[i+c+1]--;
+  if(b>=a) { cout<<b<<endl; return; }
+  if(c<=d) { cout<<"-1\n"; return; }
 
-  rep(i,1,1000001) arr[i]+=arr[i-1];
-  ll ans=0;
-  rep(i,c+1,1000001) ans+=(ll)arr[i]*min(d-c+1,i-c);
+  ll ans=b;
+  a-=b;
+  int rem=c-d;
+  ans+=c*((a%rem)? a/rem+1: a/rem);
   cout<<ans<<endl;
+
 }
 
 int main()
@@ -44,7 +46,7 @@ int main()
 
   IOS()
   ll t=1;
-  // cin>>t;
+  cin>>t;
   while(t--)
     solve();
 }
