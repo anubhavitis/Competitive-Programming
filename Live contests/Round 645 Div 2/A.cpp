@@ -24,28 +24,10 @@ ll i,j,n,m;
 
 void solve()
 {
-  int a,b;
-  cin>>n>>m>>a>>b;
-
-  if(a*n!=b*m) { cout<<"NO\n"; return; }
-  cout<<"YES\n";
-  int sumc[m]={},arr[n][m]={};
-
-  rep(i,0,n)
-  {
-    int k=a,z;
-    rep(z,0,b)
-    rep(j,0,m)
-      if(sumc[j]==z and k) 
-      {
-        arr[i][j]=1;
-        sumc[j]++;
-        k--;
-      }
-  }
-  rep(i,0,n)
-    { rep(j,0,m) cout<<arr[i][j]; cout<<endl; }
-
+  cin>>n>>m;
+  ll ans=n*(m/2);
+  if(m%2) ans+=ceil(n/2.0);
+  cout<<ans<<endl;
 }
 
 int main()

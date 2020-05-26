@@ -24,28 +24,13 @@ ll i,j,n,m;
 
 void solve()
 {
-  int a,b;
-  cin>>n>>m>>a>>b;
+  ll x1,x2,y1,y2;
+  cin>>x1>>y1>>x2>>y2;
 
-  if(a*n!=b*m) { cout<<"NO\n"; return; }
-  cout<<"YES\n";
-  int sumc[m]={},arr[n][m]={};
+  n=x2-x1+1;
+  m=y2-y1+1;
 
-  rep(i,0,n)
-  {
-    int k=a,z;
-    rep(z,0,b)
-    rep(j,0,m)
-      if(sumc[j]==z and k) 
-      {
-        arr[i][j]=1;
-        sumc[j]++;
-        k--;
-      }
-  }
-  rep(i,0,n)
-    { rep(j,0,m) cout<<arr[i][j]; cout<<endl; }
-
+  cout<<1+(m-1)*(n-1)<<endl;
 }
 
 int main()

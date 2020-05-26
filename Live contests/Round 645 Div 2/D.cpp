@@ -21,46 +21,57 @@
 using namespace std;
 
 ll i,j,n,m;
-
-ll bin(string s)
+ll sud(ll beg)
 {
-  ll ans=0.pos=1;
-
-  rrep(j,m-1,0)
-  {
-    if(s=='1') ans+=pos;
-    pos=pos<<1;
-  }
-  return ans;
+  return (beg*(beg+1))/2;
 }
 void solve()
 {
-  cin>>n>>m;
-  string s;
-  vector<ll> v;
-  rep(i,0,n)
-  {
-    cin>>s;
-    v.pb(bin(s));
-  }
-  sort(all(v));
+  ll x;
+  cin>>n>>x;
 
-  ll med=(pow(2,m)-1)/2;
-  int cnt=lb(all(v),med)-v.begin();
-  int r,l;
-  if(v[cnt]==med)
+  int d[n];
+  ll sumarr[n],prefsum[n];
+  rep(i,0,n) 
   {
-    r=cnt;
-    l=n-med;
-    int mi=min(r,l);
-    r-=mi;
-    l-=mi;
+    cin>>d[i];
+    sumarr[i]=((ll)d[i]*((ll)d[i]+1))/2;
+    if(i==0) prefsum[i]=sumarr[i];
+    else prefsum[i]=prefsum[i-1]+sumarr[i];
   }
-  else
+  ll l=1,ml=0,r,mr=-1;
+  ll sum=0;
+  while(sum<x) r=sum,sum+=d[++mr];
+  r=x-r;
+  ll ans=prefsum[mr-1]+ sud(r);
+  while(ml<n and l<=d[n-1])
   {
-    
+    if( (d[mr-1]-r) < (d[ml-1]-l) )
+    {
+      l=d[mr-1]-r+1;
+      ans=max(ans,sud(d[ml])-sud(l-1)+prefsum[mr]-prefsum[ml]+1);
+      r=1;
+      mr=(mr+1)%n;
+    }
+    else if((d[mr-1]-r) == (d[ml-1]-l))
+    {
+      l=1;
+      ml++;
+      if(ml==n) break;
+      ans=max(ans,prefsum[mr]-prefsum[ml-1]+1);
+      r=1;
+      mr=(mr+1)%n;
+    }
+    else
+    {
+      l=1;
+      ml++;
+      if(ml==n) break;
+      r+=(d[ml-1]-l);
+      ans=max(ans,prefsum[mr-1]-prefsum[ml-1]+sud(r));
+    }
   }
-
+  cout<<ans<<endl;
 }
 
 int main()
@@ -74,7 +85,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  // cin>>t;
   while(t--)
     solve();
 } 

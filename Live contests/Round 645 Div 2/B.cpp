@@ -24,28 +24,23 @@ ll i,j,n,m;
 
 void solve()
 {
-  int a,b;
-  cin>>n>>m>>a>>b;
-
-  if(a*n!=b*m) { cout<<"NO\n"; return; }
-  cout<<"YES\n";
-  int sumc[m]={},arr[n][m]={};
-
+  cin>>n;
+  int a[n];
+  rep(i,0,n) cin>>a[i];
+  sort(a,a+n);
+  int cnt=1,pos=0,ma=0;
   rep(i,0,n)
   {
-    int k=a,z;
-    rep(z,0,b)
-    rep(j,0,m)
-      if(sumc[j]==z and k) 
-      {
-        arr[i][j]=1;
-        sumc[j]++;
-        k--;
-      }
+    ma=max(ma,a[i]);
+    if(ma<= cnt+i-pos)
+    {
+      cnt+=i-pos+1;
+      pos=i+1;
+      ma=0;
+    }
+    cerr<<pos<<" "<<cnt<<endl;
   }
-  rep(i,0,n)
-    { rep(j,0,m) cout<<arr[i][j]; cout<<endl; }
-
+  cout<<cnt<<endl;
 }
 
 int main()
