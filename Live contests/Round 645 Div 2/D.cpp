@@ -30,47 +30,46 @@ void solve()
   ll x;
   cin>>n>>x;
 
-  int d[n];
-  ll sumarr[n],prefsum[n];
+  ll d[2*n];
+  ll pref[2*n+1]={},cntday[2*n+1]={};
   rep(i,0,n) 
   {
     cin>>d[i];
-    sumarr[i]=((ll)d[i]*((ll)d[i]+1))/2;
-    if(i==0) prefsum[i]=sumarr[i];
-    else prefsum[i]=prefsum[i-1]+sumarr[i];
+    d[i+n]=d[i];
   }
-  ll l=1,ml=0,r,mr=-1;
-  ll sum=0;
-  while(sum<x) r=sum,sum+=d[++mr];
-  r=x-r;
-  ll ans=prefsum[mr-1]+ sud(r);
-  while(ml<n and l<=d[n-1])
+  rrep(i,2*n-1,0)
   {
-    if( (d[mr-1]-r) < (d[ml-1]-l) )
-    {
-      l=d[mr-1]-r+1;
-      ans=max(ans,sud(d[ml])-sud(l-1)+prefsum[mr]-prefsum[ml]+1);
-      r=1;
-      mr=(mr+1)%n;
-    }
-    else if((d[mr-1]-r) == (d[ml-1]-l))
-    {
-      l=1;
-      ml++;
-      if(ml==n) break;
-      ans=max(ans,prefsum[mr]-prefsum[ml-1]+1);
-      r=1;
-      mr=(mr+1)%n;
-    }
-    else
-    {
-      l=1;
-      ml++;
-      if(ml==n) break;
-      r+=(d[ml-1]-l);
-      ans=max(ans,prefsum[mr-1]-prefsum[ml-1]+sud(r));
-    }
+    pref[i]=pref[i+1]+sud(d[i]);
+    cntday[i]=cntday[i+1]+d[i];
   }
+  // deball(d)
+  // deball(pref)
+
+  ll ans=0,pos=2*n-1;
+
+  while(pos>=n)
+  {
+    //find start day for cur pos
+    int l=0,r=pos,mid=(l+r)/2,beg;
+    while(l<=r)
+    {
+      if(cntday[mid]-cntday[pos+1]>=x) l=mid+1,beg=mid;
+      else if(cntday[mid]-cntday[pos+1]<x) r=mid-1;
+
+      mid=(l+r)/2;
+    }
+    // cerr<<beg<<" "<<pos<<endl;
+    // calculate sum for current segment
+    ll temp=0;
+    if(beg!=pos) temp+=pref[beg+1]-pref[pos+1];
+    temp+= sud(d[beg])-sud(d[beg]- x+cntday[beg+1]-cntday[pos+1] );
+    // deb(x)
+    // deb(temp)
+    // update answer with the maximum number.
+    ans=max(ans,temp);
+    pos--;
+  }
+
   cout<<ans<<endl;
 }
 
