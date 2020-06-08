@@ -21,47 +21,28 @@
 using namespace std;
 
 ll i,j,n,m;
-vector<int> adj[200001];
-ll a[200001],b[200001],c[200001];
-pair<int,int> bad[200001];
-ll ans=0;
-
-void dfs(int node,int pt)
-{
-  int b1=0,b2=0;
-  a[node]=min(a[node],a[pt]);
-  if(b[node]==0 and c[node]==1) b1++;
-  else if(b[node]==1 and c[node]==0) b2++;
-  for(auto it: adj[node])
-  {
-    if(it!=pt)
-    {
-      dfs(it,node);
-      int c1=bad[it].first,c2=bad[it].second;
-      ans+=a[it]*2*min(c1,c2);
-      b1+=c1-min(c1,c2);
-      b2+=c2-min(c1,c2);
-    }
-  }
-  bad[node]=mp(b1,b2);
-}
 
 void solve()
 {
-  cin>>n;
-  a[0]=LINF;
-  rep(i,0,n) cin>>a[i+1]>>b[i+1]>>c[i+1];
-  int u,v;
-  rep(i,0,n-1)
+  int n,m;
+  cin>>n>>m;
+  std::vector<int> v(n);
+  
+  int a[m];
+  rep(i,0,m) a[i]=-1;
+  
+  rep(i,0,n)
   {
-    cin>>u>>v;
-    adj[u].pb(v);
-    adj[v].pb(u);
+    cin>>v[i];
+    int b[m]={};
+    rep(j,0,m) if(a[j]>0) b[(v[i]+j)%m]=1;
+    b[v[i]%m]=1;
+    rep(j,0,m) if(b[j]) a[j]=b[j];
+    if(a[0]>0) { break; }
   }
-  dfs(1,0);
-  ans+=a[1]*2*bad[1].first;
-  if(bad[1].first!=bad[1].second) cout<<"-1\n";
-  else cout<<ans<<endl;
+
+  if(a[0]>0) cout<<"YES\n";
+  else cout<<"NO\n";
 }
 
 int main()

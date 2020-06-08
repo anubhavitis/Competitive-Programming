@@ -21,47 +21,39 @@
 using namespace std;
 
 ll i,j,n,m;
-vector<int> adj[200001];
-ll a[200001],b[200001],c[200001];
-pair<int,int> bad[200001];
-ll ans=0;
-
-void dfs(int node,int pt)
-{
-  int b1=0,b2=0;
-  a[node]=min(a[node],a[pt]);
-  if(b[node]==0 and c[node]==1) b1++;
-  else if(b[node]==1 and c[node]==0) b2++;
-  for(auto it: adj[node])
-  {
-    if(it!=pt)
-    {
-      dfs(it,node);
-      int c1=bad[it].first,c2=bad[it].second;
-      ans+=a[it]*2*min(c1,c2);
-      b1+=c1-min(c1,c2);
-      b2+=c2-min(c1,c2);
-    }
-  }
-  bad[node]=mp(b1,b2);
-}
 
 void solve()
 {
-  cin>>n;
-  a[0]=LINF;
-  rep(i,0,n) cin>>a[i+1]>>b[i+1]>>c[i+1];
-  int u,v;
-  rep(i,0,n-1)
+  string s;
+  cin>>s;
+  n=s.size();
+
+  int dp[n][2]={};
+  dp[0][1]=(s[0]==')')?-1:1;
+
+  rep(i,1,n)
   {
-    cin>>u>>v;
-    adj[u].pb(v);
-    adj[v].pb(u);
+    if(s[i]=='(') 
+    {
+      dp[i][0]=dp[i-1][0];
+      if(dp[i-1][1]<0) dp[i][1]=1;
+      else dp[i][1]=dp[i-1][1]+1;
+    }
+    else 
+    {
+      dp[i][1]=dp[i-1][1]-1;
+      if(dp[i][1]>=0) dp[i][0]=dp[i-1][0]+2;
+      else dp[i][0]=0;
+    }
   }
-  dfs(1,0);
-  ans+=a[1]*2*bad[1].first;
-  if(bad[1].first!=bad[1].second) cout<<"-1\n";
-  else cout<<ans<<endl;
+  
+  rep(i,0,n) cerr<<dp[i][0]<<" "; cerr<<endl;
+  int mx=-1;
+  rep(i,0,n) mx=max(mx,dp[i][0]);
+  cout<<mx<<" ";
+  int cnt=(dp[n-1][0]==mx)?1:0;
+  rep(i,0,n-1) if(dp[i][0]==mx and dp[i+1][0]!=mx) cnt++;
+  cout<<cnt;
 }
 
 int main()
