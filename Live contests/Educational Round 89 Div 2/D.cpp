@@ -21,47 +21,50 @@
 using namespace std;
 
 ll i,j,n,m;
+const int MAXN=10000001;
+int spf[MAXN]; 
+void sieve() 
+{ 
+  spf[1] = 1; 
+  for (int i=2; i<MAXN; i++) spf[i] = i; 
 
-vector<int> fd(int x)
-{
-  vector<int> ans;
-  for(i=1;i*i<=x;++i)
-  {
-    if(x%i==0)
-    {
-      ans.pb(i);
-      if(x/i!=i) ans.pb(x/i);
-    }
-  }
-  sort(all(ans));
-  return ans;
-}
+  for (int i=4; i<MAXN; i+=2) 
+      spf[i] = 2; 
+
+  for (int i=3; i*i<MAXN; i++) 
+  if (spf[i] == i) 
+      for (int j=i*i; j<MAXN; j+=i)  
+          if (spf[j]==j) 
+            spf[j] = i; 
+} 
+set<int> getFactorization(int x) 
+{ 
+    set<int> ret; 
+    while (x != 1) 
+    { 
+        ret.insert(spf[x]); 
+        x = x / spf[x]; 
+    } 
+    return ret; 
+} 
 void solve()
 {
+  sieve();
   cin>>n;
-  vector<int> v(n),f1,f2;
-  rep(i,0,n) cin>>v[i];
-  for(auto it:v)
+  vector<int> f1,f2;
+  int temp;
+  rep(i,0,n)
   {
-    vector<int> div=fd(it);
-    if(div.size()<4)
-    {
-      f1.pb(-1);
-      f2.pb(-1);
-      cout<<"No\n";
-      continue;
-    }
-    int f=1;
-    deball(div)
-    rep(i,1,div.size()-2)
-      if(__gcd(div[i]+div[div.size()-2],it)==1)
-      {
-        cout<<"Yes\n";
-        f=0;
-        break;
-      }
-    if(f) cout<<"No\n";
+    cin>>temp;
+    set<int> prime=getFactorization(temp);
+    ll prod=1;
+    for(auto it:prime) prod*=it;
+    if(prime.size()==1) f1.pb(-1),f2.pb(-1);
+    else f1.pb(*(prime.begin())),f2.pb(prod/(*(prime.begin())));
   }
+  for(auto it:f1) cout<<it<<" "; cout<<endl;
+  for(auto it:f2) cout<<it<<" "; 
+  
 }
 
 int main()
