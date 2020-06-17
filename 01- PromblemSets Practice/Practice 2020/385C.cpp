@@ -20,27 +20,32 @@
 #define INF INT_MAX
 using namespace std;
 
-int i,j,n,m;
- 
+#define N 10000000
+int i,j,n,m,l,r,a[N+20]={},p[N+20]={},pref[N+20]={};
+
 void solve()
 {
-  int x;
-  cin>>n>>x;
-
-  vector<int> v(n+1),pref(n+1,0);
-  int l=-1,r=-1;
-  rep(i,1,n+1)
+  cin>>n;
+  int temp;
+  rep(j,0,n) cin>>temp,a[temp]++;
+  
+  for(int i=2;i<=N;++i)
   {
-    cin>>v[i];
-    pref[i]=pref[i-1]+v[i];
+    if(!p[i])
+      for(j=i;j<=N;j+=i){
+        pref[i]+=a[j];
+        p[j]=1;
+      }
+    pref[i]+=pref[i-1];
   }
-  if(pref[n]%x!=0) cout<<n<<endl;
-  else
+
+  cin>>m;
+  while(m--)
   {
-    rrep(j,n,1) if(pref[j]%x!=0) break;
-    rep(i,1,n+1)  if(pref[i]%x!=0) break;
-    if(i==n+1) cout<<"-1\n";
-    else cout<<max(j,n-i)<<endl;
+    cin>>l>>r;
+    if(l>10000000) l=10000000;
+    if(r>10000000) r=10000000;
+    cout<<pref[r]-pref[l-1]<<endl;
   }
 }
 
@@ -55,7 +60,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  // cin>>t;
   while(t--)
     solve();
 } 

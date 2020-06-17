@@ -24,24 +24,37 @@ int i,j,n,m;
  
 void solve()
 {
-  int x;
-  cin>>n>>x;
+  cin>>n;
+  int a[1000001],pos[1000001]={},used[1000001]={};
+  rep(i,1,n+1) 
+  {
+    cin>>a[i];
+    pos[a[i]]++;
+  }
+  int p=0;
+  std::vector<int> ans;
+  stack<int> rem;
+  rep(i,0,n+1)
+  {
+    if(pos[i]==0) continue;
 
-  vector<int> v(n+1),pref(n+1,0);
-  int l=-1,r=-1;
-  rep(i,1,n+1)
-  {
-    cin>>v[i];
-    pref[i]=pref[i-1]+v[i];
+    while(pos[i])
+    {
+      if(rem.size())
+      {
+        pos[i]--;
+        ans.pb(rem.top());
+        rem.pop();
+        continue;
+      }
+      while(pos[p] or used[p]) p++;
+      used[p]++;
+      ans.pb(p++);
+      pos[i]--;
+    }
+    rem.push(i);
   }
-  if(pref[n]%x!=0) cout<<n<<endl;
-  else
-  {
-    rrep(j,n,1) if(pref[j]%x!=0) break;
-    rep(i,1,n+1)  if(pref[i]%x!=0) break;
-    if(i==n+1) cout<<"-1\n";
-    else cout<<max(j,n-i)<<endl;
-  }
+  for(auto it:ans) cout<<it<<" ";
 }
 
 int main()
@@ -55,7 +68,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  // cin>>t;
   while(t--)
     solve();
 } 

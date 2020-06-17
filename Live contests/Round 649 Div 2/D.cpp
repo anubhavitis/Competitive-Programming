@@ -21,27 +21,44 @@
 using namespace std;
 
 int i,j,n,m;
- 
+vector<int> v[100001];
+int fat[100001]={},depth[100001]={};
+std::vector<int> vans;
+int ans=INT_MAX;
+void dfs(int node,int par)
+{
+  depth[node]=depth[par]+1;
+  fat[node]=par;
+  deb(node)
+  for(auto child:v[node]){
+    if(child==par) continue;
+    else if(!depth[child] or depth[child]>depth[node]) dfs(child,node);
+    else if(ans>(depth[node]-depth[child]+1)){
+      ans=depth[node]-depth[child]+1;
+      int curr=node;
+      while(1){
+        vans.pb(curr);
+        curr=fat[curr];
+        if(child==curr) break;
+      }
+    }
+  }
+}
+
 void solve()
 {
-  int x;
-  cin>>n>>x;
-
-  vector<int> v(n+1),pref(n+1,0);
-  int l=-1,r=-1;
-  rep(i,1,n+1)
+  int k;
+  cin>>n>>m>>k;
+  deb(n)
+  rep(i,0,m)
   {
-    cin>>v[i];
-    pref[i]=pref[i-1]+v[i];
+    int a,b;
+    cin>>a>>b;
+    v[a].pb(b);
+    v[b].pb(a);
   }
-  if(pref[n]%x!=0) cout<<n<<endl;
-  else
-  {
-    rrep(j,n,1) if(pref[j]%x!=0) break;
-    rep(i,1,n+1)  if(pref[i]%x!=0) break;
-    if(i==n+1) cout<<"-1\n";
-    else cout<<max(j,n-i)<<endl;
-  }
+  dfs(1,0);
+  cout<<ans<<endl;
 }
 
 int main()
@@ -55,7 +72,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  // cin>>t;
   while(t--)
     solve();
 } 

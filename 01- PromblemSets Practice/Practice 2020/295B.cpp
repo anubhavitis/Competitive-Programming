@@ -21,27 +21,33 @@
 using namespace std;
 
 int i,j,n,m;
- 
+
 void solve()
 {
-  int x;
-  cin>>n>>x;
+  cin>>n;
+  int gr[n][n],x[n];
+  rep(i,0,n) rep(j,0,n) cin>>gr[i][j];
+  rep(i,0,n) cin>>x[i];
 
-  vector<int> v(n+1),pref(n+1,0);
-  int l=-1,r=-1;
-  rep(i,1,n+1)
+  ll dp[n][n];
+  rep(i,0,n)  rep(j,0,n)
+    dp[i][j]=gr[x[n-i-1]-1][x[n-j-1]-1];
+
+  // rep(i,0,n) { rep(j,0,n) cerr<<dp[i][j]<<" "; cerr<<endl; }
+
+  ll ans[n]={};
+  int k;
+  rep(k,0,n)
   {
-    cin>>v[i];
-    pref[i]=pref[i-1]+v[i];
+    rep(i,0,n)
+      rep(j,0,n)
+        dp[i][j]=min(dp[i][j],dp[i][k]+dp[k][j]);
+    rep(i,0,k+1)
+      rep(j,0,k+1)
+        ans[n-k-1]+=dp[i][j];
   }
-  if(pref[n]%x!=0) cout<<n<<endl;
-  else
-  {
-    rrep(j,n,1) if(pref[j]%x!=0) break;
-    rep(i,1,n+1)  if(pref[i]%x!=0) break;
-    if(i==n+1) cout<<"-1\n";
-    else cout<<max(j,n-i)<<endl;
-  }
+  for(ll i:ans) cout<<i<<"   ";
+    
 }
 
 int main()
@@ -55,7 +61,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  // cin>>t;
   while(t--)
     solve();
 } 

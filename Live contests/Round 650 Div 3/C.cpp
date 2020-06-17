@@ -20,28 +20,50 @@
 #define INF INT_MAX
 using namespace std;
 
-int i,j,n,m;
- 
+ll i,j,n,k;
+string s;
+bool check(int x)
+{ 
+  int l=s.size();
+  int arr[l]={};
+  if(s[l-1]=='0') arr[l-1]=k+1;
+  rrep(i,l-2,0){
+    if(s[i]=='1') arr[i]=0;
+    else if(arr[i+1]==k+1) arr[i]=k+1;
+    else arr[i]=arr[i+1]+1;
+  }
+  int pre=k+1;
+  rep(i,0,l)
+  {
+    if(s[i]=='1') { pre=1; continue; }
+
+    if(arr[i]>k and pre>k){
+      x--;
+      pre=0;
+    }
+    pre++;
+  }
+  if(x>0) return false;
+  else return true;
+}
 void solve()
 {
-  int x;
-  cin>>n>>x;
+  cin>>n>>k>>s;
 
-  vector<int> v(n+1),pref(n+1,0);
-  int l=-1,r=-1;
-  rep(i,1,n+1)
-  {
-    cin>>v[i];
-    pref[i]=pref[i-1]+v[i];
+  int l=1,r=0;
+  for(auto it:s) if(it=='0') r++;
+  int ans=0,mid=0;
+
+  while(l<=r){
+    mid=(l+r)/2;
+    if(check(mid)){
+      ans=mid;
+      l=mid+1;
+    }
+    else r=mid-1;
   }
-  if(pref[n]%x!=0) cout<<n<<endl;
-  else
-  {
-    rrep(j,n,1) if(pref[j]%x!=0) break;
-    rep(i,1,n+1)  if(pref[i]%x!=0) break;
-    if(i==n+1) cout<<"-1\n";
-    else cout<<max(j,n-i)<<endl;
-  }
+
+  cout<<ans<<endl;
 }
 
 int main()

@@ -20,28 +20,21 @@
 #define INF INT_MAX
 using namespace std;
 
-int i,j,n,m;
- 
+ll i,j,n,m;
+
 void solve()
 {
-  int x;
-  cin>>n>>x;
+  string s;
+  cin>>s;
 
-  vector<int> v(n+1),pref(n+1,0);
-  int l=-1,r=-1;
-  rep(i,1,n+1)
-  {
-    cin>>v[i];
-    pref[i]=pref[i-1]+v[i];
-  }
-  if(pref[n]%x!=0) cout<<n<<endl;
-  else
-  {
-    rrep(j,n,1) if(pref[j]%x!=0) break;
-    rep(i,1,n+1)  if(pref[i]%x!=0) break;
-    if(i==n+1) cout<<"-1\n";
-    else cout<<max(j,n-i)<<endl;
-  }
+  int l=s.size();
+  if(l<=2) { cout<<s<<endl; return; }
+
+  string ans="";
+  ans+=s[0];
+  for(i=2;i<s.size()-1;i+=2) ans+=s[i];
+  ans+=s[l-1];
+  cout<<ans<<endl;
 }
 
 int main()
