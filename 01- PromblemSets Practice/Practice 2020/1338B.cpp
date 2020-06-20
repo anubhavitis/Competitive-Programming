@@ -20,35 +20,49 @@
 #define INF INT_MAX
 using namespace std;
 
-ll i,j,n,m;
+ll i,j,n,m,ma=0;
+vector<int> adj[100001],vis(100001,0),depth(100001,0);
+set<int> nodal;
 
+void dfs(int node, int d)
+{
+  depth[node]=d;
+  vis[node]=1;
+  for(auto child:adj[node]) if(!vis[child]) dfs(child,d+1);
+}
+void dfsnodal(int node){
+  vis[node]=1;
+  for(auto child: adj[node])
+    if(!vis[child]){
+      if(adj[child].size()==1) nodal.insert(node);
+      else dfsnodal(child);
+    }
+}
 void solve()
 {
-  string s;
-  cin>>s>>m;
-  int b[m],a[26]={};
-  for(char ch:s) a[(ch-'a')]++;
-  rep(i,0,m) cin>>b[i];
-  string ans;
-  rep(i,0,m) ans+='+';
-  // deb(ans)
-  rrep(i,25,0){
-    if(!a[i]) continue;
-
-    vector<int> v;
-    rep(j,0,m) if(b[j]==0) v.pb(j);
-    if(!v.size()) break;
-    while( ( v.size()>a[i] or !a[i] ) and i>=0) i--;
-    for(int p:v){
-      ans[p]=char('a'+i);
-      int cnt=0,te;
-      rrep(te,p,0) b[te]-=cnt++;
-      cnt=0;
-      rep(te,p,m) b[te]-=cnt++;
-      b[p]=-1;
-    }
+  cin>>n;
+  rep(i,0,n-1){
+    int a,b;
+    cin>>a>>b;
+    adj[a].pb(b);
+    adj[b].pb(a);
   }
-  cout<<ans<<endl;
+
+  std::vector<int> leaf;
+  int root;
+  rep(i,1,n+1)
+   if(adj[i].size()==1) leaf.pb(i);
+   else root=i;
+  dfs(leaf[0],0);
+  rep(i,1,n+1) vis[i]=0;
+  dfsnodal(root);
+
+  bool even=true;
+  for(auto item:leaf) if(depth[item]%2) even=false;
+
+  if(even)  cout<<"1 "<<n-leaf.size()+nodal.size()-1<<endl;
+  else cout<<"3 "<<n-leaf.size()+nodal.size()-1<<endl;
+
 }
 
 int main()
@@ -62,7 +76,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  // cin>>t;
   while(t--)
     solve();
 } 

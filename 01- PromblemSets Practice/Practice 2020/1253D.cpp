@@ -20,35 +20,32 @@
 #define INF INT_MAX
 using namespace std;
 
-ll i,j,n,m;
+ll i,j,n,m,ma=0;
+vector<int> v[200001],vis(200001,0);
+
+void dfs(int node){
+  vis[node]=1;
+  ma=max(node,(int)ma);
+  for(auto it: v[node]) if(!vis[it]) dfs(it);
+}
 
 void solve()
 {
-  string s;
-  cin>>s>>m;
-  int b[m],a[26]={};
-  for(char ch:s) a[(ch-'a')]++;
-  rep(i,0,m) cin>>b[i];
-  string ans;
-  rep(i,0,m) ans+='+';
-  // deb(ans)
-  rrep(i,25,0){
-    if(!a[i]) continue;
+  cin>>n>>m;
 
-    vector<int> v;
-    rep(j,0,m) if(b[j]==0) v.pb(j);
-    if(!v.size()) break;
-    while( ( v.size()>a[i] or !a[i] ) and i>=0) i--;
-    for(int p:v){
-      ans[p]=char('a'+i);
-      int cnt=0,te;
-      rrep(te,p,0) b[te]-=cnt++;
-      cnt=0;
-      rep(te,p,m) b[te]-=cnt++;
-      b[p]=-1;
-    }
+  rep(i,0,m){
+    int a,b;
+    cin>>a>>b;
+    v[a].pb(b);
+    v[b].pb(a);
   }
-  cout<<ans<<endl;
+  int ans=0;
+  rep(i,1,n+1)
+    if(!vis[i]){
+      if(i<ma) ans++;
+      dfs(i);
+    }
+  cout<<ans;
 }
 
 int main()
@@ -62,7 +59,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  // cin>>t;
   while(t--)
     solve();
 } 

@@ -20,35 +20,30 @@
 #define INF INT_MAX
 using namespace std;
 
-ll i,j,n,m;
+ll i,n,k;
+string s;
+int b[1005]={};
 
-void solve()
-{
-  string s;
-  cin>>s>>m;
-  int b[m],a[26]={};
-  for(char ch:s) a[(ch-'a')]++;
-  rep(i,0,m) cin>>b[i];
-  string ans;
-  rep(i,0,m) ans+='+';
-  // deb(ans)
-  rrep(i,25,0){
-    if(!a[i]) continue;
+bool check(int cur,int w1,int w2){
 
-    vector<int> v;
-    rep(j,0,m) if(b[j]==0) v.pb(j);
-    if(!v.size()) break;
-    while( ( v.size()>a[i] or !a[i] ) and i>=0) i--;
-    for(int p:v){
-      ans[p]=char('a'+i);
-      int cnt=0,te;
-      rrep(te,p,0) b[te]-=cnt++;
-      cnt=0;
-      rep(te,p,m) b[te]-=cnt++;
-      b[p]=-1;
+  if(cur>k) return true;
+  int j;
+  rep(j,1,11)
+    if(b[cur-1]!=j and s[j-1]=='1' and (w1+j)>w2 ){
+      b[cur]=j;
+      if(check(cur+1,w2,w1+j)) return true;
     }
+  return false;
+
+} 
+
+void solve(){
+  cin>>s>>k;
+  if(!check(1,0,0)) cout<<"NO\n";
+  else{
+    cout<<"YES\n";
+    rep(i,1,k+1) cout<<b[i]<<" ";
   }
-  cout<<ans<<endl;
 }
 
 int main()
@@ -62,7 +57,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  // cin>>t;
   while(t--)
     solve();
 } 

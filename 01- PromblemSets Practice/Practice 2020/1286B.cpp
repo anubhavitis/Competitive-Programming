@@ -20,35 +20,42 @@
 #define INF INT_MAX
 using namespace std;
 
-ll i,j,n,m;
+ll i,j,n,m,ma=0,f=1;
+vector<int> adj[2001],vis(2001,0),cnt(2001,0);
+vector<int> used(2001,0), c(2001), a(2001);
+
+void dfs(int node, int dad){
+  int temp=c[node];
+  cnt[node]=1;
+  int ii;
+  rep(ii,1,n+1)
+    if(!used[ii] and !temp) { a[node]=ii; used[ii]=1; break; }
+    else if(!used[ii]) temp--;
+  for(auto child: adj[node]){
+    dfs(child,node);
+  }
+  cnt[dad]+=cnt[node];
+  if(cnt[node]-1<c[node]) f=0;
+}
 
 void solve()
 {
-  string s;
-  cin>>s>>m;
-  int b[m],a[26]={};
-  for(char ch:s) a[(ch-'a')]++;
-  rep(i,0,m) cin>>b[i];
-  string ans;
-  rep(i,0,m) ans+='+';
-  // deb(ans)
-  rrep(i,25,0){
-    if(!a[i]) continue;
-
-    vector<int> v;
-    rep(j,0,m) if(b[j]==0) v.pb(j);
-    if(!v.size()) break;
-    while( ( v.size()>a[i] or !a[i] ) and i>=0) i--;
-    for(int p:v){
-      ans[p]=char('a'+i);
-      int cnt=0,te;
-      rrep(te,p,0) b[te]-=cnt++;
-      cnt=0;
-      rep(te,p,m) b[te]-=cnt++;
-      b[p]=-1;
-    }
+  cin>>n;
+  int root;
+  rep(i,0,n){
+    int u;
+    cin>>u>>c[i+1];
+    adj[u].pb(i+1);
+    if(u==0) root=i+1;
   }
-  cout<<ans<<endl;
+
+  dfs(root,0);
+
+  if(!f) cout<<"NO\n";
+  else{
+    cout<<"YES\n";
+    rep(i,1,n+1) cout<<a[i]<<" ";
+  }
 }
 
 int main()
@@ -62,7 +69,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  // cin>>t;
   while(t--)
     solve();
 } 
