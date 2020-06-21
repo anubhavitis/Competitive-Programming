@@ -24,9 +24,19 @@ ll i,j,n,k;
 
 void solve(){
   cin>>n;
-  int ans=0;
-  rep(i,1,n) if(2*i<=n) ans=i;
-  cout<<ans<<endl;
+  if(n==1) { cout<<"FastestFinger\n"; return; }
+  else if(n==2 or n%2){ cout<<"Ashishgup\n"; return; }
+
+  ll bd=1,cd=0;
+  for(i=2;i*i<=n;++i)
+    if(n%i==0){
+      if(i%2) cd++,bd=max(bd,i);
+      if((n/i)%2) cd++,bd=max(bd,n/i);
+    }
+  
+  if(n/bd==2 and cd==1) cout<<"FastestFinger\n";
+  else if(bd==1) cout<<"FastestFinger\n";
+  else cout<<"Ashishgup\n";
 }
 
 int main()

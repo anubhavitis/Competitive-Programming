@@ -23,9 +23,28 @@ using namespace std;
 ll i,j,n,k;
 
 void solve(){
-  cin>>n;
-  int ans=0;
-  rep(i,1,n) if(2*i<=n) ans=i;
+  cin>>n>>k;
+  std::vector<int> v(n);
+  rep(i,0,n) cin>>v[i];
+  int l=1,r=1000000000,mid,ans=INF;
+  while(l<=r){
+    mid=(l+r)/2;
+    int len1=0;
+    rep(i,0,n){
+      if(len1%2 and v[i]<=mid) len1++;
+      else if(len1%2==0) len1++;
+    }
+    int len2=1;
+    rep(i,0,n){
+      if(len2%2 and v[i]<=mid) len2++;
+      else if(len2%2==0) len2++;
+    }
+    len2--;
+    int len=max(len1,len2);
+    // cerr<<l<<" "<<r<<" "<<len<<endl;
+    if(len>=k) ans=min(ans,mid),r=mid-1;
+    else l=mid+1;
+  }
   cout<<ans<<endl;
 }
 
@@ -40,7 +59,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  // cin>>t;
   while(t--)
     solve();
 } 

@@ -24,9 +24,24 @@ ll i,j,n,k;
 
 void solve(){
   cin>>n;
-  int ans=0;
-  rep(i,1,n) if(2*i<=n) ans=i;
-  cout<<ans<<endl;
+  int v[2*n];
+  std::vector<int> odd,even;
+  rep(i,0,2*n){
+    cin>>v[i];
+    if(v[i]%2) odd.pb(i+1);
+    else even.pb(i+1);
+  }
+  int cnt=0;
+  rep(i,0,even.size()){
+    if((i+1)==even.size() or cnt==(n-1)) break;
+    cout<<even[i]<<" "<<even[++i]<<endl;
+    cnt++;
+  }
+  rep(i,0,odd.size()){
+    if((i+1)==odd.size() or cnt==(n-1)) break;
+    cout<<odd[i]<<" "<<odd[++i]<<endl;
+    cnt++;
+  }
 }
 
 int main()
