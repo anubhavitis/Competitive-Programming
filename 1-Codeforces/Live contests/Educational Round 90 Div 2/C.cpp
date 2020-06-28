@@ -23,16 +23,19 @@ using namespace std;
 int i,j,n,k;
 
 void solve(){
-  ll a,b,c;
-  cin>>a>>b>>c;
-  if(b==1 and c==a) { cout<<"-1 -1\n"; return; }
+  string s;
+  cin>>s;
+  ll ans=s.size();
+  vector<int> v;
+  int cnt=0;
+  rep(i,0,s.size()) {
+    if(s[i]=='-') cnt--;
+    else cnt++;
 
-  if(c<a) { cout<<"-1 1\n"; return; }
-  if(c==a) { cout<<"-1 2\n"; return; }
-  if(a*b<=c) { cout<<"1 -1\n"; return; }
+    if(cnt<0) cnt=0,ans+=i+1;
+  }
 
-  cout<<"1 "<<b<<endl;
-
+  cout<<ans<<endl;  
 }
 
 int main()

@@ -21,18 +21,36 @@
 using namespace std;
 
 int i,j,n,k;
+ll maxsu(vector<int> a, int size) 
+{ 
+  ll max_yet = INT_MIN, max_now = 0; 
 
+  for (int i = 0; i < size; i++) 
+  { 
+    max_now = max_now + a[i]; 
+    if (max_yet < max_now) 
+        max_yet = max_now; 
+
+    if (max_now < 0) 
+        max_now = 0; 
+  } 
+  return max_yet; 
+} 
 void solve(){
-  ll a,b,c;
-  cin>>a>>b>>c;
-  if(b==1 and c==a) { cout<<"-1 -1\n"; return; }
+  cin>>n;
+  ll sum=0;
+  vector<int> v(n),l,r;
+  rep(i,0,n) {
+    cin>>v[i];
+    if(i%2==0) sum+=v[i];
+  }
+  for(i=1;i<n;i+=2) l.pb(v[i]-v[i-1]);
+  for(i=1;i<n;i+=2) if((i+1)!=n) r.pb(v[i]-v[i+1]);
 
-  if(c<a) { cout<<"-1 1\n"; return; }
-  if(c==a) { cout<<"-1 2\n"; return; }
-  if(a*b<=c) { cout<<"1 -1\n"; return; }
+  ll maxl=maxsu(l,l.size());
+  ll maxr=maxsu(r,r.size());
 
-  cout<<"1 "<<b<<endl;
-
+  cout<<max(sum+max(maxr,maxl),sum)<<endl;
 }
 
 int main()

@@ -23,16 +23,7 @@ using namespace std;
 int i,j,n,k;
 
 void solve(){
-  ll a,b,c;
-  cin>>a>>b>>c;
-  if(b==1 and c==a) { cout<<"-1 -1\n"; return; }
-
-  if(c<a) { cout<<"-1 1\n"; return; }
-  if(c==a) { cout<<"-1 2\n"; return; }
-  if(a*b<=c) { cout<<"1 -1\n"; return; }
-
-  cout<<"1 "<<b<<endl;
-
+  
 }
 
 int main()
@@ -46,7 +37,7 @@ int main()
 
   IOS()
   ll t=1;
-  cin>>t;
+  // cin>>t;
   while(t--)
     solve();
 } 

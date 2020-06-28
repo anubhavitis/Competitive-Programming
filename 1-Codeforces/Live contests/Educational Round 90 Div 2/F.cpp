@@ -23,16 +23,22 @@ using namespace std;
 int i,j,n,k;
 
 void solve(){
-  ll a,b,c;
-  cin>>a>>b>>c;
-  if(b==1 and c==a) { cout<<"-1 -1\n"; return; }
+  cin>>n;
+  ll sum1=0,sum2=0;
+  vector<ll> node(n),path(n);
+  rep(i,0,n) {
+    cin>>node[i];
+    sum1+=node[i];
+  }
+  rep(i,0,n) {
+    cin>>path[i];
+    sum2+=path[i];
+  }
+  if(sum2<sum1 or node[0]>(path[0]+path[n-1]) ) { cout<<"NO\n"; return; }
+  rep(i,1,n)
+    if(node[i]>(path[i]+path[i-1])) { cout<<"NO\n"; return; }
 
-  if(c<a) { cout<<"-1 1\n"; return; }
-  if(c==a) { cout<<"-1 2\n"; return; }
-  if(a*b<=c) { cout<<"1 -1\n"; return; }
-
-  cout<<"1 "<<b<<endl;
-
+  cout<<"YES\n";
 }
 
 int main()
