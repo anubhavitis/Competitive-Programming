@@ -1,4 +1,4 @@
-//Mark XXV
+//Mark XXVII
 #include<bits/stdc++.h>
 
 #define big(x) greater<x>()
@@ -8,30 +8,31 @@
 #define lb lower_bound
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
+#define PI 3.14159265
 #define deb(x) cerr<<#x<<" : "<<x<<"\n";
+#define deball(x) for(auto iit:x) cerr<<iit<<" ";cerr<<"\n";
 #define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
 #define rep(i,b,c) for(i=b; i<c; ++i)
+#define rrep(i,b,c) for(i=b; i>=c; --i)
 
 #define M 998244353
 #define LINF 1e18
 #define INF INT_MAX
-int i,j;
 using namespace std;
 
-void solve(int t)
-{
-  int n;
-  ll d;
-  cin>>n>>d;
-  ll a[n];
-  rep(i,0,n) cin>>a[i];
-  ll mi=d;
-  rep(i,1,n)
-    mi=min(mi,d-(d%a[i]));
-  mi=mi-(mi%a[0]);
-  // if(a[0]>mi) mi=a[0];
-  cout<<"Case #"<<t<<": "<<mi<<endl;
-  
+ll i,j,n,k;
+
+ 
+void solve(){
+  cin>>n;
+  int a[n+1]={};
+  rep(i,1,n+1){
+    cin>>j;
+    if(j!=i) a[i]=1;
+  }
+  int ans=0;
+  rep(i,1,n+1) if(a[i]==1 and a[i-1]==0) ans++;
+  cout<<min(ans,2)<<endl;
 }
 
 int main()
@@ -46,6 +47,6 @@ int main()
   IOS()
   ll t=1;
   cin>>t;
-  rep(j,1,t+1)
-    solve(j);
+  while(t--)
+    solve();
 } 

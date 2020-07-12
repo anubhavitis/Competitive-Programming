@@ -1,4 +1,4 @@
-//Mark XXV
+//Mark XXVII
 #include<bits/stdc++.h>
 
 #define big(x) greater<x>()
@@ -8,28 +8,43 @@
 #define lb lower_bound
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
+#define PI 3.14159265
 #define deb(x) cerr<<#x<<" : "<<x<<"\n";
+#define deball(x) for(auto iit:x) cerr<<iit<<" ";cerr<<"\n";
 #define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
 #define rep(i,b,c) for(i=b; i<c; ++i)
+#define rrep(i,b,c) for(i=b; i>=c; --i)
 
 #define M 998244353
 #define LINF 1e18
 #define INF INT_MAX
-int i,j;
 using namespace std;
 
-void solve(int t)
-{
-  int n;
+ll i,j,n,k;
+
+vector<int> div(ll x){
+  std::vector<int> v;
+  v.pb(1);
+  for(j=2;j*j<=x;++j){
+    if(x%j==0){
+      v.pb(j);
+      if(x/j!=j) v.pb(x/j);
+    }
+  }
+  return v;
+
+}
+ 
+void solve(){
   cin>>n;
-  int a[n];
-  rep(i,0,n) cin>>a[i];
+  vector<int> v=div(n);
 
-  int cnt=0;
-  rep(i,1,n-1) { if(a[i]>a[i-1] and a[i]>a[i+1]) cnt++; }
+  int mi=n-1,ans=1;
+  for(auto x:v) if(mi>((n/x)-1))
+    mi=((n/x)-1),ans=x;
 
-  cout<<"Case #"<<t<<": "<<cnt<<endl;
-  
+  cout<<ans<<" "<<mi*ans<<endl;
+
 }
 
 int main()
@@ -44,6 +59,6 @@ int main()
   IOS()
   ll t=1;
   cin>>t;
-  rep(j,1,t+1)
-    solve(j);
+  while(t--)
+    solve();
 } 
