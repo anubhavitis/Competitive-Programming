@@ -20,35 +20,25 @@
 #define INF INT_MAX
 using namespace std;
 
-int i,j,n,m;
-vector<int> adj[201],col(201,0),vis(201,0);
-
-bool dfs(int node, int c){
-  vis[node]=1;
-  col[node]=!c;
-  for(auto child: adj[node]){
-    if(!vis[child]){
-      if(!dfs(child, !c)) return false;
-    }
-    else if(col[child]!=c) return false;
-  }
-  return true;
-}
+int i,n,m;
 
 void solve(){
-  string s;
-  cin>>n>>s;
-  rep(i,0,n-1)
-    rep(j,i+1,n)
-      if(s[i]>s[j]){
-        adj[i+1].pb(j+1);
-        adj[j+1].pb(i+1);
-      }
-  rep(i,1,n+1) 
-    if(!vis[i]) 
-       if(dfs(i,1)) { cout<<"NO\n"; return; }
-  cout<<"YES\n";
-  rep(i,1,n+1) cout<<col[i];
+  cin>>n>>m;
+  int j;
+  int arr[1001]={};
+  rep(i,0,n){
+    cin>>j;
+    arr[j]++;
+  }
+  int ans=-1;
+  rep(i,0,m){
+    cin>>j;
+    if(arr[j]!=0){
+      ans=j;
+    }
+  }
+  if(ans==-1) cout<<"NO\n";
+  else cout<<"YES\n1 "<<ans<<endl;
 }
 
 int main()
@@ -62,7 +52,7 @@ int main()
 
   IOS()
   ll t=1;
-  // cin>>t;
+  cin>>t;
   while(t--)
     solve();
 } 

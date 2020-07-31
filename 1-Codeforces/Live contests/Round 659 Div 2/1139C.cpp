@@ -21,34 +21,47 @@
 using namespace std;
 
 int i,j,n,m;
-vector<int> adj[201],col(201,0),vis(201,0);
+vector<int> adj[20];
+vector<int> vis;
 
-bool dfs(int node, int c){
+void dfs(int node){
   vis[node]=1;
-  col[node]=!c;
   for(auto child: adj[node]){
-    if(!vis[child]){
-      if(!dfs(child, !c)) return false;
-    }
-    else if(col[child]!=c) return false;
+    if(!vis[child]) dfs(child);
   }
-  return true;
 }
 
-void solve(){
-  string s;
-  cin>>n>>s;
-  rep(i,0,n-1)
-    rep(j,i+1,n)
-      if(s[i]>s[j]){
-        adj[i+1].pb(j+1);
-        adj[j+1].pb(i+1);
+void solve(void) {
+    int n;
+    cin >> n;
+    vector<char> v(26,'+');
+    string a, b;
+    cin >> a >> b;
+    int ans = 0;
+    for(auto it:adj) it.clear();
+    vis.assign(20,0);
+    set<char> s;
+    for (int i = 0; i < n; i++) {
+      if (a[i] > b[i]) {
+          ans = -1;
+          break;
       }
-  rep(i,1,n+1) 
-    if(!vis[i]) 
-       if(dfs(i,1)) { cout<<"NO\n"; return; }
-  cout<<"YES\n";
-  rep(i,1,n+1) cout<<col[i];
+      if(a[i]==b[i]) continue; 
+      s.insert(a[i]);
+      s.insert(b[i]);
+      adj[a[i]-'a'].pb(b[i]-'a');
+      adj[b[i]-'a'].pb(a[i]-'a');
+    }
+    int k=0;
+    for(auto it:s){
+      if(!vis[it-'a']){
+        k++;
+        dfs((it-'a'));
+        cerr<<endl;
+      }
+    }
+    if(ans==-1) cout<<ans<<endl;
+    else  cout << s.size()-k << '\n';
 }
 
 int main()
@@ -62,7 +75,7 @@ int main()
 
   IOS()
   ll t=1;
-  // cin>>t;
+  cin>>t;
   while(t--)
     solve();
 } 

@@ -21,34 +21,20 @@
 using namespace std;
 
 int i,j,n,m;
-vector<int> adj[201],col(201,0),vis(201,0);
-
-bool dfs(int node, int c){
-  vis[node]=1;
-  col[node]=!c;
-  for(auto child: adj[node]){
-    if(!vis[child]){
-      if(!dfs(child, !c)) return false;
-    }
-    else if(col[child]!=c) return false;
-  }
-  return true;
-}
 
 void solve(){
+  cin>>n;
   string s;
-  cin>>n>>s;
-  rep(i,0,n-1)
-    rep(j,i+1,n)
-      if(s[i]>s[j]){
-        adj[i+1].pb(j+1);
-        adj[j+1].pb(i+1);
-      }
-  rep(i,1,n+1) 
-    if(!vis[i]) 
-       if(dfs(i,1)) { cout<<"NO\n"; return; }
-  cout<<"YES\n";
-  rep(i,1,n+1) cout<<col[i];
+  rep(i,0,200) s+='a';
+  s+='\n';
+  vector<int> v(n);
+  rep(i,0,n) cin>>v[i];
+  cout<<s;
+  rep(i,0,n){
+    if(s[v[i]]=='a') s[v[i]]='b';
+    else s[v[i]]='a';
+    cout<<s;
+  }
 }
 
 int main()
@@ -62,7 +48,7 @@ int main()
 
   IOS()
   ll t=1;
-  // cin>>t;
+  cin>>t;
   while(t--)
     solve();
 } 

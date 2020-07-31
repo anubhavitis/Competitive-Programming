@@ -20,35 +20,45 @@
 #define INF INT_MAX
 using namespace std;
 
-int i,j,n,m;
-vector<int> adj[201],col(201,0),vis(201,0);
+int i,n,j,m;
 
-bool dfs(int node, int c){
-  vis[node]=1;
-  col[node]=!c;
-  for(auto child: adj[node]){
-    if(!vis[child]){
-      if(!dfs(child, !c)) return false;
-    }
-    else if(col[child]!=c) return false;
-  }
-  return true;
+char rev(char x){
+  if(x=='1') return '0';
+  else return '1';
 }
 
 void solve(){
-  string s;
-  cin>>n>>s;
-  rep(i,0,n-1)
-    rep(j,i+1,n)
-      if(s[i]>s[j]){
-        adj[i+1].pb(j+1);
-        adj[j+1].pb(i+1);
-      }
-  rep(i,1,n+1) 
-    if(!vis[i]) 
-       if(dfs(i,1)) { cout<<"NO\n"; return; }
-  cout<<"YES\n";
-  rep(i,1,n+1) cout<<col[i];
+  string a,b;
+  cin>>n>>a>>b;
+
+  int r=n-1;
+  while(a[r]==b[r] and r>=0) r--;
+  if(r<0) { cout<<"0\n"; return; }
+  int k=0;
+  vector<int> v;
+  int f=0;
+  while(r>=0){
+    // cerr<<r<<" "<<k<<endl;
+    if(a[0]==b[r]){
+      k++;
+      v.pb(1);
+      a[0]=rev(a[0]);
+    }
+    k++;
+    v.pb(r+1);
+
+    // a=revs(a,r);
+    int x=0;
+    if(!f) { f=1; while(rev(a[x])==b[r-x] and x<=r) x++; }
+    else { while(a[x]==b[r-x] and x<=r) x++; }
+    r-=x;
+    a=a.substr(x,r-x+1);
+    reverse(all(a));
+    while(a[r]==b[r] and r>=0) r--;
+  }
+  cout<<k<<" ";
+  for(auto it:v) cout<<it<<" ";
+    cout<<endl;
 }
 
 int main()
@@ -62,7 +72,7 @@ int main()
 
   IOS()
   ll t=1;
-  // cin>>t;
+  cin>>t;
   while(t--)
     solve();
 } 

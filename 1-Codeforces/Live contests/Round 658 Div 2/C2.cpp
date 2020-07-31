@@ -10,7 +10,7 @@
 #define all(x) x.begin(), x.end()
 #define PI 3.14159265
 #define deb(x) cerr<<#x<<" : "<<x<<"\n";
-#define deball(x) for(auto iit:x) cerr<<iit<<" ";cerr<<"\n";
+#define deball(x) cerr<<#x<<": "; for(auto iit:x) cerr<<iit<<" ";cerr<<"\n";
 #define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
 #define rep(i,b,c) for(i=b; i<c; ++i)
 #define rrep(i,b,c) for(i=b; i>=c; --i)
@@ -20,35 +20,39 @@
 #define INF INT_MAX
 using namespace std;
 
-int i,j,n,m;
-vector<int> adj[201],col(201,0),vis(201,0);
-
-bool dfs(int node, int c){
-  vis[node]=1;
-  col[node]=!c;
-  for(auto child: adj[node]){
-    if(!vis[child]){
-      if(!dfs(child, !c)) return false;
-    }
-    else if(col[child]!=c) return false;
-  }
-  return true;
-}
+int i,n,j,m;
 
 void solve(){
-  string s;
-  cin>>n>>s;
+  string a,b;
+  cin>>n>>a>>b;
+
+  int k=0;
+  vector<int> v1,v2;
   rep(i,0,n-1)
-    rep(j,i+1,n)
-      if(s[i]>s[j]){
-        adj[i+1].pb(j+1);
-        adj[j+1].pb(i+1);
-      }
-  rep(i,1,n+1) 
-    if(!vis[i]) 
-       if(dfs(i,1)) { cout<<"NO\n"; return; }
-  cout<<"YES\n";
-  rep(i,1,n+1) cout<<col[i];
+    if(a[i]!=a[i+1]){
+      k++;
+      v1.pb(i+1);
+    }
+  if(a[n-1]=='1'){
+    k++;
+    v1.pb(n);
+  }
+  if(b[n-1]=='1'){
+    k++;
+    v1.pb(n);
+  }
+
+  rep(i,0,n-1)
+    if(b[i]!=b[i+1]){
+      k++;
+      v2.pb(i+1);
+    }
+  // deball(v1)
+  // deball(v2)
+  rrep(i,v2.size()-1,0) v1.pb(v2[i]);
+  cout<<k<<" ";
+  for(auto it:v1) cout<<it<<" ";
+  cout<<endl;
 }
 
 int main()
@@ -62,7 +66,7 @@ int main()
 
   IOS()
   ll t=1;
-  // cin>>t;
+  cin>>t;
   while(t--)
     solve();
 } 

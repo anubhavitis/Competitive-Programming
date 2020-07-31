@@ -21,34 +21,35 @@
 using namespace std;
 
 int i,j,n,m;
-vector<int> adj[201],col(201,0),vis(201,0);
-
-bool dfs(int node, int c){
-  vis[node]=1;
-  col[node]=!c;
-  for(auto child: adj[node]){
-    if(!vis[child]){
-      if(!dfs(child, !c)) return false;
-    }
-    else if(col[child]!=c) return false;
-  }
-  return true;
-}
 
 void solve(){
-  string s;
-  cin>>n>>s;
-  rep(i,0,n-1)
-    rep(j,i+1,n)
-      if(s[i]>s[j]){
-        adj[i+1].pb(j+1);
-        adj[j+1].pb(i+1);
-      }
-  rep(i,1,n+1) 
-    if(!vis[i]) 
-       if(dfs(i,1)) { cout<<"NO\n"; return; }
-  cout<<"YES\n";
-  rep(i,1,n+1) cout<<col[i];
+  cin>>n;
+  vector<int> v(2*n),part;
+  rep(i,0,2*n) cin>>v[i];
+  int size=1,key=v[0];
+  rep(i,1,2*n){
+    if(v[i]<key) size++;
+    else{
+      part.pb(size);
+      key=v[i];
+      size=1;
+    }
+  }
+  part.pb(size);
+
+  int l=part.size();
+  bool dp[n+1][l+1];
+  rep(i,0,n+1) dp[i][0]=false;
+  rep(i,0,l+1) dp[0][i]=true;
+
+  rep(i,1,n+1)
+    rep(j,1,l+1){
+      // 2,3
+      dp[i][j]=dp[i][j-1];
+      if(part[j-1]<=i) dp[i][j]|=dp[(i-part[j-1])][j-1];
+    }
+  if(dp[n][l]) cout<<"YES\n";
+  else cout<<"NO\n";
 }
 
 int main()
@@ -62,7 +63,7 @@ int main()
 
   IOS()
   ll t=1;
-  // cin>>t;
+  cin>>t;
   while(t--)
     solve();
 } 
