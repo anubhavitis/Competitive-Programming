@@ -23,24 +23,43 @@ using namespace std;
 int i, j, n, k, z;
 
 void solve(void) {
-
-  cin >> n >> k >> z;
-  vector<ll> v(n + 1), pref(n + 1, 0);;
-  rep(i, 1, n + 1) cin >> v[i], pref[i] = pref[i - 1] + v[i];
-  // deball(pref)
-  ll mp = 0, sum = 0, x = 0;
-  for (i = 0; i <= k; i++)
-  {
-    if (i + 1 < n)
-      mp = max(mp, v[i + 1] + v[i + 2]);
-    sum += v[i + 1];
-    if ((k - i) % 2 == 0 && z >= (k - i) / 2)
-    {
-      x = max(x, sum + mp * (k - i) / 2);
+  string s;
+  cin >> n >> s;
+  queue<int> q1,q0;
+  int cg=1;
+  vector<int> ans;
+  ans.pb(1);
+  if(s[0]=='0') q0.push(1);
+  else q1.push(1);
+  rep(i,1,n){
+    if(s[i]=='0'){
+      if(q1.size()==0){
+        cg++;
+        q0.push(cg);
+        ans.pb(cg);
+      }
+      else{
+        q0.push(q1.front());
+        ans.pb(q1.front());
+        q1.pop();
+      }
     }
-    // cerr << mp << " " << sum << " " << x << endl;
+    else{
+      if(q0.size()==0){
+        cg++;
+        q1.push(cg);
+        ans.pb(cg);
+      }
+      else{
+        q1.push(q0.front());
+        ans.pb(q0.front());
+        q0.pop();
+      }
+    }
   }
-  cout << x << endl;
+  cout<<cg<<endl;
+  for(auto it: ans) cout<<it<<" ";
+  cout<<endl;
 }
 
 int main()

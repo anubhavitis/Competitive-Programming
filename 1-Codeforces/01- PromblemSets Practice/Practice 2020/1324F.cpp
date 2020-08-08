@@ -20,29 +20,48 @@
 #define INF INT_MAX
 using namespace std;
 
-int i, j, n, k, z;
+int i, j, n, m, k;
+vector<vector<int> > adj;
+vector<int> vis, val, dp;
 
-void solve(void) {
-
-  cin >> n >> k >> z;
-  vector<ll> v(n + 1), pref(n + 1, 0);;
-  rep(i, 1, n + 1) cin >> v[i], pref[i] = pref[i - 1] + v[i];
-  // deball(pref)
-  ll mp = 0, sum = 0, x = 0;
-  for (i = 0; i <= k; i++)
-  {
-    if (i + 1 < n)
-      mp = max(mp, v[i + 1] + v[i + 2]);
-    sum += v[i + 1];
-    if ((k - i) % 2 == 0 && z >= (k - i) / 2)
-    {
-      x = max(x, sum + mp * (k - i) / 2);
+void dfs(int node) {
+  vis[node] = 1;
+  int sum = (val[node] == 0) ? -1 : 1;
+  for (auto child : adj[node]) if (!vis[child]) {
+      dfs(child);
+      sum = max(sum, sum + dp[child]);
     }
-    // cerr << mp << " " << sum << " " << x << endl;
-  }
-  cout << x << endl;
+  dp[node] = sum;
 }
 
+void dfs2(int node) {
+  vis[node] = 1;
+  for (auto child : adj[node]) if (!vis[child]) {
+      int marks = dp[node] - max(0, dp[child]);
+      dp[child]=max(dp[child],dp[child]+marks);
+      dfs2(child);
+    }
+}
+void solve(void) {
+  cin >> n;
+  val.assign(n + 1, 0);
+  rep(i, 0, n) cin >> val[i + 1];
+  adj.assign(n + 1, vector<int>());
+  dp.assign(n + 1, 0);
+
+  rep(i, 0, n - 1) {
+    int u, v;
+    cin >> u >> v;
+    adj[u].pb(v);
+    adj[v].pb(u);
+  }
+
+  vis.assign(n + 1, 0);
+  dfs(1);
+  vis.assign(n + 1, 0);
+  dfs2(1);
+  rep(i,1,n+1) cout<<dp[i]<<" ";
+}
 int main()
 {
   //Skipped in presense of online judge.
@@ -54,7 +73,7 @@ int main()
 
   IOS()
   ll t = 1;
-  cin >> t;
+  // cin >> t;
   while (t--)
     solve();
 }

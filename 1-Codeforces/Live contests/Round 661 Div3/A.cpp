@@ -23,24 +23,17 @@ using namespace std;
 int i, j, n, k, z;
 
 void solve(void) {
+  cin>>n;
+  vector<int> v(n);
+  rep(i,0,n) cin>>v[i];
+  sort(all(v));
+  int f=0;
+  rep(i,1,v.size()) if((v[i]-v[i-1])>1) f=1;
 
-  cin >> n >> k >> z;
-  vector<ll> v(n + 1), pref(n + 1, 0);;
-  rep(i, 1, n + 1) cin >> v[i], pref[i] = pref[i - 1] + v[i];
-  // deball(pref)
-  ll mp = 0, sum = 0, x = 0;
-  for (i = 0; i <= k; i++)
-  {
-    if (i + 1 < n)
-      mp = max(mp, v[i + 1] + v[i + 2]);
-    sum += v[i + 1];
-    if ((k - i) % 2 == 0 && z >= (k - i) / 2)
-    {
-      x = max(x, sum + mp * (k - i) / 2);
-    }
-    // cerr << mp << " " << sum << " " << x << endl;
-  }
-  cout << x << endl;
+  if(f) cout<<  "NO\n";
+  else cout<<"YES\n";
+
+
 }
 
 int main()

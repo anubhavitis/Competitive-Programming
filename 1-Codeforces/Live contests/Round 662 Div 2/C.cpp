@@ -20,29 +20,39 @@
 #define INF INT_MAX
 using namespace std;
 
-int i, j, n, k, z;
-
+ll i, j, n, k, z;
 void solve(void) {
-
-  cin >> n >> k >> z;
-  vector<ll> v(n + 1), pref(n + 1, 0);;
-  rep(i, 1, n + 1) cin >> v[i], pref[i] = pref[i - 1] + v[i];
-  // deball(pref)
-  ll mp = 0, sum = 0, x = 0;
-  for (i = 0; i <= k; i++)
-  {
-    if (i + 1 < n)
-      mp = max(mp, v[i + 1] + v[i + 2]);
-    sum += v[i + 1];
-    if ((k - i) % 2 == 0 && z >= (k - i) / 2)
-    {
-      x = max(x, sum + mp * (k - i) / 2);
-    }
-    // cerr << mp << " " << sum << " " << x << endl;
+  cin >> n;
+  vector<int> v(n+1,0);
+  int m=0,key;
+  rep(i,0,n){
+    cin>>j;
+    v[j]++;
+    if(m<v[j]) key=j,m=v[j];
   }
-  cout << x << endl;
-}
 
+  vector<vector<int> > gp(m,vector<int>(1,key));
+
+  int pos=0;
+  rep(i,1,n+1){
+    if(i==key) continue;
+    pos=pos%m;
+    if(v[i]){
+      gp[pos++].pb(i);
+      v[i]--;
+      i--;
+    }
+  }
+  
+  int ans=INT_MAX;
+  for(auto it: gp) {
+    deball(it)
+    ans=min(ans, (int)it.size());
+  }
+
+  cout<<ans-1<<endl;
+  
+}
 int main()
 {
   //Skipped in presense of online judge.
