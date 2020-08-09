@@ -26,23 +26,23 @@ vector<int> vis;
 map< pair<int, int>, ll > w;
 ll tot = 0;
 
-struct comp {
-  bool operator() (const pair<ll,ll>& p1, const pair<ll,ll>& p2) const {
-    if(p1.first*p1.second> p2.first*p2.second) return true;
-    else return false;
-  }
-};
-set< pair<ll, ll> , comp> cnt;
+
+vector< pair<ll, ll> > cnt;
 
 int dfs(int node, int dad) {
   vis[node] = 1;
-  int sum = 0,f=0;
+  int sum = 0, f = 0;
 
   for (auto child : adj[node]) {
-    if (!vis[child]) f=1,sum += dfs(child, node);
+    if (!vis[child]) f = 1, sum += dfs(child, node);
   }
-  if (!f) { cnt.insert(mp(w[mp(node, dad)], 1)); tot += w[mp(node, dad)]; return 1; }
-  cnt.insert(mp(w[mp(node, dad)], sum));
+
+  if (!f) {
+    cnt.pb(mp(w[mp(node, dad)], 1));
+    tot += w[mp(node, dad)];
+    return 1;
+  }
+  cnt.pb(mp(w[mp(node, dad)], sum));
   tot += w[mp(node, dad)] * sum;
   return sum;
 }
@@ -50,7 +50,7 @@ int dfs(int node, int dad) {
 void solve(void) {
 
   ll s;
-  tot=0;
+  tot = 0;
   cnt.clear();
   w.clear();
 
@@ -64,19 +64,31 @@ void solve(void) {
     adj[u].pb(v);
     adj[v].pb(u);
   }
-  int l=dfs(1,0);
+  int l = dfs(1, 0);
   // for(auto it: cnt) cerr<<it.first<<" "<<it.second<<endl;
-  int ans = 0;
-  while (tot > s ) {
-    auto temp=*cnt.begin();
-    tot-=temp.first*temp.second;
-    temp.first/=2;
-    tot+=temp.first*temp.second;
-    cnt.erase(cnt.begin());
-    cnt.insert(temp);
-    ans++;
+
+  set< pair<ll, ll> > diff;
+
+  rep(i, 0, cnt.size()) {
+    ll p = (cnt[i].first - cnt[i].first / 2) * cnt[i].second;
+    diff.insert(mp(p, i));
   }
-  cout<<ans<<endl;
+
+  // cerr<<"----\n";
+  // for(auto it: diff) cerr<<it.first<<" "<<it.second<<endl;
+
+  int ans=0;
+  while (tot > s) {
+    ans++;
+    pair<ll,ll> temp=*--diff.end();
+    diff.erase(--diff.end());
+    i=temp.second;
+    tot-=temp.first;
+    cnt[i].first=cnt[i].first/2;
+    ll p = (cnt[i].first - cnt[i].first / 2) * cnt[i].second;
+    diff.insert(mp(p, i));
+  }
+  cout << ans << endl;
 }
 
 int main()
