@@ -20,31 +20,42 @@
 #define INF INT_MAX
 using namespace std;
 
-ll i, j, n, k, z;
+ll i, j, n, k, m, d;
+
 void solve(void) {
-  cin >> n;
-  vector<int> v(100001, 0);
-  rep(i, 0, n) cin >> j, v[j]++;;
-  int sum2 = 0, sum4 = 0;
-
-  for (auto it : v) sum2 += (it / 2), sum4 += (it / 4);
-
-  cin >> k;
-  while (k--) {
-    char ch;
-    int x;
-    cin >> ch >> x;
-    sum2 -= v[x] / 2;
-    sum4 -= v[x] / 4;
-    if (ch == '+') v[x]++;
-      else v[x]--;
-
-    sum2 += v[x] / 2;
-    sum4 += v[x] / 4;
-
-    if (sum4 and sum2 >= 4) cout << "YES\n";
-    else cout << "NO\n";
+  cin >> n >> d >> m;
+  vector<ll> a(n), g, b;
+  rep(i, 0, n) {
+    cin >> a[i];
+    if (a[i] > m) b.pb(a[i]);
+    else g.pb(a[i]);
   }
+  vector<ll> prefb, prefg;
+
+  ll pref = 0;
+  sort(all(b), big(ll));
+  for (auto it : b) pref += it, prefb.pb(pref);
+  int q=prefb.size();
+
+  pref = 0;
+  sort(all(g), big(ll));
+  for (auto it : g) pref += it, prefg.pb(pref);
+  int p=prefg.size();
+
+  if (!q) { cout << prefg[p - 1]; return; }
+
+  ll ans = 0;
+  rep(i, 1, q + 1) {
+    int days = n - ((i - 1) * (d + 1) + 1);
+    
+    if (days < 0) break;
+    ll sum = prefb[i - 1];
+    
+    if (p and days) sum += prefg[min(days - 1 , p - 1 )];
+    
+    ans = max(ans, sum);
+  }
+  cout << ans << endl;
 
 }
 int main()

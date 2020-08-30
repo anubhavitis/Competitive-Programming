@@ -38,8 +38,8 @@ int find(int node) {
 }
 void solve(void) {
   cin >> n >> m >> k;
-  x.assign(k, 0);
-  rep(i, 0, k) cin >> x[i];
+  x.assign(n + 1, 0);
+  rep(i, 0, k) cin >> j, x[j] = 1;
   vector<Edge> edges;
 
   rep(i, 0, m) {
@@ -52,16 +52,21 @@ void solve(void) {
   iota(all(dad), 0);
   adj.assign(n + 1, vector<int>());
   int cnt = 0, i = 0;
+  int ans = 0;
   while (cnt < (n - 1)) {
-    if (find(edges[i].u) != find(edges[i].v)) {
+    int d1 = find(edges[i].u), d2 = find(edges[i].v);
+    if (d1 != d2) {
       cnt++;
-      dad[find(edges[i].u)] = find(edges[i].v);
+      dad[d1] = d2;
+      x[d2]+=x[d1];
+      if(x[d2]==k){ ans=edges[i].w; break; }
       adj[edges[i].u].pb(edges[i].v);
       adj[edges[i].v].pb(edges[i].u);
     }
     i++;
   }
-  // Minimum Spanning Tree is stored into the adj matrix.
+  rep(i,0,k) cout<<ans<<" ";
+
 }
 int main()
 {

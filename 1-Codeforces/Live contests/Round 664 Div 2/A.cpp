@@ -20,32 +20,45 @@
 #define INF INT_MAX
 using namespace std;
 
-ll i, j, n, k, z;
+ll i, j, n, k, m;
+
 void solve(void) {
-  cin >> n;
-  vector<int> v(100001, 0);
-  rep(i, 0, n) cin >> j, v[j]++;;
-  int sum2 = 0, sum4 = 0;
-
-  for (auto it : v) sum2 += (it / 2), sum4 += (it / 4);
-
-  cin >> k;
-  while (k--) {
-    char ch;
-    int x;
-    cin >> ch >> x;
-    sum2 -= v[x] / 2;
-    sum4 -= v[x] / 4;
-    if (ch == '+') v[x]++;
-      else v[x]--;
-
-    sum2 += v[x] / 2;
-    sum4 += v[x] / 4;
-
-    if (sum4 and sum2 >= 4) cout << "YES\n";
-    else cout << "NO\n";
+  int a, b, c, d;
+  cin >> a >> b >> c >> d;
+  int x = min(a, min(b, c));
+  if (x != 0) {
+    a -= x - 1;
+    b -= x - 1;
+    c -= x - 1;
+    d += x - 1;
   }
+  int cnt = 0;
+  if (a % 2 == 0) cnt++;
+  if (b % 2 == 0) cnt++;
+  if (c % 2 == 0) cnt++;
+  if (d % 2 == 0) cnt++;
 
+  int f = -1;
+  if (cnt >= 3) f = 1;
+  else f = 0;
+
+  x = min(a, min(b, c));
+  if (x != 0) {
+    a -= x ;
+    b -= x ;
+    c -= x ;
+    d += x ;
+  }
+  cnt = 0;
+  if (a % 2 == 0) cnt++;
+  if (b % 2 == 0) cnt++;
+  if (c % 2 == 0) cnt++;
+  if (d % 2 == 0) cnt++;
+
+  if (cnt >= 3) f = max(f, 1);
+
+  if (f) cout << "YES\n";
+  else cout << "NO\n";
 }
 int main()
 {
@@ -58,7 +71,7 @@ int main()
 
   IOS()
   ll t = 1;
-  // cin >> t;
+  cin >> t;
   while (t--)
     solve();
 }

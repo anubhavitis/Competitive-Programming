@@ -20,31 +20,29 @@
 #define INF INT_MAX
 using namespace std;
 
-ll i, j, n, k, z;
+int i, j, n, k, m;
+
 void solve(void) {
-  cin >> n;
-  vector<int> v(100001, 0);
-  rep(i, 0, n) cin >> j, v[j]++;;
-  int sum2 = 0, sum4 = 0;
+  cin >> n >> m;
 
-  for (auto it : v) sum2 += (it / 2), sum4 += (it / 4);
+  ll a[n], b[m];
+  rep(i, 0, n) cin >> a[i];
+  rep(i, 0, m) cin >> b[i];
 
-  cin >> k;
-  while (k--) {
-    char ch;
-    int x;
-    cin >> ch >> x;
-    sum2 -= v[x] / 2;
-    sum4 -= v[x] / 4;
-    if (ch == '+') v[x]++;
-      else v[x]--;
-
-    sum2 += v[x] / 2;
-    sum4 += v[x] / 4;
-
-    if (sum4 and sum2 >= 4) cout << "YES\n";
-    else cout << "NO\n";
+  int ans=0;
+  while(ans<=512){
+    int cnt=0;
+    rep(i,0,n){
+      int f=0;
+      rep(j,0,m) if(((a[i]&b[j])|ans)==ans) f=1;
+      cnt+=f;
+    }
+    
+    if(cnt==n) break;
+    ans++;
   }
+  cout << ans << endl;
+
 
 }
 int main()

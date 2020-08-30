@@ -10,46 +10,40 @@
 #define all(x) x.begin(), x.end()
 #define PI 3.14159265
 #define deb(x) cerr<<#x<<" : "<<x<<"\n";
-#define deball(x) for(auto iit:x) cerr<<iit<<" ";cerr<<"\n";
+#define deball(x) for(auto iit:x) cerr<<setw(4)<<iit;cerr<<"\n";
 #define IOS() ios_base::sync_with_stdio(0);cin.tie(0);
 #define rep(i,b,c) for(i=b; i<c; ++i)
 #define rrep(i,b,c) for(i=b; i>=c; --i)
 
-#define M 998244353
+#define M 1000000007
 #define LINF 1e18
 #define INF INT_MAX
 using namespace std;
 
-ll i, j, n, k, z;
-void solve(void) {
+ll i, j, n, k, w, m;
+
+int answer(auto &v, int bl) {
+  if (bl < 0) return 0;
+  vector<int> l, r;
+  for (auto it : v)
+    if (it & (1 << bl)) l.pb(it);
+    else r.pb(it);
+
+  if (l.size() == 0) return answer(r, bl - 1);
+  if (r.size() == 0) return answer(l, bl - 1);
+
+  return (1 << bl) + min( answer(r, bl - 1), answer(l, bl - 1));
+}
+void solve(int t)
+{
   cin >> n;
-  vector<int> v(100001, 0);
-  rep(i, 0, n) cin >> j, v[j]++;;
-  int sum2 = 0, sum4 = 0;
-
-  for (auto it : v) sum2 += (it / 2), sum4 += (it / 4);
-
-  cin >> k;
-  while (k--) {
-    char ch;
-    int x;
-    cin >> ch >> x;
-    sum2 -= v[x] / 2;
-    sum4 -= v[x] / 4;
-    if (ch == '+') v[x]++;
-      else v[x]--;
-
-    sum2 += v[x] / 2;
-    sum4 += v[x] / 4;
-
-    if (sum4 and sum2 >= 4) cout << "YES\n";
-    else cout << "NO\n";
-  }
-
+  vector<int> v(n);
+  for (auto& it : v) cin >> it;
+  cout << answer(v, 30) << endl;
 }
 int main()
 {
-  //Skipped in presense of online judge.
+  // Skipped in presense of online judge.
 #ifndef ONLINE_JUDGE
   freopen("/home/zeddie/Documents/input.txt", "r", stdin);
   freopen("/home/zeddie/Documents/output.txt", "w", stdout);
@@ -59,6 +53,6 @@ int main()
   IOS()
   ll t = 1;
   // cin >> t;
-  while (t--)
-    solve();
+  for (int ii = 1; ii <= t; ++ii)
+    solve(ii);
 }
