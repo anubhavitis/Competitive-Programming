@@ -24,21 +24,8 @@ using namespace std;
 int i, j, n, k, z;
 
 void solve(void) {
-  cin>>n;
-  int arr[26]={};
-  rep(i,0,n){
-    string s;
-    cin>>s;
-    for(auto it: s) arr[it-'a']++;
-  }
-
-  rep(i,0,26)
-    if(arr[i]%n){
-      cout<<"NO\n";
-      return;
-    }
-  cout<<"YES\n";
-
+  cin >> n;
+  
 }
 
 int main()

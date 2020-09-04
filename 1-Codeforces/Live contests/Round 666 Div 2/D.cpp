@@ -24,20 +24,14 @@ using namespace std;
 int i, j, n, k, z;
 
 void solve(void) {
-  cin>>n;
-  int arr[26]={};
-  rep(i,0,n){
-    string s;
-    cin>>s;
-    for(auto it: s) arr[it-'a']++;
-  }
-
-  rep(i,0,26)
-    if(arr[i]%n){
-      cout<<"NO\n";
-      return;
-    }
-  cout<<"YES\n";
+  cin >> n;
+  vector<int> arr(n);
+  for (auto& it : arr) cin >> it;
+  sort(all(arr));
+  int sum=accumulate(all(arr), 0);
+  sum-=arr[n-1];
+  if(arr[n-1]>sum) cout<<"T\n";
+  else cout<<"HL\n";
 
 }
 

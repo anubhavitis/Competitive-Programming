@@ -21,24 +21,32 @@
 using namespace std;
 
 //Code begins from here!!
-int i, j, n, k, z;
+ll i, j, n, k, z;
 
 void solve(void) {
-  cin>>n;
-  int arr[26]={};
-  rep(i,0,n){
-    string s;
-    cin>>s;
-    for(auto it: s) arr[it-'a']++;
+  cin >> n;
+  vector<ll> arr(n);
+  for (auto& it : arr) cin >> it;
+
+  if(n==1){
+    cout<<"1 1\n"<<-(arr[0])<<"\n1 1\n0\n1 1\n0\n";
+    return;
   }
+  
+  cout<<"1 "<<(n-1)<<endl;
+  rep(i, 0, n-1){
+    cout<< (n-1)*(arr[i]%n)<<" ";
+    arr[i]+=(n-1)*(arr[i]%n);
+  }
+  cout<<endl;
 
-  rep(i,0,26)
-    if(arr[i]%n){
-      cout<<"NO\n";
-      return;
-    }
-  cout<<"YES\n";
+  cout<<n<<" "<<n<<endl;
+  cout<<-(arr[n-1]%n)<<endl;
+  arr[n-1]-=arr[n-1]%n;
 
+  cout<<"1 "<<n<<endl;
+  for(auto it: arr) cout<<-it<<" ";
+  
 }
 
 int main()
@@ -51,7 +59,7 @@ int main()
 #endif
   IOS()
   ll t = 1;
-  cin >> t;
+  // cin >> t;
 
   while (t--)
     solve();

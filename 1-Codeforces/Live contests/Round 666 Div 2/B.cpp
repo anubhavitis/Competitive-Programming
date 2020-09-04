@@ -24,21 +24,26 @@ using namespace std;
 int i, j, n, k, z;
 
 void solve(void) {
-  cin>>n;
-  int arr[26]={};
-  rep(i,0,n){
-    string s;
-    cin>>s;
-    for(auto it: s) arr[it-'a']++;
+  cin >> n;
+  vector<ll> a(n);
+  for (auto &it : a) cin >> it;
+  sort(all(a));
+  ll c = 1, ans = LINF;
+
+  while (1) {
+    if (pow(c, (n - 1)) > INT_MAX) break;
+    // deb(c)
+    ll sum = 0, temp = 1;
+    rep(i, 0, n) {
+      sum += abs(temp - a[i]);
+      temp *= c;
+    }
+    // deb(temp)
+    ans = min(ans, sum);
+    c++;
   }
 
-  rep(i,0,26)
-    if(arr[i]%n){
-      cout<<"NO\n";
-      return;
-    }
-  cout<<"YES\n";
-
+  cout << ans << endl;
 }
 
 int main()
@@ -51,7 +56,7 @@ int main()
 #endif
   IOS()
   ll t = 1;
-  cin >> t;
+  // cin >> t;
 
   while (t--)
     solve();
