@@ -21,14 +21,41 @@
 using namespace std;
 
 //Code begins from here!!
-int i, j, n, k, z;
+ll j, n, k, z;
 
 void solve(void) {
-  int a,b;
-  cin >> a>>b;
-  int diff=abs(b-a);
-  int ans=diff/10 + (diff%10!=0);
-  cout<<ans<<endl;
+  ll s;
+  cin >> n >> s;
+
+  ll ans = 0, dig = 0, sum = 0, dups = n, pdig;
+  while (dups) sum += dups % 10, dups /= 10, dig++;
+
+  if (sum <= s) { cout << 0 << endl; return; }
+
+  pdig = (s / 9 + (s % 9 != 0));
+  cerr << s << " " << pdig << " " << dig << endl;
+  if (dig < pdig) {
+    ll temp = 1;
+    for (int i = 1; i < pdig; ++i) temp *= 10;
+    ans += temp - n;
+    n = temp;
+    dig = pdig;
+  }
+
+  dups = n;
+  while (dups) sum += dups % 10, dups /= 10;
+
+  sum = s - sum;
+
+  for (unsigned ll i = 10; sum > 0 and n / i != 0; i *= 10) {
+    ll d = n % i;
+    d = d / (i / 10);
+    ll dif = min( (ll)9 - d, sum);
+    ans += dif * (i / 10);
+    sum -= dif;
+  }
+
+  cout << ans << endl;
 
 }
 

@@ -21,14 +21,26 @@
 using namespace std;
 
 //Code begins from here!!
-int i, j, n, k, z;
+ll i, j, n, k, z;
 
 void solve(void) {
-  int a,b;
-  cin >> a>>b;
-  int diff=abs(b-a);
-  int ans=diff/10 + (diff%10!=0);
+  ll a, b, x, y;
+  cin >> a >> b >> x >> y >> n;
+
+  ll fd1 = min(a - x, n);
+  ll fd2 = min(b - y, n);
+
+  ll dupa = a - fd1;
+  ll dupn = n - fd1;
+  ll dupb = b - min(b - y, dupn);
+  ll ans= dupa*dupb;
+
+  b-=fd2;
+  n-=fd2;
+  a-=min(a-x, n);
+  ans=min(ans, a*b);
   cout<<ans<<endl;
+
 
 }
 

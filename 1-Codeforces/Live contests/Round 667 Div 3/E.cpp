@@ -21,14 +21,37 @@
 using namespace std;
 
 //Code begins from here!!
-int i, j, n, k, z;
+ll j, n, k, z;
 
 void solve(void) {
-  int a,b;
-  cin >> a>>b;
-  int diff=abs(b-a);
-  int ans=diff/10 + (diff%10!=0);
-  cout<<ans<<endl;
+  cin >> n >> k;
+  vector<int> x(n), y(n);
+  for (auto& it : x) cin >> it;
+  for (auto& it : y) cin >> it;
+
+  sort(x.begin(), x.end());
+
+  vector<int> temp(n), pref(n), suff(n);
+  for (int i = 0; i < n; ++i) {
+    int p2 = lb(all(x), x[i] - k) - x.begin();
+    int p1 = ub(all(x), x[i]) - x.begin() - 1;
+    pref[i] = p1 - p2 + 1;
+  }
+
+  for (int i = n - 1; i >= 0; --i) {
+    int p1 = lb(all(x), x[i]) - x.begin();
+    int p2 = ub(all(x), x[i] + k) - x.begin() - 1;
+    suff[i] = p2 - p1 + 1;
+    if (i != (n - 1)) suff[i] = max(suff[i], suff[i + 1]);
+  }
+  suff.pb(0);
+  pref.pb(0);
+  ll ans = 0;
+  for (int i = 0; i < n; ++i)
+    if (x[i] != x[i + 1])
+      ans = max((int)ans, pref[i] + suff[i + 1]);
+  cout << ans << endl;
+
 
 }
 
