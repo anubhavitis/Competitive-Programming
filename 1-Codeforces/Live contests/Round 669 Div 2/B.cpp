@@ -26,27 +26,24 @@ ll i, j, n, k, z;
 void solve(void) {
   cin >> n;
   vector<int> a(n);
-  int cnt0 = 0, cnt1 = 0;
-  for (auto &it : a) {
-    cin >> it;
-    if (it) cnt1++;
-    else cnt0++;
+  for (int i = 0; i < n; ++i) cin >> a[i];
+  sort(a.begin(), a.end());
+  bool avail[n] = {};
+  avail[n - 1] = true;
+  vector<int> ans(1, a[n - 1]);
+  int gmax = a[n - 1];
+  for (int i = 1; i < n ; ++i) {
+    int temp = -1, key = -1;
+    for (int j = 0; j < n; ++j) if (!avail[j] and temp < __gcd(gmax, a[j])) {
+        key = j;
+        temp = __gcd(gmax, a[j]);
+      }
+    avail[key] = 1;
+    ans.pb(a[key]);
+    gmax = __gcd(gmax, a[key]);
   }
-  if (cnt0 >= (n / 2)) {
-    cout << cnt0 << endl;
-    rep(i, 0, cnt0) cout << "0 ";
-    cout << endl;
-  }
-  else if (cnt1 % 2 == 0) {
-    cout << cnt1 << endl;
-    rep(i, 0, cnt1) cout << "1 ";
-    cout << endl;
-  }
-  else {
-    cout << cnt1 - 1 << endl;
-    rep(i, 0, cnt1 - 1) cout << "1 ";
-    cout << endl;
-  }
+  for (auto it : ans) cout << it << " ";
+  cout << endl;
 }
 
 int main()

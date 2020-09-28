@@ -21,32 +21,17 @@
 using namespace std;
 
 //Code begins from here!!
-ll i, j, n, k, z;
+
+ll x, y, k;
 
 void solve(void) {
-  cin >> n;
-  vector<int> a(n);
-  int cnt0 = 0, cnt1 = 0;
-  for (auto &it : a) {
-    cin >> it;
-    if (it) cnt1++;
-    else cnt0++;
-  }
-  if (cnt0 >= (n / 2)) {
-    cout << cnt0 << endl;
-    rep(i, 0, cnt0) cout << "0 ";
-    cout << endl;
-  }
-  else if (cnt1 % 2 == 0) {
-    cout << cnt1 << endl;
-    rep(i, 0, cnt1) cout << "1 ";
-    cout << endl;
-  }
-  else {
-    cout << cnt1 - 1 << endl;
-    rep(i, 0, cnt1 - 1) cout << "1 ";
-    cout << endl;
-  }
+  cin >> x >> y >> k;
+  ll tot = k * (y + 1);
+  ll ans;
+  if ((tot - 1) % (x - 1)) ans = 1 + (tot - 1) / (x - 1);
+  else ans = (tot - 1) / (x - 1);
+  cout << ans + k << endl;
+
 }
 
 int main()

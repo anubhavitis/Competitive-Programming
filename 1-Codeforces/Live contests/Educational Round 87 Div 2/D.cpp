@@ -18,63 +18,71 @@
 #define LINF 1e18
 #define INF INT_MAX
 using namespace std;
-int i,j,n;
+int i, j, n;
+vector<int> bit;
 
-int tree[2000001];
+void add(int val, int ind) {
+  while (ind <= n) {
+    bit[ind] += val;
+    ind += ind & (-ind);
+  }
+}
 
-void build( int arr[])  
-{  
-  rep(i,0,n) cerr<<arr[i]<<" "; cerr<<"\n";
-  for (int i=0; i<n; i++) tree[n+i] = arr[i]; 
-  for (int i = n - 1; i > 0; --i) tree[i] = tree[i<<1] + tree[i<<1 | 1];
-} 
-  
-void updateTreeNode(int p,int val)  
-{  
-  tree[p+n]+=val; 
-  p = p+n; 
-  
-  for (int i=p; i > 1; i >>= 1) tree[i>>1] = tree[i] + tree[i^1]; 
-} 
-  
-int query(int k,int t)  
-{  
-  
-} 
+int pref(int r) {
+  int sum = 0;
+  while (r > 0) {
+    sum += bit[r];
+    r -= r & (-r);
+  }
+  return sum;
+}
 
 void solve()
 {
   int q;
-  cin>>n>>q;
-  int t,a[n]={};
-  rep(i,0,n) cin>>t,a[t]++;
-  build(a);
-  rep(i,0,2*n) cerr<<tree[i]<<" ";
+  cin >> n >> q;
+  int cnt[n+1]={};
+  bit.assign(n + 1, 0);
+  for (i = 0; i < n; ++i) {
+    cin >> j;
+    cnt[j]++;
+    add(1, j);
+  }
 
-  deb(query(3))
-  // while(q--)
-  // {
-  //   cin>>t;
-  //   if(t>0) updateTreeNode(t,1);
-  //   t*=(-1);
-  //   query
+  for (int k = 0; k < q; ++k) {
+    cin >> j;
+    if (j > 0) add(+1, j), cnt[j]++;
+    else {
+      j *= -1;
+      int l = 0, r = n+1, mid;
+      while (l < r) {
+        mid = (l + r) / 2;
+        int sum = pref(mid);
+        if (sum >= j) r = mid;
+        else l = mid+1;
+      }
+      add(-1, l);
+      cnt[l]--;
+    }
+  }
 
-  // }
-
+  int ans = 0;
+  for (int i = 1; i <= n; ++i) if ( pref(i) ) { ans = i; break; }
+  cout << ans << endl;
 }
 
 int main()
 {
   //Skipped in presense of online judge.
-  #ifndef ONLINE_JUDGE
-  freopen("/home/zeddie/Documents/input.txt","r",stdin);
-  freopen("/home/zeddie/Documents/output.txt","w",stdout);
-  freopen("/home/zeddie/Documents/error.txt","w",stderr);
-  #endif
+#ifndef ONLINE_JUDGE
+  freopen("/home/zeddie/Documents/input.txt", "r", stdin);
+  freopen("/home/zeddie/Documents/output.txt", "w", stdout);
+  freopen("/home/zeddie/Documents/error.txt", "w", stderr);
+#endif
 
   IOS()
-  ll t=1;
+  ll t = 1;
   // cin>>t;
-  while(t--)
+  while (t--)
     solve();
 }

@@ -21,32 +21,22 @@
 using namespace std;
 
 //Code begins from here!!
-ll i, j, n, k, z;
+bool comp( pair<ll,ll> p1, pair<ll,ll> p2){
+  if(p1.second==1 or p2.second==1) return false;
 
+  return p1.first<=p2.first;
+}
 void solve(void) {
+  ll n;
   cin >> n;
-  vector<int> a(n);
-  int cnt0 = 0, cnt1 = 0;
-  for (auto &it : a) {
-    cin >> it;
-    if (it) cnt1++;
-    else cnt0++;
-  }
-  if (cnt0 >= (n / 2)) {
-    cout << cnt0 << endl;
-    rep(i, 0, cnt0) cout << "0 ";
-    cout << endl;
-  }
-  else if (cnt1 % 2 == 0) {
-    cout << cnt1 << endl;
-    rep(i, 0, cnt1) cout << "1 ";
-    cout << endl;
-  }
-  else {
-    cout << cnt1 - 1 << endl;
-    rep(i, 0, cnt1 - 1) cout << "1 ";
-    cout << endl;
-  }
+  vector<pair<ll,ll>> val(n);
+  for (auto &it : val) cin >> it.first;
+  for (auto &it : val) cin >> it.second;
+
+  sort(all(val), comp);
+  for(auto it: val) cout<<it.first<<" ";
+  cout<<endl;
+
 }
 
 int main()

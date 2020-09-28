@@ -21,32 +21,32 @@
 using namespace std;
 
 //Code begins from here!!
-ll i, j, n, k, z;
 
 void solve(void) {
+  ll i, j, k, n, m, ct = 0, t, ans = 0;
   cin >> n;
-  vector<int> a(n);
-  int cnt0 = 0, cnt1 = 0;
-  for (auto &it : a) {
-    cin >> it;
-    if (it) cnt1++;
-    else cnt0++;
+  ll a[n];
+  rep(i, 0, n) cin >> a[i];
+  sort(a, a + n);
+  ll b[n] = {0}; j = 0;
+  for (i = 1; i <= n - 2; i += 2) {
+    b[i] = a[j];
+    j++;
+    k = j;
   }
-  if (cnt0 >= (n / 2)) {
-    cout << cnt0 << endl;
-    rep(i, 0, cnt0) cout << "0 ";
-    cout << endl;
+  deb(k)deb(j)
+  rep(i, 0, n) {
+    if (b[i] == 0) {
+      b[i] = a[j];
+      j++;
+    }
   }
-  else if (cnt1 % 2 == 0) {
-    cout << cnt1 << endl;
-    rep(i, 0, cnt1) cout << "1 ";
-    cout << endl;
+  deb(j)
+  for (i = 1; i <= n - 2; i++) {
+    if (b[i - 1] > b[i] and b[i + 1] > b[i]) ct++;
   }
-  else {
-    cout << cnt1 - 1 << endl;
-    rep(i, 0, cnt1 - 1) cout << "1 ";
-    cout << endl;
-  }
+  cout << ct << endl;
+  rep(i, 0, n) cout << b[i] << " ";
 }
 
 int main()
@@ -59,7 +59,7 @@ int main()
 #endif
   IOS()
   ll t = 1;
-  cin >> t;
+  // cin >> t;
 
   while (t--)
     solve();

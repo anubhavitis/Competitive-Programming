@@ -21,32 +21,53 @@
 using namespace std;
 
 //Code begins from here!!
-ll i, j, n, k, z;
 
 void solve(void) {
+  ll i, j, k, n, m, ct = 0, t, ans = 0;
   cin >> n;
-  vector<int> a(n);
-  int cnt0 = 0, cnt1 = 0;
-  for (auto &it : a) {
-    cin >> it;
-    if (it) cnt1++;
-    else cnt0++;
+  ll odd = 0, even = 0;
+  ll a[n + 1];
+  for (i = 1; i <= n; i++) {
+    scanf("%1d", &a[i]);
+    if (i % 2 != 0) {
+      if (a[i] % 2 == 0) even++;
+    }
+    else {
+      if (a[i] % 2 != 0) odd++;
+    }
   }
-  if (cnt0 >= (n / 2)) {
-    cout << cnt0 << endl;
-    rep(i, 0, cnt0) cout << "0 ";
-    cout << endl;
+
+  ll n2 = (n + 1) / 2 - even, n3 = n / 2 - odd;
+  ll digits = n;
+  ll flag = 0;
+
+  while (digits != 1) {
+    if (flag == 0) {
+      if (even > 0) {
+        even--;
+        flag = 1;
+      }
+      else {
+        n2--;
+        flag = 1;
+      }
+    }
+    else {
+      if (odd > 0) {
+        odd--;
+        flag = 0;
+      }
+      else {
+        n3--;
+        flag = 0;
+      }
+    }
+    digits--;
   }
-  else if (cnt1 % 2 == 0) {
-    cout << cnt1 << endl;
-    rep(i, 0, cnt1) cout << "1 ";
-    cout << endl;
-  }
-  else {
-    cout << cnt1 - 1 << endl;
-    rep(i, 0, cnt1 - 1) cout << "1 ";
-    cout << endl;
-  }
+
+  if (even >= 1 || n3 >= 1) cout << "2\n";
+  else cout << "1\n";
+
 }
 
 int main()
@@ -57,7 +78,7 @@ int main()
   freopen("/home/zeddie/Documents/output.txt", "w", stdout);
   freopen("/home/zeddie/Documents/error.txt", "w", stderr);
 #endif
-  IOS()
+  // IOS()
   ll t = 1;
   cin >> t;
 

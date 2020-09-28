@@ -25,28 +25,30 @@ ll i, j, n, k, z;
 
 void solve(void) {
   cin >> n;
-  vector<int> a(n);
-  int cnt0 = 0, cnt1 = 0;
-  for (auto &it : a) {
-    cin >> it;
-    if (it) cnt1++;
-    else cnt0++;
+  vector<int> ans(n);
+  int mx=1;
+  for(int i=2; i<=n; ++i){
+    int r1,r2;
+    cout<<"? "<<mx<<" "<<i<<endl;
+    cout.flush();
+    cin>>r1;
+    cout<<"? "<<i<<" "<<mx<<endl;
+    cout.flush();
+    cin>>r2;
+    cerr<<r1<<" "<<r2<<endl;
+    if(r1>r2){
+      ans[mx-1]=r1;
+      mx=i;
+    }
+    else{
+      ans[i-1]=r2;
+    }
   }
-  if (cnt0 >= (n / 2)) {
-    cout << cnt0 << endl;
-    rep(i, 0, cnt0) cout << "0 ";
-    cout << endl;
-  }
-  else if (cnt1 % 2 == 0) {
-    cout << cnt1 << endl;
-    rep(i, 0, cnt1) cout << "1 ";
-    cout << endl;
-  }
-  else {
-    cout << cnt1 - 1 << endl;
-    rep(i, 0, cnt1 - 1) cout << "1 ";
-    cout << endl;
-  }
+  ans[mx-1]=n;
+  cout<<"! ";
+  for(auto it: ans) cout<<it<<" ";
+  cout.flush();
+  cout<<endl;
 }
 
 int main()
@@ -59,7 +61,7 @@ int main()
 #endif
   IOS()
   ll t = 1;
-  cin >> t;
+  // cin >> t;
 
   while (t--)
     solve();

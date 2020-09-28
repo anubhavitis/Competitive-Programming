@@ -21,32 +21,27 @@
 using namespace std;
 
 //Code begins from here!!
-ll i, j, n, k, z;
+// ll i, j, n, k, z;
 
 void solve(void) {
-  cin >> n;
-  vector<int> a(n);
-  int cnt0 = 0, cnt1 = 0;
-  for (auto &it : a) {
-    cin >> it;
-    if (it) cnt1++;
-    else cnt0++;
+  int n; cin >> n;
+  vector<int> v(101,0);
+  int rep=0;
+  for(int i=0; i<n; ++i){
+    int j;
+    cin>>j;
+    v[j]++;
   }
-  if (cnt0 >= (n / 2)) {
-    cout << cnt0 << endl;
-    rep(i, 0, cnt0) cout << "0 ";
-    cout << endl;
+  // deball(v)
+  int f0=-1, f1=-1;
+  for(int i=0; i<101; ++i){
+    // cerr<<f0<<" "<<f1<<" "<<v[i]<<endl;
+    if(v[i]==1 and f0==-1 and f1==-1) f1=i;
+    if(v[i]==0 and f0==-1) f0=i;
   }
-  else if (cnt1 % 2 == 0) {
-    cout << cnt1 << endl;
-    rep(i, 0, cnt1) cout << "1 ";
-    cout << endl;
-  }
-  else {
-    cout << cnt1 - 1 << endl;
-    rep(i, 0, cnt1 - 1) cout << "1 ";
-    cout << endl;
-  }
+  // cerr<<f0<<" "<<f1<<endl;
+  if(f1==-1) cout<<2*f0<<endl;
+  else cout<<f0+f1<<endl;
 }
 
 int main()

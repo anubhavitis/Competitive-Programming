@@ -21,32 +21,50 @@
 using namespace std;
 
 //Code begins from here!!
-ll i, j, n, k, z;
+// ll i, j, n, k, z;
+
+ll proj(ll A[], ll n, ll k)
+{
+  sort(A, A + n);
+  ll product = 1;
+  if (A[n - 1] == 0 && (k & 1))
+    return 0;
+  if (A[n - 1] <= 0 && (k & 1)) {
+    for (ll i = n - 1; i >= n - k; i--)
+      product *= A[i];
+    return product;
+  }
+  ll i = 0;
+  ll j = n - 1;
+  if (k & 1) {
+    product *= A[j];
+    j--;
+    k--;
+  }
+  k >>= 1;
+  for (ll itr = 0; itr < k; itr++) {
+    ll left_product = A[i] * A[i + 1];
+    ll right_product = A[j] * A[j - 1];
+    if (left_product > right_product) {
+      product *= left_product;
+      i += 2;
+    }
+    else {
+      product *= right_product;
+      j -= 2;
+    }
+  }
+
+  // Finally return product
+  return product;
+}
 
 void solve(void) {
-  cin >> n;
-  vector<int> a(n);
-  int cnt0 = 0, cnt1 = 0;
-  for (auto &it : a) {
-    cin >> it;
-    if (it) cnt1++;
-    else cnt0++;
-  }
-  if (cnt0 >= (n / 2)) {
-    cout << cnt0 << endl;
-    rep(i, 0, cnt0) cout << "0 ";
-    cout << endl;
-  }
-  else if (cnt1 % 2 == 0) {
-    cout << cnt1 << endl;
-    rep(i, 0, cnt1) cout << "1 ";
-    cout << endl;
-  }
-  else {
-    cout << cnt1 - 1 << endl;
-    rep(i, 0, cnt1 - 1) cout << "1 ";
-    cout << endl;
-  }
+  ll n; cin >> n;
+  ll arr[n];
+  for(ll i=0; i<n; ++i) cin>>arr[i];
+  ll ans= proj(arr, n, 5);
+  cout << ans << endl;
 }
 
 int main()

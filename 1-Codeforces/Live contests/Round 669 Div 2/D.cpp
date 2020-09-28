@@ -21,32 +21,41 @@
 using namespace std;
 
 //Code begins from here!!
-ll i, j, n, k, z;
+// ll i, j, n, k, z;
 
 void solve(void) {
-  cin >> n;
-  vector<int> a(n);
-  int cnt0 = 0, cnt1 = 0;
-  for (auto &it : a) {
-    cin >> it;
-    if (it) cnt1++;
-    else cnt0++;
+  int n; cin >> n;
+  int h[n], dp[n] = {};
+  for (int i = 0; i < n; i++) cin >> h[i];
+  stack<int> inc, dec;
+  inc.push(0);
+  dec.push(0);
+
+  for (int i = 1; i < n; i++) {
+    dp[i] = dp[i - 1] + 1;
+
+    while ( !inc.empty() && h[inc.top()] < h[i]) {
+      dp[i] = min(dp[inc.top()] + 1, dp[i]);
+      inc.pop();
+    }
+    if ( !inc.empty() ) {
+      dp[i] = min(dp[inc.top()] + 1, dp[i]);
+      if (h[inc.top()] == h[i])inc.pop();
+    }
+    inc.push(i);
+
+    while ( !dec.empty() && h[dec.top()] > h[i] ) {
+      dp[i] = min(dp[dec.top()] + 1, dp[i]);
+      dec.pop();
+    }
+    if ( !dec.empty() ) {
+      dp[i] = min(dp[dec.top()] + 1, dp[i]);
+      if (h[dec.top()] == h[i])dec.pop();
+    }
+    dec.push(i);
   }
-  if (cnt0 >= (n / 2)) {
-    cout << cnt0 << endl;
-    rep(i, 0, cnt0) cout << "0 ";
-    cout << endl;
-  }
-  else if (cnt1 % 2 == 0) {
-    cout << cnt1 << endl;
-    rep(i, 0, cnt1) cout << "1 ";
-    cout << endl;
-  }
-  else {
-    cout << cnt1 - 1 << endl;
-    rep(i, 0, cnt1 - 1) cout << "1 ";
-    cout << endl;
-  }
+
+  cout << dp[n - 1] << endl;
 }
 
 int main()
@@ -59,7 +68,7 @@ int main()
 #endif
   IOS()
   ll t = 1;
-  cin >> t;
+  // cin >> t;
 
   while (t--)
     solve();
