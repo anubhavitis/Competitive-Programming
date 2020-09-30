@@ -25,13 +25,18 @@ using namespace std;
 //Code begins from here!!
 
 void solve(void) {
-	int n, x;
-	cin >> n >>x;
-	if(n==1 or n==2) cout<<"1\n";
-	else{
-		n-=2;
-		cout<<(1+(n/x)+(n%x!=0))<<endl;
+	int n, m;
+	cin >> n >> m;
+	vector< vector<int> > v(n, vector<int> (4));
+	for (int i = 0; i < n; ++i) cin >> v[i][0] >> v[i][1] >> v[i][2] >> v[i][3];
+
+	if (m & 1) { cout << "NO" << endl; return; }
+
+	for (auto it : v) {
+		if (it[1] == it[2]) { cout << "YES\n"; return; }
 	}
+	cout << "NO\n";
+
 }
 
 signed main()

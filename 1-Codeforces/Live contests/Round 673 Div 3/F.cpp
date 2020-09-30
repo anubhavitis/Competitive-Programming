@@ -11,7 +11,7 @@
 
 #define IOS()         ios_base::sync_with_stdio(0);cin.tie(0);
 #define deb(x)        cerr<<#x<<" : "<<x<<"\n";
-#define debaint(x)    for(auto iit:x) cerr<<setw(4)<<iit;cerr<<"\n";
+#define deball(x)    for(auto iit:x) cerr<<setw(4)<<iit;cerr<<"\n";
 #define rep(i,b,c)    for(i=b; i<c; ++i)
 #define rrep(i,b,c)   for(i=b; i>=c; --i)
 
@@ -25,13 +25,32 @@ using namespace std;
 //Code begins from here!!
 
 void solve(void) {
-	int n, x;
-	cin >> n >>x;
-	if(n==1 or n==2) cout<<"1\n";
-	else{
-		n-=2;
-		cout<<(1+(n/x)+(n%x!=0))<<endl;
+	int n;
+	string s;
+	cin >> n >> s;
+
+	int dp[n + 1][3] = {};
+
+	for (int i = 1; i <= n; ++i) {
+		dp[i][0] = dp[i - 1][0];
+		dp[i][1] = 2 * dp[i - 1][1];
+		dp[i][2] = 2 * dp[i - 1][2];
+
+		if (s[i - 1] == 'a') 		dp[i][0]++;
+		else if (s[i - 1] == 'b')	dp[i][1] += dp[i][0];
+		else if (s[i - 1] == 'c') 	dp[i][2] += dp[i][1];
+		else {
+			dp[i][2] += dp[i - 1][1];
+			dp[i][1] += dp[i - 1][0];
+			dp[i][0]++;
+		}
 	}
+
+	for (int i = 0; i <= n; ++i) {
+		cerr << dp[i][0] << " " << dp[i][1] << " " << dp[i][2] << endl;
+	}
+	cout << dp[n][2] << endl;
+
 }
 
 signed main()
@@ -44,7 +63,7 @@ signed main()
 #endif
 	IOS()
 	int t = 1;
-	cin >> t;
+	// cin >> t;
 
 	while (t--)
 		solve();

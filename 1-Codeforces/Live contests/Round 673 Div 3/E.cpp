@@ -11,7 +11,7 @@
 
 #define IOS()         ios_base::sync_with_stdio(0);cin.tie(0);
 #define deb(x)        cerr<<#x<<" : "<<x<<"\n";
-#define debaint(x)    for(auto iit:x) cerr<<setw(4)<<iit;cerr<<"\n";
+#define deball(x)    for(auto iit:x) cerr<<setw(4)<<iit;cerr<<"\n";
 #define rep(i,b,c)    for(i=b; i<c; ++i)
 #define rrep(i,b,c)   for(i=b; i>=c; --i)
 
@@ -25,13 +25,31 @@ using namespace std;
 //Code begins from here!!
 
 void solve(void) {
-	int n, x;
-	cin >> n >>x;
-	if(n==1 or n==2) cout<<"1\n";
-	else{
-		n-=2;
-		cout<<(1+(n/x)+(n%x!=0))<<endl;
-	}
+	int n;
+	cin >> n;
+	vector<int> alice(3, 0), bob(3, 0);
+	for (auto &it : alice) cin >> it;
+	for (auto &it : bob) cin >> it;
+
+	int alimax = 0, alimin = INF;
+	alimax = min(alice[0], bob[1]) + min(alice[1], bob[2]) + min(alice[2], bob[0]);
+
+	vector< pair<int, int> > ops;
+	ops.pb(mp(0, 0)); ops.pb(mp(0, 2));
+	ops.pb(mp(1, 1)); ops.pb(mp(1, 0));
+	ops.pb(mp(2, 2)); ops.pb(mp(2, 1));
+
+	sort(all(ops));
+	do {
+		vector<int> ta = alice, tb = bob;
+		for (auto it : ops) {
+			int val = min(ta[it.first], tb[it.second]);
+			ta[it.first] -= val;
+			tb[it.second] -= val;
+		}
+		alimin = min(alimin, accumulate(all(ta), (int)0));
+	} while (next_permutation(all(ops)));
+	cout << alimin << " " << alimax << endl;
 }
 
 signed main()
@@ -44,7 +62,7 @@ signed main()
 #endif
 	IOS()
 	int t = 1;
-	cin >> t;
+	// cin >> t;
 
 	while (t--)
 		solve();

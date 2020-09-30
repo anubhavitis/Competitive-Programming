@@ -25,13 +25,15 @@ using namespace std;
 //Code begins from here!!
 
 void solve(void) {
-	int n, x;
-	cin >> n >>x;
-	if(n==1 or n==2) cout<<"1\n";
-	else{
-		n-=2;
-		cout<<(1+(n/x)+(n%x!=0))<<endl;
+	int n;
+	cin >> n;
+
+	int ans=INT_MAX;
+	for(int i=1; i<63245; ++i){
+		int temp=(i-1)+(n/i + (n%i!=0) -1);
+		ans=min(ans, temp);
 	}
+	cout<<ans<<endl;
 }
 
 signed main()

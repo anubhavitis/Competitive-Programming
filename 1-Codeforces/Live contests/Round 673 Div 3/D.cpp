@@ -25,13 +25,20 @@ using namespace std;
 //Code begins from here!!
 
 void solve(void) {
-	int n, x;
-	cin >> n >>x;
-	if(n==1 or n==2) cout<<"1\n";
-	else{
-		n-=2;
-		cout<<(1+(n/x)+(n%x!=0))<<endl;
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	for (auto &it : v) cin >> it;
+
+	int sum = 0, ans = 0;
+	map<int, int> pos;
+	pos[0] = 1;
+	for (int i = 0; i < n; ++i) {
+		sum += v[i];
+		if (pos[sum]) { ans++; pos.clear();  pos[0] = i + 1; sum = v[i]; pos[sum] = i + 2;}
+		else pos[sum] = i + 2;
 	}
+	cout << ans << endl;
 }
 
 signed main()
@@ -44,7 +51,7 @@ signed main()
 #endif
 	IOS()
 	int t = 1;
-	cin >> t;
+	// cin >> t;
 
 	while (t--)
 		solve();
