@@ -16,7 +16,7 @@
 #define rrep(i,b,c)   for(i=b; i>=c; --i)
 
 #define PI      3.14159265
-#define M       998244353
+#define M       (int)1000000007
 #define LINF    LONG_MAX
 #define INF     INT_MAX
 
@@ -29,27 +29,21 @@ void solve(void) {
 	string s;
 	cin >> n >> s;
 
-	int dp[n + 1][3] = {};
+	int dp[3] = {}; int len=1;
 
 	for (int i = 1; i <= n; ++i) {
-		dp[i][0] = dp[i - 1][0];
-		dp[i][1] = 2 * dp[i - 1][1];
-		dp[i][2] = 2 * dp[i - 1][2];
 
-		if (s[i - 1] == 'a') 		dp[i][0]++;
-		else if (s[i - 1] == 'b')	dp[i][1] += dp[i][0];
-		else if (s[i - 1] == 'c') 	dp[i][2] += dp[i][1];
+		if (s[i - 1] == 'a') 		dp[0] = (dp[0]+len)%M;
+		else if (s[i - 1] == 'b')	dp[1] = (dp[1] + dp[0])%M;
+		else if (s[i - 1] == 'c') 	dp[2] = (dp[2] + dp[1])%M;
 		else {
-			dp[i][2] += dp[i - 1][1];
-			dp[i][1] += dp[i - 1][0];
-			dp[i][0]++;
+			dp[2] = (3 * dp[2] + dp[1])%M;
+			dp[1] = (3 * dp[1] + dp[0])%M;
+			dp[0] = (3 * dp[0] + len)%M;
+			len= (3*len)%M;
 		}
 	}
-
-	for (int i = 0; i <= n; ++i) {
-		cerr << dp[i][0] << " " << dp[i][1] << " " << dp[i][2] << endl;
-	}
-	cout << dp[n][2] << endl;
+	cout << dp[2] << endl;
 
 }
 
