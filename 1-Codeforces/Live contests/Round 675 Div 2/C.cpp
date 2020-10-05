@@ -24,14 +24,34 @@ using namespace std;
 
 //Code begins from here!!
 
-void solve(void) {
-	int a[3], ans = 0;
-	for (int i = 0; i < 3; ++i) {
-		cin >> a[i];
-		ans = max(a[i], ans);
-	}
+int g(int n) {
+	n = (n * (n + 1)) / 2;
+	return n % M;
+}
 
-	cout << ans + 1 << endl;
+void solve(void) {
+	string s;
+	cin >> s;
+	int n = s.size();
+	int loc = pow(10, n);
+	int ans = 0;
+
+	vector<int> prod(1, 0);
+	int b = 0;
+
+	for (int i = 2; i < (n + 1); ++i) {
+		int nn = 9 * b + (pow(10, n) - 1) / (9 * pow(10, n));
+		prod.pb(nn);
+	}
+	deball(prod)
+	for (int i = 0; i < n; ++i, loc /= 10) {
+		int x = i, y = n - i - 1;
+		int sum = (g(x) + g(y)) % M;
+		deb(sum)
+		int num = s[i] - '0';
+		ans = (ans + (loc * sum) % M) % M;
+	}
+	cout << ans << endl;
 }
 
 signed main()
@@ -44,7 +64,7 @@ signed main()
 #endif
 	IOS()
 	int t = 1;
-	cin >> t;
+	// cin >> t;
 
 	while (t--)
 		solve();
