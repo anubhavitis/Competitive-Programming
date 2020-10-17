@@ -11,7 +11,7 @@
 
 #define IOS()         ios_base::sync_with_stdio(0);cin.tie(0);
 #define deb(x)        cerr<<#x<<" : "<<x<<"\n";
-#define deball(x)     for(auto iit:x) cerr<<setw(4)<<iit;cerr<<"\n";
+#define deball(x)     for(auto iit:x) cerr<<" "<<iit;cerr<<"\n";
 #define rep(i,b,c)    for(i=b; i<c; ++i)
 #define rrep(i,b,c)   for(i=b; i>=c; --i)
 
@@ -33,25 +33,29 @@ void solve(void) {
 	string s;
 	cin >> s;
 	int n = s.size();
-	int loc = pow(10, n);
+
+	vector<int> right, left;
+	int l = 1, r = 0;
+
+	for (int i = 0; i < n; ++i) {
+		left.pb(l);
+		l = (l * 10) % M;
+
+		if (i) r = ((i * left[left.size() - 2]) + r) % M;
+		right.pb(r);
+	}
+	reverse(all(right));
+	reverse(all(left));
+
 	int ans = 0;
-
-	vector<int> prod(1, 0);
-	int b = 0;
-
-	for (int i = 2; i < (n + 1); ++i) {
-		int nn = 9 * b + (pow(10, n) - 1) / (9 * pow(10, n));
-		prod.pb(nn);
+	for (int i = 0; i < n; ++i) {
+		int x = (s[i] - '0');
+		ans = (ans + x * g(i) * left[i]) % M;
+		ans = (ans + x * right[i]) % M;
 	}
-	deball(prod)
-	for (int i = 0; i < n; ++i, loc /= 10) {
-		int x = i, y = n - i - 1;
-		int sum = (g(x) + g(y)) % M;
-		deb(sum)
-		int num = s[i] - '0';
-		ans = (ans + (loc * sum) % M) % M;
-	}
+
 	cout << ans << endl;
+	///home/zeddie/.config/sublime-text-3/Packages/User/competitve_programming.sublime-build
 }
 
 signed main()

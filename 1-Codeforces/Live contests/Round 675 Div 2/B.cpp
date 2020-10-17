@@ -34,36 +34,24 @@ void solve(void) {
 
 	int ans = 0;
 
-	for (int i = 0; i < n / 2; ++i) {
-		for (int j = 0; j < m / 2; ++j) {
+	for (int i = 0; i < (n + 1) / 2; ++i) {
+		for (int j = 0; j < (m + 1) / 2; ++j) {
 			vector<int> temp;
 			temp.pb(arr[i][j]);
-			temp.pb(arr[n - 1 - i][j]);
-			temp.pb(arr[i][m - 1 - j]);
-			temp.pb(arr[n - 1 - i][m - 1 - j]);
-			sort(all(temp));
+			if (i != n - i - 1) temp.pb(arr[n - 1 - i][j]);
+			if (j != m - j - 1) temp.pb(arr[i][m - 1 - j]);
+			if (i != n - i - 1 and j != m - j - 1) temp.pb(arr[n - 1 - i][m - 1 - j]);
 
 			int anstemp = INF;
-			for (int i = 0; i < 4; ++i) {
+			for (int it : temp) {
 				int ansmain = 0;
-				for (int j = 0; j < 4; ++j)
-					ansmain += abs(temp[j] - temp[i]);
+				for (int jt : temp)	ansmain += abs(jt - it);
 				anstemp = min(anstemp, ansmain);
 			}
 			ans += anstemp;
 		}
 	}
 
-	if (n & 1) {
-		int x = n / 2;
-		for (int j = 0; j < m / 2; ++j)
-			ans += abs(arr[x][j] - arr[x][m - 1 - j]);
-	}
-	if (m & 1) {
-		int x = m / 2;
-		for (int j = 0; j < n / 2; ++j)
-			ans += abs(arr[j][x] - arr[n - 1 - j][x]);
-	}
 	cout << ans << endl;
 }
 
