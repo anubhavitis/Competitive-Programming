@@ -25,30 +25,24 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	int n;
-	string s;
-	cin >> n >> s;
+	int n, k;
+	cin >> n >> k;
+	vector<int> arr( n );
+	for( auto &it : arr ) cin >> it;
 
-	bool a = false, b = false;
-	map<int, int> mapi;
-	for( int i = 0; i < n; ++i ) {
-		if( s[i] == '-' ) {
-			mapi[i] = 1;
-			mapi[( i + 1 ) % n] = 1;
-		}
-		else if( s[i] == '>' ) a = true;
-		else b = true;
-	}
+	int sum = accumulate( all( arr ), 0 );
+	int m = ceil( sum / float( k ) );
 
-	if( a and b ) {
-		int res = 0;
-		for( auto it : mapi ) res++;
-		cout << res << endl;
-	}
-	else cout << n << endl;
+	vector<int> rem;
+	for( auto it : arr )
+		if( it <= m ) res += it * it;
+		else rem.pb( it );
+
+	int rn = rem.size();
+	k -= n - rn;
+
 
 }
-
 signed main() {
 
 	#ifndef ONLINE_JUDGE
@@ -58,7 +52,7 @@ signed main() {
 	#endif
 	IOS()
 	int t = 1;
-	cin >> t;
+	// cin >> t;
 
 	while ( t-- )
 		solve();

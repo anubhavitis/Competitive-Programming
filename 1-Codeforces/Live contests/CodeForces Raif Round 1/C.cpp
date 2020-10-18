@@ -25,28 +25,19 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	int n;
 	string s;
-	cin >> n >> s;
+	cin >> s;
+	int n = s.size();
 
-	bool a = false, b = false;
-	map<int, int> mapi;
+	string res;
 	for( int i = 0; i < n; ++i ) {
-		if( s[i] == '-' ) {
-			mapi[i] = 1;
-			mapi[( i + 1 ) % n] = 1;
+		if( res.empty() ) res.push_back( s[i] );
+		else {
+			if( s[i] == 'A' ) res.pb( s[i] );
+			else res.pop_back();
 		}
-		else if( s[i] == '>' ) a = true;
-		else b = true;
 	}
-
-	if( a and b ) {
-		int res = 0;
-		for( auto it : mapi ) res++;
-		cout << res << endl;
-	}
-	else cout << n << endl;
-
+	cout << res.size() << endl;
 }
 
 signed main() {

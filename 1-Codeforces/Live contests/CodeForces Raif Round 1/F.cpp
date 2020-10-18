@@ -28,24 +28,11 @@ void solve() {
 	int n;
 	string s;
 	cin >> n >> s;
+	int pref[n] = {}, t = 0;
+	for( int i = 0; i < n; ++i )
+		if( s[i] == '1' ) pref[i] = ++t;
+		else t = 0; pref[i] = t;
 
-	bool a = false, b = false;
-	map<int, int> mapi;
-	for( int i = 0; i < n; ++i ) {
-		if( s[i] == '-' ) {
-			mapi[i] = 1;
-			mapi[( i + 1 ) % n] = 1;
-		}
-		else if( s[i] == '>' ) a = true;
-		else b = true;
-	}
-
-	if( a and b ) {
-		int res = 0;
-		for( auto it : mapi ) res++;
-		cout << res << endl;
-	}
-	else cout << n << endl;
 
 }
 
@@ -58,7 +45,7 @@ signed main() {
 	#endif
 	IOS()
 	int t = 1;
-	cin >> t;
+	// cin >> t;
 
 	while ( t-- )
 		solve();

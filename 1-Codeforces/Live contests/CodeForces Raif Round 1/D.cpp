@@ -26,26 +26,37 @@ using namespace std;
 
 void solve() {
 	int n;
-	string s;
-	cin >> n >> s;
+	cin >> n;
+	vector<int> vec( n );
 
-	bool a = false, b = false;
-	map<int, int> mapi;
+	vector<int> cnt[3] = {};
 	for( int i = 0; i < n; ++i ) {
-		if( s[i] == '-' ) {
-			mapi[i] = 1;
-			mapi[( i + 1 ) % n] = 1;
-		}
-		else if( s[i] == '>' ) a = true;
-		else b = true;
+		cin >> vec[i];
+		int it = vec[i];
+		if( it == 1 ) cnt[0].pb( it );
+		else if( it == 2 ) cnt[1].pb( it );
+		else cnt[2].pb( it );
 	}
 
-	if( a and b ) {
-		int res = 0;
-		for( auto it : mapi ) res++;
-		cout << res << endl;
+	if( cnt[1].size() > cnt[0].size() or vec[n - 1] != 1 ) {
+		cout << "-1\n";
+		return;
 	}
-	else cout << n << endl;
+
+	int mat[n][n] = {};
+	int r = 0;
+	for( auto it : cnt[1] ) {
+		mat[r][it] = 1;
+		mat[r][cnt[0].back()] = 1;
+		cnt[0].pop_back();
+		r++;
+	}
+
+	while( cnt[2].size() ) {
+		int c = cnt[2].back();
+		mat[r][c] = 1;
+		mat[r][]
+	}
 
 }
 
