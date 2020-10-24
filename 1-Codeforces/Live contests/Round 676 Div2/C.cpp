@@ -25,31 +25,20 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	int n;
-	cin >> n;
-	string s[n];
-	for( auto &it : s ) cin >> it;
+	string s;
+	cin >> s;
+	int n = s.size();
 
-	vector< pair<int, int> > ans, ans1;
+	cout << "4\nR 2\n";
+	int n2 = n + n - 2;
+	cout << "L " << n2 - 1 << endl;
+	int n3 = n2 + n2 - 2;
+	cout << "R " << ( n - 1 ) + ( n - 2 ) << endl;
+	int n4 = n3 + ( n - 1 ) + ( n - 2 );
+	// deb( n4 )
+	cout << "R " << n4 - ( ( n - 1 ) + ( n - 2 ) - 1 ) << endl;
 
-	if( s[0][1] != '0' ) ans.pb( {1, 2} );
-	if( s[1][0] != '0' ) ans.pb( {2, 1} );
-	if( s[n - 2][n - 1] != '1' ) ans.pb( {n - 1, n} );
-	if( s[n - 1][n - 2] != '1' ) ans.pb( {n, n - 1} );
 
-
-	if( s[0][1] != '1' ) ans1.pb( {1, 2} );
-	if( s[1][0] != '1' ) ans1.pb( {2, 1} );
-	if( s[n - 2][n - 1] != '0' ) ans1.pb( {n - 1, n} );
-	if( s[n - 1][n - 2] != '0' ) ans1.pb( {n, n - 1} );
-	if( ans.size() < ans1.size() ) {
-		cout << ans.size() << endl;
-		for( auto it : ans ) cout << it.first << " " << it.second << endl;
-	}
-	else {
-		cout << ans1.size() << endl;
-		for( auto it : ans1 ) cout << it.first << " " << it.second << endl;
-	}
 }
 
 signed main() {
@@ -61,7 +50,7 @@ signed main() {
 	#endif
 	IOS()
 	int t = 1;
-	cin >> t;
+	// cin >> t;
 
 	while ( t-- )
 		solve();

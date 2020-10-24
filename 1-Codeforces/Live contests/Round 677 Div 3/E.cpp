@@ -7,6 +7,7 @@
 #define pb      push_back
 #define lb      lower_bound
 #define ub      upper_bound
+#define sp      fixed<<setprecision
 #define all(x)  x.begin(), x.end()
 
 #define IOS()         ios_base::sync_with_stdio(0);cin.tie(0);
@@ -24,37 +25,29 @@ using namespace std;
 
 //Code begins from here!!
 
-int X( int A, int B )
-{
-	int j = 0, x = 0;
-	while ( A || B ) {
-		if ( ( A & 1 ) && ( B & 1 ) ) x += ( 1 << j );
-		A >>= 1;
-		B >>= 1;
-		j += 1;
-	}
-	return x;
-}
-
 void solve() {
-	int a, b;
-	cin >> a >> b;
-	int x = X( a, b );
-	cout << ( a ^ x ) + ( b ^ x ) << endl;
+    int n;
+    cin >> n;
+    vector<int> fact( n + 1, 1 );
+    for ( int i = 1; i <= n; ++i ) fact[i] = i * fact[i - 1];
+
+    int ans = fact[n] / ( 2 * fact[n / 2] * fact[n / 2] );
+    cout << ans*fact[n / 2 - 1]*fact[n / 2 - 1  ] << endl;
+
 }
 
 signed main() {
 
-	#ifndef ONLINE_JUDGE
-	freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
-	freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
-	freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
-	#endif
-	IOS()
-	int t = 1;
-	cin >> t;
+#ifndef ONLINE_JUDGE
+    freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
+    freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
+    freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
+#endif
+    IOS()
+    int t = 1;
+    // cin >> t;
 
-	while ( t-- )
-		solve();
+    while ( t-- )
+        solve();
 
 }
