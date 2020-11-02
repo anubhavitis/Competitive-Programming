@@ -34,14 +34,16 @@ using namespace std;
 #define mxn 1000
 
 void solve() {
-    int n,m ;
-    cin >> n>>m;
-    vector<int> vec(n);
-    for(auto &it: vec) cin>>it;
+    int n ;
+    cin >> n;
 
-    int sum= accumulate(all(vec), 0); 
-    if(sum==m) cout<<"YES\n";
-    else cout<<"NO\n";
+    int mat[n][n]={};
+    for(int i=0; i<n; ++i) mat[i][i]=mat[i][(i+1)%n]=1;
+
+    for(int i=0; i<n; ++i){
+        for(int j=0; j<n; ++j) cout<<mat[i][j]<<" ";
+        cout<<endl;
+    }
 }
 
 signed main() {

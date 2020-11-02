@@ -15,7 +15,7 @@
 #define pi              pair<int,int>
 
 #define PI              3.14159265
-#define M               (int)1000000007
+#define M               1000000007
 #define LINF            LONG_MAX
 #define NL              LONG_MIN
 #define INF             INT_MAX
@@ -33,15 +33,47 @@ using namespace std;
 
 #define mxn 1000
 
-void solve() {
-    int n,m ;
-    cin >> n>>m;
-    vector<int> vec(n);
-    for(auto &it: vec) cin>>it;
+vvi adj;
+vector<ll> val, leaf, tot, dp;
 
-    int sum= accumulate(all(vec), 0); 
-    if(sum==m) cout<<"YES\n";
-    else cout<<"NO\n";
+void dfs(int node, ll up){
+    
+    if(adj[node].size()==0){
+        leaf[node]=1;
+        tot[node]=val[node];
+        dp[node]=val[node];
+        return;
+    }
+    ll l=0, t=0;
+    for(auto child: adj[node]){
+        dfs(child, val[node]+up);
+        l+=leaf[child];
+        t+=tot[child];
+    }
+    tot[node]=t;
+    leaf[node]=l;
+    
+}
+
+
+void solve() {
+    int n;
+    cin >> n;
+    adj.resize(n + 1);
+    for (int i = 2; i <= n; ++i) {
+        int u;
+        cin >> u;
+        adj[u].pb(i);
+    }
+    val.resize(n + 1);
+    for (int i = 1; i <= n; ++i) cin >> val[i + 1];
+
+    leaf.assign(n + 1, 0);
+    tot.assign(n+1, 0);
+    dp.assign(n+1,0);
+    dfs(1,0);
+
+    
 }
 
 signed main() {
@@ -54,7 +86,7 @@ signed main() {
     IOS()
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
 
     for (int i = 0; i < t; ++i)
         solve();

@@ -15,7 +15,7 @@
 #define pi              pair<int,int>
 
 #define PI              3.14159265
-#define M               (int)1000000007
+#define M               1000000007
 #define LINF            LONG_MAX
 #define NL              LONG_MIN
 #define INF             INT_MAX
@@ -34,14 +34,35 @@ using namespace std;
 #define mxn 1000
 
 void solve() {
-    int n,m ;
-    cin >> n>>m;
-    vector<int> vec(n);
-    for(auto &it: vec) cin>>it;
+    ll p, q;
+    cin >> p >> q;
 
-    int sum= accumulate(all(vec), 0); 
-    if(sum==m) cout<<"YES\n";
-    else cout<<"NO\n";
+    vector<pair<ll, ll> > pri;
+    ll dup = q;
+    for (ll i = 2; i * i <= q; ++i)
+        if (q % i == 0) {
+            ll cnt = 0;
+            while (q % i == 0) {
+                cnt++;
+                q /= i;
+            }
+            pri.pb({i, cnt});
+        }
+    if (q > 1) pri.pb({q, 1});
+
+    q = dup;
+    ll ans = 1;
+    for (auto [u, v] : pri) {
+        ll cnt = 0;
+        dup = p;
+        while (dup % u == 0) cnt++, dup /= u;
+        ll req = min(v - 1, cnt);
+        dup = pow(u, cnt - req);
+        ans = max(ans, p / dup);
+    }
+
+    cout << ans << "\n";
+
 }
 
 signed main() {
