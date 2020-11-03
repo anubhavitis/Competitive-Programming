@@ -36,26 +36,24 @@ using namespace std;
 vvi adj;
 vector<ll> val, leaf, tot, dp;
 
-void dfs(int node, ll up){
-    
-    if(adj[node].size()==0){
-        leaf[node]=1;
-        tot[node]=val[node];
-        dp[node]=val[node];
-        return;
+void dfs(int node) {
+    tot[node]=val[node];
+
+    if (adj[node].size() == 0) {
+        leaf[node] = 1;
     }
-    ll l=0, t=0;
-    for(auto child: adj[node]){
-        dfs(child, val[node]+up);
-        l+=leaf[child];
-        t+=tot[child];
+    for (auto child : adj[node]) {
+        dfs(child);
+        leaf[node] += leaf[child];
+        tot[node] += tot[child];
+        dp[node] = max(dp[node], dp[child]);
+
     }
-    tot[node]=t;
-    leaf[node]=l;
     
+    dp[node] = max(dp[node], (tot[node] + leaf[node] - 1) / leaf[node]);
 }
 
-
+    
 void solve() {
     int n;
     cin >> n;
@@ -66,14 +64,18 @@ void solve() {
         adj[u].pb(i);
     }
     val.resize(n + 1);
-    for (int i = 1; i <= n; ++i) cin >> val[i + 1];
+    for (int i = 1; i <= n; ++i) cin >> val[i];
 
-    leaf.assign(n + 1, 0);
-    tot.assign(n+1, 0);
-    dp.assign(n+1,0);
-    dfs(1,0);
-
+    leaf.resize(n+1);
+    tot.resize(n+1);
+    dp.resize(n+1);
+    dfs(1);
     
+    //  deball(leaf)
+    // deball(tot)
+    // deball(dp)
+
+    cout << dp[1] << endl;
 }
 
 signed main() {

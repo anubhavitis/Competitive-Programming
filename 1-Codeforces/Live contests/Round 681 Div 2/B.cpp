@@ -1,7 +1,7 @@
 //Mark XXXII
 #include<bits/stdc++.h>
 
-#define ll              long long
+#define ll             long long
 #define mp              make_pair
 #define pb              push_back
 #define lb              lower_bound
@@ -33,66 +33,34 @@ using namespace std;
 
 #define mxn 1000
 
-ll power(ll x, ll y)
-{
-    ll res = 1;
-    while (y > 0)
-    {
-        if (y & 1)  res = (res * x) % M;
-        y = y >> 1;
-        x = (x * x) % M;
-    }
-    return res % M;
-}
-
-ll C(ll n, ll k, const vector <long long> &fact, const vector <long long> &inv) {
-    if (k > n) return 0;
-    ll multiply = (fact[n] * inv[k]) % M;
-    multiply = (multiply * inv[n - k]) % M;
-    return multiply;
-}
-
 void solve() {
-    int n, y, ind ;
-    cin >> n >> y >> ind;
+    int a, b, n;
+    string s;
+    cin >> a >> b >> s;
+    n = s.size();
 
-    vector <ll> fact(n + 1, 1LL);
-    vector <ll> inv(n + 1, 1LL);
-    for (int i = 1; i <= n; ++i) {
-        fact[i] = (fact[i - 1] * i) % M;
-        inv[i] = power(fact[i], M - 2);
+    string res;
+    res.pb(s[0]);
+    for (int i = 1; i < n; ++i) {
+        if (res.back() == '1' and s[i] == '1') continue;
+        else res.push_back(s[i]);
     }
+    int ans = 0, cnt = 0, ind = -1;
+    for (int i = 0; i < res.size(); ++i) {
 
-    ll l = y - 1, r = n - y;
-    ll cl = 0, cr = 0;
-
-    ll l1 = 0, r1 = n;
-    while (l1 < r1) {
-        ll mid = (l1 + r1) / 2;
-
-        if (mid <= ind) {
-            if (mid != ind) cl++;
-            l1 = mid + 1;
+        if (res[i] == '1') {
+            if (ind == -1) {
+                cnt=0;
+                ind = i;
+                ans += a;
+                continue;
+            }
+            ans += min(cnt * b, a);
+            cnt = 0;
+            ind = i;
         }
-        else {
-            cr++;
-            r1 = mid;
-        }
+        else cnt++;
     }
-
-    ll f1 = C(l, cl, fact, inv);
-
-    f1 = (f1 * fact[cl]) % M;
-    if (cl > l) f1 = 0;
-
-    ll f2 = C(r, cr, fact, inv);
-
-    f2 = (f2 * fact[cr]) % M;
-    if (cr > r) f2 = 0;
-
-    ll ans = (f1 * f2) % M;
-    ans = ( ans * fact[n - cl - cr - 1]) % M;
-
     cout << ans << endl;
 }
 
@@ -104,9 +72,8 @@ signed main() {
     freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
 #endif
     IOS()
-
     int t = 1;
-    // cin >> t;
+    cin >> t;
 
     for (int i = 0; i < t; ++i)
         solve();
