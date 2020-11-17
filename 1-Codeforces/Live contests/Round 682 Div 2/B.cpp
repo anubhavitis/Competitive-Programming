@@ -34,12 +34,18 @@ using namespace std;
 #define mxn 1000
 
 void solve() {
-    int n;
+    int n, f=1;
     cin >> n;
-    for(int i=0; i<n; ++i) cout<<"1 ";
-    cout<<endl;
-
-
+    map<int,int> mp;
+    for(int i=0; i<n; ++i){
+        int j;
+        cin>>j;
+        if(mp[j]) f=0;
+        mp[j]++;
+    }
+    if(f) cout<<"NO\n";
+    else cout<<"YES\n";
+    
 }
 
 signed main() {

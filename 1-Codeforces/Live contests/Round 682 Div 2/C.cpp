@@ -32,14 +32,26 @@ using namespace std;
 //Code begins from here!!
 
 #define mxn 1000
+int n, m;
+
+void ( vvi & arr, int d, int x, int y){
+    
+}
 
 void solve() {
-    int n;
-    cin >> n;
-    for(int i=0; i<n; ++i) cout<<"1 ";
-    cout<<endl;
+    cin >> n >> m;
+    vvi arr(n, vi(m));
+    for (int i = 0; i < n; ++i)
+        for (int j = 0; j < m; ++j) cin >> arr[i][j];
 
+    vvi dup1=arr, dup2=arr;
+    help(dup1, 1);
+    help(dup2, 0)
 
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= m; ++j) cout << arr[i][j] << " ";
+        cout << endl;
+    }
 }
 
 signed main() {
