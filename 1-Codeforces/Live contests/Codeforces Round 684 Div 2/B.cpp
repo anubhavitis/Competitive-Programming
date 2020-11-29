@@ -32,30 +32,39 @@ using namespace std;
 //Code begins from here!!
 
 #define mxn 1000
-int n, m;
+ll n, k;
 
 void solve() {
-    string s;
-    ll c0, c1, h;
-    cin >> n >> c0 >> c1 >> h >> s;
-    // cerr << n << " " << c0 << " " << c1 << " " << h << " " << s << endl;
-    ll cnt0 = 0, cnt1 = 0;
-    for (auto it : s)
-        if (it == '1') cnt1++;
-        else cnt0++;
+    cin >> n >> k;
+    vector<ll> v(n * k + 1, 0);
+    for (ll i = 1; i <= n * k; ++i) cin >> v[i];
+    sort(all(v));
 
-    if (c0 + h < c1) {
-        // deb(1)
-        cout << (c0 * n + h * cnt1) << endl;
-    }
-    else if (c1 + h < c0) {
-        // deb(2)
-        cout << (c1 * n + h * cnt0) << endl;
+    ll x, y, z;
+    ll i = 0, j = n;
+    if (n & 1) {
+        z = n + 1;
+        x = n / 2;
+        y = n / 2 + 1;
     }
     else {
-        // deb(3)
-        cout << (cnt1 * c1 + cnt0 * c0) << endl;
+        z = n;
+        y = n / 2 + 1;
+        x = n / 2 - 1;
     }
+
+    ll a = x;
+    ll b = y;
+
+    ll ans = 0;
+
+    while (n * k - b >= a) {
+        ans += v[v.size() - b];
+        b += y;
+        a += x;
+    }
+
+    cout << ans << endl;
 
 }
 

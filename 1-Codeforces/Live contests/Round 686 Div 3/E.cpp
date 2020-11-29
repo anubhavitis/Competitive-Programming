@@ -1,7 +1,7 @@
 //Mark XXXII
 #include<bits/stdc++.h>
 
-#define ll             long long
+#define ll              long long
 #define mp              make_pair
 #define pb              push_back
 #define lb              lower_bound
@@ -15,7 +15,7 @@
 #define pi              pair<int,int>
 
 #define PI              3.14159265
-#define M               1000000007
+#define M               998244353
 #define LINF            LONG_MAX
 #define NL              LONG_MIN
 #define INF             INT_MAX
@@ -31,45 +31,59 @@ using namespace std;
 
 //Code begins from here!!
 
-#define mxn 1000
-int n, m;
+vvi adj;
+vi dis, vis;
+ll ans;
+
+void dfs(int node, int dad, ll d) {
+	dis[node] = d;
+	vis[node]=1;
+	for (auto child : adj[node])
+		if (child!=dad and !vis[child]) {
+			dfs(child, node, d + 1);
+		}
+		else if(child!=dad and vis[child]){
+			// Length of cycle is dis[node]-dis[child]+1
+		}
+	vis[node]=0;
+}
 
 void solve() {
-    string s;
-    ll c0, c1, h;
-    cin >> n >> c0 >> c1 >> h >> s;
-    // cerr << n << " " << c0 << " " << c1 << " " << h << " " << s << endl;
-    ll cnt0 = 0, cnt1 = 0;
-    for (auto it : s)
-        if (it == '1') cnt1++;
-        else cnt0++;
+	ll n;
+	cin >> n;
+	adj.assign(n+1, vi());
+	dis.assign(n+1, 0);
+	vis.assign(n+1, 0);
 
-    if (c0 + h < c1) {
-        // deb(1)
-        cout << (c0 * n + h * cnt1) << endl;
-    }
-    else if (c1 + h < c0) {
-        // deb(2)
-        cout << (c1 * n + h * cnt0) << endl;
-    }
-    else {
-        // deb(3)
-        cout << (cnt1 * c1 + cnt0 * c0) << endl;
-    }
+	for (int i = 0; i < n; ++i) {
+		int u, v;
+		cin >> u >> v;
+		adj[u].pb(v);
+		adj[v].pb(u);
+	}
 
+	int leaf = 1;
+	for (int i = 1; i <= n; ++i) if (adj[i].size() == 1) {
+			leaf = i;
+			break;
+		}
+	ans = 0;
+	
+	dfs(leaf, -1, 1);
+	cout << ans << endl;
 }
 
 signed main() {
 
 #ifndef ONLINE_JUDGE
-    freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
-    freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
-    freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
+	freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
+	freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
+	freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
 #endif
-    IOS()
-    int t = 1;
-    cin >> t;
+	IOS()
+	int t = 1;
+	cin >> t;
 
-    for (int i = 0; i < t; ++i)
-        solve();
+	for (int i = 0; i < t; ++i)
+		solve();
 }

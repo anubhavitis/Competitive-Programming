@@ -1,7 +1,7 @@
 //Mark XXXII
 #include<bits/stdc++.h>
 
-#define ll             long long
+#define ll              long long
 #define mp              make_pair
 #define pb              push_back
 #define lb              lower_bound
@@ -15,7 +15,7 @@
 #define pi              pair<int,int>
 
 #define PI              3.14159265
-#define M               1000000007
+#define M               998244353
 #define LINF            LONG_MAX
 #define NL              LONG_MIN
 #define INF             INT_MAX
@@ -31,32 +31,61 @@ using namespace std;
 
 //Code begins from here!!
 
-#define mxn 1000
-int n, m;
+ll power(ll x, ll y, ll p)
+{
+    ll res = 1;
+
+    x = x % p;
+
+    if (x == 0) return 0;
+
+    while (y > 0)
+    {
+        if (y & 1)
+            res = (res * x) % p;
+        y = y >> 1;
+        x = (x * x) % p;
+    }
+    return res;
+}
+
+ll gcdExtended(ll a, ll b, ll* x, ll* y);
+
+ll modInverse(ll a, ll m)
+{
+    ll x, y;
+    ll g = gcdExtended(a, m, &x, &y);
+    ll res = (x % m + m) % m;
+    return res;
+}
+
+ll gcdExtended(ll a, ll b, ll* x, ll* y)
+{
+    if (a == 0)
+    {
+        *x = 0, *y = 1;
+        return b;
+    }
+
+    ll x1, y1; // To store results of recursive call
+    ll gcd = gcdExtended(b % a, a, &x1, &y1);
+
+    *x = y1 - (b / a) * x1;
+    *y = x1;
+
+    return gcd;
+}
 
 void solve() {
-    string s;
-    ll c0, c1, h;
-    cin >> n >> c0 >> c1 >> h >> s;
-    // cerr << n << " " << c0 << " " << c1 << " " << h << " " << s << endl;
-    ll cnt0 = 0, cnt1 = 0;
-    for (auto it : s)
-        if (it == '1') cnt1++;
-        else cnt0++;
+    ll n;
+    cin >> n;
+    ll arr[n + 1];
+    arr[1] = arr[2] = 1;
+    for (int i = 3; i <= n; ++i) arr[i] = (arr[i - 1] + arr[i - 2]) % M;
 
-    if (c0 + h < c1) {
-        // deb(1)
-        cout << (c0 * n + h * cnt1) << endl;
-    }
-    else if (c1 + h < c0) {
-        // deb(2)
-        cout << (c1 * n + h * cnt0) << endl;
-    }
-    else {
-        // deb(3)
-        cout << (cnt1 * c1 + cnt0 * c0) << endl;
-    }
-
+    ll ans = arr[n];
+    ll inv = modInverse( power(2, n, M), M);
+    cout << (ans * inv) % M;
 }
 
 signed main() {
@@ -68,7 +97,7 @@ signed main() {
 #endif
     IOS()
     int t = 1;
-    cin >> t;
+    // cin >> t;
 
     for (int i = 0; i < t; ++i)
         solve();

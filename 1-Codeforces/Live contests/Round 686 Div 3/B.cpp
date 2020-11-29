@@ -1,7 +1,7 @@
 //Mark XXXII
 #include<bits/stdc++.h>
 
-#define ll             long long
+#define ll              long long
 #define mp              make_pair
 #define pb              push_back
 #define lb              lower_bound
@@ -15,7 +15,7 @@
 #define pi              pair<int,int>
 
 #define PI              3.14159265
-#define M               1000000007
+#define M               998244353
 #define LINF            LONG_MAX
 #define NL              LONG_MIN
 #define INF             INT_MAX
@@ -31,32 +31,42 @@ using namespace std;
 
 //Code begins from here!!
 
-#define mxn 1000
-int n, m;
+ll power(ll x, ll y, ll p)
+{
+    ll res = 1;
+
+    x = x % p;
+
+    if (x == 0) return 0;
+
+    while (y > 0)
+    {
+        if (y & 1)
+            res = (res * x) % p;
+        y = y >> 1;
+        x = (x * x) % p;
+    }
+    return res;
+}
 
 void solve() {
-    string s;
-    ll c0, c1, h;
-    cin >> n >> c0 >> c1 >> h >> s;
-    // cerr << n << " " << c0 << " " << c1 << " " << h << " " << s << endl;
-    ll cnt0 = 0, cnt1 = 0;
-    for (auto it : s)
-        if (it == '1') cnt1++;
-        else cnt0++;
-
-    if (c0 + h < c1) {
-        // deb(1)
-        cout << (c0 * n + h * cnt1) << endl;
-    }
-    else if (c1 + h < c0) {
-        // deb(2)
-        cout << (c1 * n + h * cnt0) << endl;
-    }
-    else {
-        // deb(3)
-        cout << (cnt1 * c1 + cnt0 * c0) << endl;
+    int n, k;
+    cin>>n;
+    map<int,vector<int> > mp;
+    for(int i=0; i<n; ++i){
+        int t;
+        cin>>t;
+        mp[t].pb(i+1);
     }
 
+    int ans=-1;
+    for(auto it: mp){
+        // cerr<<it.first<<" ";
+        // deball(it.second);
+        if(it.second.size()==1) {ans=it.second[0]; break;}
+    }
+    cout<<ans<<endl;
+    
 }
 
 signed main() {

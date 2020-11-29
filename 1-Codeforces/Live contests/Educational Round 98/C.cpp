@@ -36,27 +36,25 @@ int n, m;
 
 void solve() {
     string s;
-    ll c0, c1, h;
-    cin >> n >> c0 >> c1 >> h >> s;
-    // cerr << n << " " << c0 << " " << c1 << " " << h << " " << s << endl;
-    ll cnt0 = 0, cnt1 = 0;
-    for (auto it : s)
-        if (it == '1') cnt1++;
-        else cnt0++;
+    cin>>s;
 
-    if (c0 + h < c1) {
-        // deb(1)
-        cout << (c0 * n + h * cnt1) << endl;
-    }
-    else if (c1 + h < c0) {
-        // deb(2)
-        cout << (c1 * n + h * cnt0) << endl;
-    }
-    else {
-        // deb(3)
-        cout << (cnt1 * c1 + cnt0 * c0) << endl;
-    }
-
+    int val1=0, v1=0, val2=0, v2=0;
+    for(auto it: s)
+        if(it=='(') {
+            val1++;
+        }
+        else if(it=='[') {
+            val2++;
+        }
+        else if(it==')') {
+            if(val1>0) v1++;
+            val1=max(0, val1-1);
+        }
+        else if(it==']') {
+            if(val2>0) v2++;
+            val2=max(0, val2-1);
+        }
+    cout<<v1+v2<<endl;
 }
 
 signed main() {

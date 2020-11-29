@@ -1,7 +1,7 @@
 //Mark XXXII
 #include<bits/stdc++.h>
 
-#define ll             long long
+#define ll              long long
 #define mp              make_pair
 #define pb              push_back
 #define lb              lower_bound
@@ -15,7 +15,7 @@
 #define pi              pair<int,int>
 
 #define PI              3.14159265
-#define M               1000000007
+#define M               998244353
 #define LINF            LONG_MAX
 #define NL              LONG_MIN
 #define INF             INT_MAX
@@ -31,31 +31,71 @@ using namespace std;
 
 //Code begins from here!!
 
-#define mxn 1000
-int n, m;
+ll power(ll x, ll y, ll p)
+{
+    ll res = 1;
+
+    x = x % p;
+
+    if (x == 0) return 0;
+
+    while (y > 0)
+    {
+        if (y & 1)
+            res = (res * x) % p;
+        y = y >> 1;
+        x = (x * x) % p;
+    }
+    return res;
+}
+
+vector<ll> primeFactors(ll n)
+{
+    vector<ll> res;
+    while (n % 2 == 0)
+    {
+        res.pb(2);
+        n = n / 2;
+    }
+
+    for (ll i = 3; i <= sqrt(n); i = i + 2)
+    {
+        while (n % i == 0)
+        {
+            res.pb(i);
+            n = n / i;
+        }
+    }
+
+    if (n > 2)
+        res.pb(n);
+    return res;
+}
 
 void solve() {
-    string s;
-    ll c0, c1, h;
-    cin >> n >> c0 >> c1 >> h >> s;
-    // cerr << n << " " << c0 << " " << c1 << " " << h << " " << s << endl;
-    ll cnt0 = 0, cnt1 = 0;
-    for (auto it : s)
-        if (it == '1') cnt1++;
-        else cnt0++;
+    ll n;
+    cin >> n;
 
-    if (c0 + h < c1) {
-        // deb(1)
-        cout << (c0 * n + h * cnt1) << endl;
+    vector<ll> prime=primeFactors(n);
+    
+    map<ll, ll> mp;
+    ll l=1;
+    for(auto it: prime){
+        mp[it]++;
+        l=max(mp[it], l);
     }
-    else if (c1 + h < c0) {
-        // deb(2)
-        cout << (c1 * n + h * cnt0) << endl;
+
+    vector<ll > ans(l, 1);
+
+    for(auto it: mp){
+        for(ll i=0; i<it.second; ++i){
+            ans[l-i-1]*=it.first;
+        }
     }
-    else {
-        // deb(3)
-        cout << (cnt1 * c1 + cnt0 * c0) << endl;
-    }
+    cout<<l<<endl;
+    for(auto it: ans) cout<<it<<" ";
+    cout<<endl;
+
 
 }
 

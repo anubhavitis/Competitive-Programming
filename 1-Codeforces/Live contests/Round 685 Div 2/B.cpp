@@ -1,7 +1,7 @@
 //Mark XXXII
 #include<bits/stdc++.h>
 
-#define ll             long long
+#define ll              long long
 #define mp              make_pair
 #define pb              push_back
 #define lb              lower_bound
@@ -15,7 +15,7 @@
 #define pi              pair<int,int>
 
 #define PI              3.14159265
-#define M               1000000007
+#define M               998244353
 #define LINF            LONG_MAX
 #define NL              LONG_MIN
 #define INF             INT_MAX
@@ -31,30 +31,50 @@ using namespace std;
 
 //Code begins from here!!
 
-#define mxn 1000
-int n, m;
+ll power(ll x, ll y, ll p)
+{
+    ll res = 1;
+
+    x = x % p;
+
+    if (x == 0) return 0;
+
+    while (y > 0)
+    {
+        if (y & 1)
+            res = (res * x) % p;
+        y = y >> 1;
+        x = (x * x) % p;
+    }
+    return res;
+}
 
 void solve() {
+    int n, q;
     string s;
-    ll c0, c1, h;
-    cin >> n >> c0 >> c1 >> h >> s;
-    // cerr << n << " " << c0 << " " << c1 << " " << h << " " << s << endl;
-    ll cnt0 = 0, cnt1 = 0;
-    for (auto it : s)
-        if (it == '1') cnt1++;
-        else cnt0++;
+    cin >> n >> q >> s;
 
-    if (c0 + h < c1) {
-        // deb(1)
-        cout << (c0 * n + h * cnt1) << endl;
-    }
-    else if (c1 + h < c0) {
-        // deb(2)
-        cout << (c1 * n + h * cnt0) << endl;
-    }
-    else {
-        // deb(3)
-        cout << (cnt1 * c1 + cnt0 * c0) << endl;
+    // int cnt0 = 0, cnt1 = 1;
+    // vector<int> z(n), o(n);
+    // for (int i = n - 1; i >= 0; --i) {
+    //     z[i] = cnt0;
+    //     o[i] = cnt1;
+
+    //     if (s[i] == '0') cnt0++;
+    //     else cnt1++;
+    // }
+
+    for (int j = 0; j < q; ++j) {
+        int u, v;
+        cin >> u >> v;
+        u--;
+        v--;
+        bool f = 0;
+        for (int i = 0; i < u; ++i) if (s[i] == s[u]) f = 1;
+        for (int i = v + 1; i < n; ++i) if (s[i] == s[v]) f = 1;
+
+        if (f) cout << "YES\n";
+        else cout << "NO\n";
     }
 
 }

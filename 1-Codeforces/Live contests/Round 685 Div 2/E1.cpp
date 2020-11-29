@@ -1,7 +1,7 @@
 //Mark XXXII
 #include<bits/stdc++.h>
 
-#define ll             long long
+#define ll              long long
 #define mp              make_pair
 #define pb              push_back
 #define lb              lower_bound
@@ -15,7 +15,7 @@
 #define pi              pair<int,int>
 
 #define PI              3.14159265
-#define M               1000000007
+#define M               998244353
 #define LINF            LONG_MAX
 #define NL              LONG_MIN
 #define INF             INT_MAX
@@ -31,32 +31,44 @@ using namespace std;
 
 //Code begins from here!!
 
-#define mxn 1000
-int n, m;
-
 void solve() {
-    string s;
-    ll c0, c1, h;
-    cin >> n >> c0 >> c1 >> h >> s;
-    // cerr << n << " " << c0 << " " << c1 << " " << h << " " << s << endl;
-    ll cnt0 = 0, cnt1 = 0;
-    for (auto it : s)
-        if (it == '1') cnt1++;
-        else cnt0++;
+    int n;
+    cin>>n;
 
-    if (c0 + h < c1) {
-        // deb(1)
-        cout << (c0 * n + h * cnt1) << endl;
-    }
-    else if (c1 + h < c0) {
-        // deb(2)
-        cout << (c1 * n + h * cnt0) << endl;
-    }
-    else {
-        // deb(3)
-        cout << (cnt1 * c1 + cnt0 * c0) << endl;
-    }
+    vector<int> v(n);
 
+    for(int i=0; i+2<n; ++i){
+        vector<int> ret(6);
+        int j=0;
+        cout<<"OR "<<i+1<<" "<<i+2<<endl;
+        cout.flush();
+        cin>>ret[j++];
+        cout<<"AND "<<i+1<<" "<<i+2<<endl;
+        cout.flush();
+        cin>>ret[j++];
+
+        cout<<"OR "<<i+3<<" "<<i+2<<endl;
+        cout.flush();
+        cin>>ret[j++];
+        cout<<"AND "<<i+3<<" "<<i+2<<endl;
+        cout.flush();
+        cin>>ret[j++];
+
+        cout<<"OR "<<i+1<<" "<<i+2<<endl;
+        cout.flush();
+        cin>>ret[j++];
+        cout<<"AND "<<i+3<<" "<<i+2<<endl;
+        cout.flush();
+        cin>>ret[j++];
+
+        vector<int> cals(6);
+        for(int j=0; j<6; j+=2){
+            for(int k=0; (1<<k)<=ret[j] and (1<<k)<=ret[j+1]; ++k){
+                int val= 1<<k;
+                if()
+            }
+        }
+    }
 }
 
 signed main() {
