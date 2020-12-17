@@ -30,49 +30,36 @@
 using namespace std;
 
 //Code begins from here!!
-
-ll power(ll x, ll y, ll p)
-{
-    ll res = 1;
-
-    x = x % p;
-
-    if (x == 0) return 0;
-
-    while (y > 0)
-    {
-        if (y & 1)
-            res = (res * x) % p;
-        y = y >> 1;
-        x = (x * x) % p;
-    }
-    return res;
+vi tree, val;
+void build(int t, int s, int e){
+	
 }
 
 void solve() {
-    ll n, m, r, c;
-    cin >> n >> m >> r >> c;
+	int n, m;
+	cin >> n;
+	val.resize(n);
+	for (auto &it : val) cin >> it;
 
-    ll res=0;
-    res=max(res, abs(1LL-r)+ abs(1LL-c));
-    res=max(res, abs(n-r)+ abs(m-c));
-    res=max(res, abs(1LL-r)+ abs(m-c));
-    res=max(res, abs(n-r)+ abs(1LL-c));
+	tree.resize(4*n);
+	build(1, 0, n-1);
+	cin>>m;
+	while(m--){
 
-    cout<<res<<endl;
+	}
 }
 
 signed main() {
 
 #ifndef ONLINE_JUDGE
-    freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
-    freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
-    freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
+	freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
+	freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
+	freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
 #endif
-    IOS()
-    int t = 1;
-    cin >> t;
+	IOS()
+	int t = 1;
+	// cin >> t;
 
-    for (int i = 0; i < t; ++i)
-        solve();
+	for (int i = 0; i < t; ++i)
+		solve();
 }

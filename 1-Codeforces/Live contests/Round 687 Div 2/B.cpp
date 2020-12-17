@@ -50,16 +50,35 @@ ll power(ll x, ll y, ll p)
 }
 
 void solve() {
-    ll n, m, r, c;
-    cin >> n >> m >> r >> c;
+    int n, k, res = INT_MAX, ans;
+    cin >> n >> k;
+    vi a(n);
+    for (auto &it : a) cin >> it;
 
-    ll res=0;
-    res=max(res, abs(1LL-r)+ abs(1LL-c));
-    res=max(res, abs(n-r)+ abs(m-c));
-    res=max(res, abs(1LL-r)+ abs(m-c));
-    res=max(res, abs(n-r)+ abs(1LL-c));
+    map<int, vi> mp;
+    for (int i = 1 ; i <= n ; i++) mp[a[i - 1]].pb(i);
 
-    cout<<res<<endl;
+    for (auto it : mp) {
+        int val = it.first, fl = 0, temp = -1;
+        ans = 0;
+        for (int i = 0 ; i < n ; i++) {
+            if (a[i] != val) {
+                if (!fl) {
+                    temp = i;
+                    ans++;
+                    fl = 1;
+                }
+                else {
+                    if (i >= temp + k) {
+                        ans++;
+                        temp = i;
+                    }
+                }
+            }
+        }
+        res = min(res, ans);
+    }
+    cout << res << "\n";
 }
 
 signed main() {

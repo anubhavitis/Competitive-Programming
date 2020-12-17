@@ -1,4 +1,4 @@
-//Mark XXXII
+//Mark XXXIII
 #include<bits/stdc++.h>
 
 #define ll              long long
@@ -14,6 +14,7 @@
 #define vvi             vector<vi>
 #define pi              pair<int,int>
 
+#define endl			"\n"
 #define PI              3.14159265
 #define M               998244353
 #define LINF            LONG_MAX
@@ -29,50 +30,35 @@
 
 using namespace std;
 
+struct HASH {
+	size_t operator()(const pair<int, int>&x)const {
+		return (size_t) x.first * 37U + (size_t) x.second;
+	}
+};
+
 //Code begins from here!!
-
-ll power(ll x, ll y, ll p)
-{
-    ll res = 1;
-
-    x = x % p;
-
-    if (x == 0) return 0;
-
-    while (y > 0)
-    {
-        if (y & 1)
-            res = (res * x) % p;
-        y = y >> 1;
-        x = (x * x) % p;
-    }
-    return res;
-}
-
+int n, m;
+vector < ll > v = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 29, 39, 49, 59, 69, 79, 89, 189, 289, 389, 489, 589, 689, 789, 1789, 2789, 3789, 4789, 5789, 6789, 16789, 26789, 36789, 46789, 56789, 156789, 256789, 356789, 456789, 1456789, 2456789, 3456789, 13456789, 23456789, 123456789};
 void solve() {
-    ll n, m, r, c;
-    cin >> n >> m >> r >> c;
-
-    ll res=0;
-    res=max(res, abs(1LL-r)+ abs(1LL-c));
-    res=max(res, abs(n-r)+ abs(m-c));
-    res=max(res, abs(1LL-r)+ abs(m-c));
-    res=max(res, abs(n-r)+ abs(1LL-c));
-
-    cout<<res<<endl;
+	cin >> n;
+	if (n > 45) cout << "-1\n";
+	else cout << v[n] << endl;
 }
+
+
 
 signed main() {
 
 #ifndef ONLINE_JUDGE
-    freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
-    freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
-    freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
+	freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
+	freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
+	freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
 #endif
-    IOS()
-    int t = 1;
-    cin >> t;
+	IOS()
+	ll t = 1;
+	cin >> t;
+	deb(v.size())
 
-    for (int i = 0; i < t; ++i)
-        solve();
+	for (int i = 0; i < t; ++i)
+		solve();
 }

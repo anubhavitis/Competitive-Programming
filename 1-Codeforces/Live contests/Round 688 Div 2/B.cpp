@@ -31,48 +31,49 @@ using namespace std;
 
 //Code begins from here!!
 
-ll power(ll x, ll y, ll p)
-{
-    ll res = 1;
-
-    x = x % p;
-
-    if (x == 0) return 0;
-
-    while (y > 0)
-    {
-        if (y & 1)
-            res = (res * x) % p;
-        y = y >> 1;
-        x = (x * x) % p;
-    }
-    return res;
-}
-
 void solve() {
-    ll n, m, r, c;
-    cin >> n >> m >> r >> c;
+	ll n, m;
+	cin >> n;
+	vector<ll> v(n);
+	for (auto &it : v) cin >> it;
 
-    ll res=0;
-    res=max(res, abs(1LL-r)+ abs(1LL-c));
-    res=max(res, abs(n-r)+ abs(m-c));
-    res=max(res, abs(1LL-r)+ abs(m-c));
-    res=max(res, abs(n-r)+ abs(1LL-c));
-
-    cout<<res<<endl;
+	vector<ll> diff(n, 0);
+	m = -1;
+	ll sum = 0;
+	for (ll i = n - 2; i >= 0; --i) {
+		diff[i] = abs(v[i] - v[i + 1]);
+		sum += diff[i];
+	}
+	vector<ll> ans(n, 0);
+	ll res = 9223372036854775807;
+	for (ll i = 0; i < n; ++i) {
+		if (!i) {
+			ans[i] = sum - abs(v[0] - v[1]);
+		}
+		else if (i == n - 1) {
+			ans[i] = sum - abs(v[n - 1] - v[n - 2]);
+		}
+		else {
+			ll temp = sum - abs(v[i] - v[i - 1]) - abs(v[i] - v[i + 1]);
+			ans[i] = temp + abs(v[i - 1] - v[i + 1]);
+		}
+		res = min(res, ans[i]);
+	}
+	// deball(ans)
+	cout << res << endl;
 }
 
 signed main() {
 
 #ifndef ONLINE_JUDGE
-    freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
-    freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
-    freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
+	freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
+	freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
+	freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
 #endif
-    IOS()
-    int t = 1;
-    cin >> t;
+	IOS()
+	int t = 1;
+	cin >> t;
 
-    for (int i = 0; i < t; ++i)
-        solve();
+	for (int i = 0; i < t; ++i)
+		solve();
 }

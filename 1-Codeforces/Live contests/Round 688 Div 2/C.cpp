@@ -28,51 +28,48 @@
 #define rrep(i,b,c)     for(i=b; i>=c; --i)
 
 using namespace std;
-
 //Code begins from here!!
 
-ll power(ll x, ll y, ll p)
-{
-    ll res = 1;
-
-    x = x % p;
-
-    if (x == 0) return 0;
-
-    while (y > 0)
-    {
-        if (y & 1)
-            res = (res * x) % p;
-        y = y >> 1;
-        x = (x * x) % p;
-    }
-    return res;
-}
-
 void solve() {
-    ll n, m, r, c;
-    cin >> n >> m >> r >> c;
+	int n; cin >> n;
+	vector<string> arr(n);
+	for (auto &it : arr) cin >> it;
 
-    ll res=0;
-    res=max(res, abs(1LL-r)+ abs(1LL-c));
-    res=max(res, abs(n-r)+ abs(m-c));
-    res=max(res, abs(1LL-r)+ abs(m-c));
-    res=max(res, abs(n-r)+ abs(1LL-c));
+	for (char d = '0'; d <= '9'; ++d) {
+		int ans = 0;
+		for (int r = 0; r < 4; ++r) {
+			int m = -1;
+			for (int i = 0; i < n; ++i)
+				for (int j = 0; j < n; ++j)
+					if (arr[i][j] == d) m = max(i, m);
 
-    cout<<res<<endl;
+			if (m == -1) continue;
+			for (int i = 0; i < n; ++i)
+				for (int j = 0; j < n; ++j)
+					if (arr[i][j] == d)
+						ans = max(ans, max(j, n - 1 - j) * abs(m - i));
+			auto temp = arr;
+			for (int i = 0; i < n; ++i)
+				for (int j = 0; j < n; ++j)
+					temp[i][j] = arr[j][n - 1 - i];
+			arr = temp;
+		}
+		cout << ans << " ";
+	}
+	cout << "\n";
 }
 
 signed main() {
 
 #ifndef ONLINE_JUDGE
-    freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
-    freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
-    freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
+	freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
+	freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
+	freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
 #endif
-    IOS()
-    int t = 1;
-    cin >> t;
+	IOS()
+	int t = 1;
+	cin >> t;
 
-    for (int i = 0; i < t; ++i)
-        solve();
+	for (int i = 0; i < t; ++i)
+		solve();
 }

@@ -50,16 +50,47 @@ ll power(ll x, ll y, ll p)
 }
 
 void solve() {
-    ll n, m, r, c;
-    cin >> n >> m >> r >> c;
+    int n;
+    cin >> n;
+    vector<ll> v(n);
+    for (auto &it : v) cin >> it;
 
-    ll res=0;
-    res=max(res, abs(1LL-r)+ abs(1LL-c));
-    res=max(res, abs(n-r)+ abs(m-c));
-    res=max(res, abs(1LL-r)+ abs(m-c));
-    res=max(res, abs(n-r)+ abs(1LL-c));
+    for (int i = 1; i < n; ++i) {
+        if (v[i] == v[i - 1]) {
+            cout << "1\n";
+            return;
+        }
+    }
 
-    cout<<res<<endl;
+    ll res = v[0];
+    int ans = n;
+    for (int i = 1; i < n - 1 ; ++i) {
+        res ^= v[i];
+        if (res > v[i + 1]) {
+            for (int j = 0; j < i; ++j) {
+                if (res > v[i + 1]) ans = min(ans, i - j);
+                else break;
+                res ^= v[j];
+            }
+            res = v[++i];
+        }
+    }
+
+    res = v[n - 1];
+    for (int i = n - 2; i > 0 ; --i) {
+        res ^= v[i];
+        if (res < v[i - 1]) {
+            for (int j = n - 1; j != i; --j) {
+                if (res < v[i - 1]) ans = min(ans, j - i);
+                else break;
+                res ^= v[j];
+            }
+            res = v[--i];
+        }
+    }
+
+    if (ans == n) cout << "-1\n";
+    else cout << ans << endl;
 }
 
 signed main() {
@@ -71,7 +102,7 @@ signed main() {
 #endif
     IOS()
     int t = 1;
-    cin >> t;
+    // cin >> t;
 
     for (int i = 0; i < t; ++i)
         solve();

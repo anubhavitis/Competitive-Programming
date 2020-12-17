@@ -1,4 +1,4 @@
-//Mark XXXII
+//Mark XXXIII
 #include<bits/stdc++.h>
 
 #define ll              long long
@@ -14,6 +14,7 @@
 #define vvi             vector<vi>
 #define pi              pair<int,int>
 
+#define endl			"\n"
 #define PI              3.14159265
 #define M               998244353
 #define LINF            LONG_MAX
@@ -29,50 +30,64 @@
 
 using namespace std;
 
+struct HASH {
+	size_t operator()(const pair<int, int>&x)const {
+		return (size_t) x.first * 37U + (size_t) x.second;
+	}
+};
+
 //Code begins from here!!
+ll n, m;
 
-ll power(ll x, ll y, ll p)
+ll binary_lower(ll value, ll arr[], ll n)
 {
-    ll res = 1;
+	ll start = 0;
+	ll end = n - 1;
+	ll ans = -1;
+	ll mid;
 
-    x = x % p;
-
-    if (x == 0) return 0;
-
-    while (y > 0)
-    {
-        if (y & 1)
-            res = (res * x) % p;
-        y = y >> 1;
-        x = (x * x) % p;
-    }
-    return res;
+	while (start <= end) {
+		mid = (start + end) / 2;
+		if (arr[mid] >= value) {
+			end = mid - 1;
+			ans = mid;
+		}
+		else start = mid + 1;
+	}
+	return ans;
 }
 
+ll countTriplet(ll arr[], ll n, ll k)
+{
+	ll count = 0;
+	sort(arr, arr + n);
+	for (ll i = 2; i < n; i++) {
+		ll cur = binary_lower(arr[i] - k, arr, n);
+		if (cur <= i - 2) count += ((i - cur) * (i - cur - 1)) / 2;
+	}
+
+	return count;
+}
 void solve() {
-    ll n, m, r, c;
-    cin >> n >> m >> r >> c;
+	cin >> n;
 
-    ll res=0;
-    res=max(res, abs(1LL-r)+ abs(1LL-c));
-    res=max(res, abs(n-r)+ abs(m-c));
-    res=max(res, abs(1LL-r)+ abs(m-c));
-    res=max(res, abs(n-r)+ abs(1LL-c));
+	ll arr[n];
+	for (ll i = 0; i < n; ++i) cin >> arr[i];
+	cout << countTriplet(arr, n, 2) << endl;
 
-    cout<<res<<endl;
 }
 
 signed main() {
 
 #ifndef ONLINE_JUDGE
-    freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
-    freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
-    freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
+	freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
+	freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
+	freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
 #endif
-    IOS()
-    int t = 1;
-    cin >> t;
+	IOS()
+	ll t = 1;
+	cin >> t;
 
-    for (int i = 0; i < t; ++i)
-        solve();
+	for (int i = 0; i < t; ++i)
+		solve();
 }

@@ -1,4 +1,4 @@
-//Mark XXXII
+//Mark XXXIII
 #include<bits/stdc++.h>
 
 #define ll              long long
@@ -14,6 +14,7 @@
 #define vvi             vector<vi>
 #define pi              pair<int,int>
 
+#define endl			"\n"
 #define PI              3.14159265
 #define M               998244353
 #define LINF            LONG_MAX
@@ -29,50 +30,48 @@
 
 using namespace std;
 
+struct HASH {
+	size_t operator()(const pair<int, int>&x)const {
+		return (size_t) x.first * 37U + (size_t) x.second;
+	}
+};
+
 //Code begins from here!!
-
-ll power(ll x, ll y, ll p)
-{
-    ll res = 1;
-
-    x = x % p;
-
-    if (x == 0) return 0;
-
-    while (y > 0)
-    {
-        if (y & 1)
-            res = (res * x) % p;
-        y = y >> 1;
-        x = (x * x) % p;
-    }
-    return res;
-}
+int n, m;
 
 void solve() {
-    ll n, m, r, c;
-    cin >> n >> m >> r >> c;
-
-    ll res=0;
-    res=max(res, abs(1LL-r)+ abs(1LL-c));
-    res=max(res, abs(n-r)+ abs(m-c));
-    res=max(res, abs(1LL-r)+ abs(m-c));
-    res=max(res, abs(n-r)+ abs(1LL-c));
-
-    cout<<res<<endl;
+	cin >> n;
+	deque<int> dq;
+	for(int i=0; i<n; ++i){
+		int t;
+		cin>>t;
+		dq.push_back(t);
+	}
+	for(int i=0; i<n; ++i){
+		if(i&1){
+			cout<<dq.back()<<" ";
+			dq.pop_back();
+		}
+		else
+		{
+			cout<<dq.front()<<" ";
+			dq.pop_front();
+		}
+	}
+	cout<<endl;
 }
 
 signed main() {
 
 #ifndef ONLINE_JUDGE
-    freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
-    freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
-    freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
+	freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
+	freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
+	freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
 #endif
-    IOS()
-    int t = 1;
-    cin >> t;
+	IOS()
+	ll t = 1;
+	cin >> t;
 
-    for (int i = 0; i < t; ++i)
-        solve();
+	for (int i = 0; i < t; ++i)
+		solve();
 }

@@ -1,4 +1,4 @@
-//Mark XXXII
+//Mark XXXIII
 #include<bits/stdc++.h>
 
 #define ll              long long
@@ -14,6 +14,7 @@
 #define vvi             vector<vi>
 #define pi              pair<int,int>
 
+#define endl			"\n"
 #define PI              3.14159265
 #define M               998244353
 #define LINF            LONG_MAX
@@ -29,50 +30,49 @@
 
 using namespace std;
 
+struct HASH {
+	size_t operator()(const pair<int, int>&x)const {
+		return (size_t) x.first * 37U + (size_t) x.second;
+	}
+};
+
 //Code begins from here!!
-
-ll power(ll x, ll y, ll p)
-{
-    ll res = 1;
-
-    x = x % p;
-
-    if (x == 0) return 0;
-
-    while (y > 0)
-    {
-        if (y & 1)
-            res = (res * x) % p;
-        y = y >> 1;
-        x = (x * x) % p;
-    }
-    return res;
-}
-
+int n, m;
 void solve() {
-    ll n, m, r, c;
-    cin >> n >> m >> r >> c;
+	cin >> n;
+	vi v(n);
+	ll sum = 0;
+	for (auto &it : v) cin >> it, sum += it;
 
-    ll res=0;
-    res=max(res, abs(1LL-r)+ abs(1LL-c));
-    res=max(res, abs(n-r)+ abs(m-c));
-    res=max(res, abs(1LL-r)+ abs(m-c));
-    res=max(res, abs(n-r)+ abs(1LL-c));
-
-    cout<<res<<endl;
+	for (int i = n; i > 0; --i)
+		if (sum % i) continue;
+		else {
+			int temp = sum / i;
+			ll cnt = 0;
+			bool f = true;
+			for (int j = 0; j < n; ++j) {
+				cnt += v[j];
+				if (cnt > temp) { f = false; break; }
+				else if (cnt == temp) cnt = 0;
+			}
+			if (f) {
+				cout << n - i << endl;
+				return;
+			}
+		}
 }
 
 signed main() {
 
 #ifndef ONLINE_JUDGE
-    freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
-    freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
-    freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
+	freopen ( "/home/zeddie/Documents/input.txt", "r", stdin );
+	freopen ( "/home/zeddie/Documents/output.txt", "w", stdout );
+	freopen ( "/home/zeddie/Documents/error.txt", "w", stderr );
 #endif
-    IOS()
-    int t = 1;
-    cin >> t;
+	IOS()
+	ll t = 1;
+	cin >> t;
 
-    for (int i = 0; i < t; ++i)
-        solve();
+	for (int i = 0; i < t; ++i)
+		solve();
 }

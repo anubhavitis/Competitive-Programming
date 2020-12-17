@@ -50,15 +50,26 @@ ll power(ll x, ll y, ll p)
 }
 
 void solve() {
-    ll n, m, r, c;
-    cin >> n >> m >> r >> c;
+    string s;
+    ll n, p, k, x, y;
+    cin >> n >> p >> k >> s >> x >> y;
 
-    ll res=0;
-    res=max(res, abs(1LL-r)+ abs(1LL-c));
-    res=max(res, abs(n-r)+ abs(m-c));
-    res=max(res, abs(1LL-r)+ abs(m-c));
-    res=max(res, abs(n-r)+ abs(1LL-c));
+    vector<ll> dp(n, 0);
+    for (ll i = n - 1; i >= 0; --i) {
+        if (s[i] == '1') dp[i] = 0;
+        else dp[i] = x;
 
+        if (i+k >= n ) continue;
+        dp[i]+=dp[i+k];
+    }
+    ll res= LONG_MAX;
+
+    // deball(dp)
+    for(ll i=0; i<n; ++i){
+        ll ans=y*i+dp[i+p-1];
+        res=min(res,ans);
+        // deb(ans)
+    }
     cout<<res<<endl;
 }
 
