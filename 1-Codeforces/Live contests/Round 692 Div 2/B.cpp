@@ -37,21 +37,26 @@ struct HASH {
 };
 
 //Code begins from here!!
-ll n, m;
 
+bool strr(ll x){
+	string s=to_string(x);
+	int arr[10]={};
+	for(auto it: s) arr[it-'0']=1;
+
+	for(int i=1; i<10; ++i)
+		if(arr[i] and x%i!=0) return 0;
+	return 1;
+
+}
 
 void solve() {
-	string s;
-	cin>>n>>s;
-	int cnt=0;
-	while(s.back()==')'){
-		cnt++;
-		s.pop_back();
-	}
+	ll n;
+	cin>>n;
+	while(!strr(n)) n++;
+	cout<<n<<endl;
 
-	if(cnt>s.size()) cout<<"Yes\n";
-	else cout<<"No\n";
 }
+
 
 signed main() {
 

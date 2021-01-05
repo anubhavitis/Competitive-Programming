@@ -16,7 +16,7 @@
 
 #define endl			"\n"
 #define PI              3.14159265
-#define M               998244353
+#define M               1e9+7
 #define LINF            LONG_MAX
 #define NL              LONG_MIN
 #define INF             INT_MAX
@@ -30,27 +30,33 @@
 
 using namespace std;
 
-struct HASH {
-	size_t operator()(const pair<int, int>&x)const {
-		return (size_t) x.first * 37U + (size_t) x.second;
-	}
-};
-
-//Code begins from here!!
-ll n, m;
-
 
 void solve() {
-	string s;
-	cin>>n>>s;
-	int cnt=0;
-	while(s.back()==')'){
-		cnt++;
-		s.pop_back();
+	int n;
+	cin >> n;
+
+	vector< pi > v(n);
+	vi ih(n), iw(n);
+	for (int i = 0; i < n; ++i) cin >> v[i].first >> v[i].second, ih[i] = i, iw[i] = i;
+
+	sort(all(ih), [&](int &i, int &j) {
+		if (v[i].first < v[j].first and v[i].second < v[j].second) return true;
+		if (v[i].first < v[j].second and v[i].second < v[j].first) return true;
+		return false;
+	});
+
+
+	vector<int> ans(n, -1);
+	for (int p = n - 2; p >= 0; --p) {
+		int i = ih[p], j = ih[p + 1];
+
+		if (v[i].first > v[j].first and v[i].second > v[j].second) ans[i] = j + 1;
+		if (v[i].first > v[j].second and v[i].second > v[j].first) ans[i] = j + 1;
 	}
 
-	if(cnt>s.size()) cout<<"Yes\n";
-	else cout<<"No\n";
+	for (auto it : ans) cout << it << " ";
+	cout << endl;
+
 }
 
 signed main() {
@@ -63,7 +69,6 @@ signed main() {
 	IOS()
 	ll t = 1;
 	cin >> t;
-
 	for (int i = 0; i < t; ++i)
 		solve();
 }

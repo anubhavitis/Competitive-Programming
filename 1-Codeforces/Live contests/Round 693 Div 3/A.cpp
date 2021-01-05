@@ -16,7 +16,7 @@
 
 #define endl			"\n"
 #define PI              3.14159265
-#define M               998244353
+#define M               1e9+7
 #define LINF            LONG_MAX
 #define NL              LONG_MIN
 #define INF             INT_MAX
@@ -30,27 +30,17 @@
 
 using namespace std;
 
-struct HASH {
-	size_t operator()(const pair<int, int>&x)const {
-		return (size_t) x.first * 37U + (size_t) x.second;
-	}
-};
-
-//Code begins from here!!
-ll n, m;
-
 
 void solve() {
-	string s;
-	cin>>n>>s;
-	int cnt=0;
-	while(s.back()==')'){
-		cnt++;
-		s.pop_back();
-	}
+	long w, h, n;
+	cin>>w>>h>>n;
 
-	if(cnt>s.size()) cout<<"Yes\n";
-	else cout<<"No\n";
+	long ans=1;
+	while(w%2==0) w/=2, ans*=2;
+	while(h%2==0) h/=2, ans*=2;
+
+	if(ans>=n) cout<<"YES\n";
+	else cout<<"NO\n";
 }
 
 signed main() {
@@ -63,7 +53,6 @@ signed main() {
 	IOS()
 	ll t = 1;
 	cin >> t;
-
 	for (int i = 0; i < t; ++i)
 		solve();
 }

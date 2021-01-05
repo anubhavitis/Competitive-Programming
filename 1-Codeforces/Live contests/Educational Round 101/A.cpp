@@ -16,7 +16,7 @@
 
 #define endl			"\n"
 #define PI              3.14159265
-#define M               998244353
+#define M               1e9+7
 #define LINF            LONG_MAX
 #define NL              LONG_MIN
 #define INF             INT_MAX
@@ -30,29 +30,33 @@
 
 using namespace std;
 
-struct HASH {
-	size_t operator()(const pair<int, int>&x)const {
-		return (size_t) x.first * 37U + (size_t) x.second;
-	}
-};
-
-//Code begins from here!!
-ll n, m;
-
 
 void solve() {
 	string s;
-	cin>>n>>s;
-	int cnt=0;
-	while(s.back()==')'){
-		cnt++;
-		s.pop_back();
+	cin >> s;
+	int n = s.size();
+
+	int f1 = -1, f2 = -1, cnt = 0;
+	for (int i = 0; i < n; ++i)
+		if (s[i] == '?') cnt++;
+		else if (s[i] == '(') f1 = i;
+		else f2 = i;
+
+// 	if (f1 < f2) {
+// 		if (cnt & 1) cout << "NO\n";
+// 		else cout << "YES\n";
+// 	}
+// 	else {
+// 		if (f2 and f1 < n and !(cnt & 1)) cout << "YES\n";
+// 		else cout << "NO\n";
+// 	}
+// }
+	if (n & 1) cout << "NO\n";
+	else {
+		if (f2 == 0 or f1 == n - 1) cout << "NO\n";
+		else cout << "YES\n";
 	}
-
-	if(cnt>s.size()) cout<<"Yes\n";
-	else cout<<"No\n";
 }
-
 signed main() {
 
 #ifndef ONLINE_JUDGE
@@ -63,7 +67,6 @@ signed main() {
 	IOS()
 	ll t = 1;
 	cin >> t;
-
 	for (int i = 0; i < t; ++i)
 		solve();
 }

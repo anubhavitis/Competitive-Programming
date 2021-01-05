@@ -16,7 +16,7 @@
 
 #define endl			"\n"
 #define PI              3.14159265
-#define M               998244353
+#define M               1e9+7
 #define LINF            LONG_MAX
 #define NL              LONG_MIN
 #define INF             INT_MAX
@@ -36,21 +36,29 @@ struct HASH {
 	}
 };
 
-//Code begins from here!!
-ll n, m;
+//##############################################################Code begins from here!!
+vi dad;
+
+int find(int n) {
+	if (dad[n] == 0 or dad[n] == n) return dad[n] = n;
+	return dad[n] = find(dad[n]);
+}
 
 
 void solve() {
-	string s;
-	cin>>n>>s;
-	int cnt=0;
-	while(s.back()==')'){
-		cnt++;
-		s.pop_back();
-	}
+	int n, m, fl = 0;
+	cin >> n >> m;
+	dad.assign(n + 1, 0);
 
-	if(cnt>s.size()) cout<<"Yes\n";
-	else cout<<"No\n";
+	for (int i = 0; i < m; ++i) {
+		int x, y;
+		cin >> x >> y;
+		if (x == y) continue;
+		fl++;
+		if (find(x) == find(y)) fl++;
+		else dad[x] = find(y);
+	}
+	cout << fl << endl;
 }
 
 signed main() {
@@ -63,7 +71,6 @@ signed main() {
 	IOS()
 	ll t = 1;
 	cin >> t;
-
 	for (int i = 0; i < t; ++i)
 		solve();
 }
