@@ -13,8 +13,6 @@
 #define vi              vector<int>
 #define vvi             vector<vi>
 #define pi              pair<int,int>
-#define F 				first
-#define S 				second
 
 #define endl			"\n"
 #define PI              3.14159265
@@ -32,37 +30,24 @@
 
 using namespace std;
 
+vvi g;
 
 void solve() {
 	int n;
-	cin >> n;
+	cin>>n;
 
-	vector< pair< pi, int> > mens(n);
+	vector<ll> v(n);
+	for(auto &it: v) cin>>it;
 
-	for (int i = 0; i < n; ++i) {
-		int u, v; cin >> u >> v;
-		mens[i].F = {min(u, v), max(u, v)};
-		mens[i].S = i;
-	}
-	
-	sort(all(mens));
-	vi ans(n, -1), val(n), ind(n);
+	sort(all(v));
 
-	for (int i = 0; i < n; ++i) {
-		val[i] = mens[i].F.S;
-		ind[i] = mens[i].S;
-
-		int pos = lb(all(mens), mp( mp( mens[i].F.F, -1), -1) ) - mens.begin() - 1;
-		if (pos >= 0 and val[pos] < mens[i].F.S) ans[mens[i].S] = ind[pos] + 1;
-
-		if (i and val[i] >= val[i - 1]) {
-			val[i] = val[i - 1];
-			ind[i] = ind[i - 1];
+	vi vis(n,0);
+	for(int i=0; i<n; ++i)
+		if(!vis[i]){
+			vi temp;
+			for(int j=)
 		}
-	}
-
-	for (auto it : ans) cout << it << " ";
-	cout << endl;
+	
 }
 
 signed main() {
