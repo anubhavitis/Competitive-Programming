@@ -37,7 +37,7 @@ void solve() {
 	int m, n;
 	cin >> m >> n;
 
-
+	cout << endl;
 }
 
 signed main() {
