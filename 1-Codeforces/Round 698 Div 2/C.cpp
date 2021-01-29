@@ -35,14 +35,41 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	int n;
-	cin>>n;
-	vi arr(2*n);
-	for(auto &it: arr) cin>>it;
+	ll n; cin >> n;
+	vector<ll> num(2 * n);
+	for (auto &it : num) cin >> it;
+	sort(all(num));
 
-	sort(all(arr));
+	vector<ll> x;
+	for (int i = 0; i < 2 * n; i += 2) {
+		if (num[i] != num[i + 1]) {
+			cout << "NO\n";
+			return;
+		}
+		if( x.size()>0 and num[i]==x.back()){
+			cout<<"NO\n";
+			return;
+		}
+		x.pb(num[i]);
+	}
 
-	
+
+	ll c = 0;
+	for (ll i = n - 1, div = 2 * n; i >= 0; --i, div -= 2) {
+		x[i] -= 2 * c;
+		if (x[i] <= 0) {
+			cout << "NO\n";
+			return;
+		}
+		ll r = x[i] % div, q = x[i] / div;
+
+		if (r == 0 and q) c += q;
+		else {
+			cout << "NO\n";
+			return;
+		}
+	}
+	cout << "YES\n";
 }
 
 

@@ -35,14 +35,22 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	int n;
-	cin>>n;
-	vi arr(2*n);
-	for(auto &it: arr) cin>>it;
+	int q, d;
+	cin >> q >> d;
+	deb(q)
+	for(int i=0; i<q; ++i){
+		int x; cin>>x;
 
-	sort(all(arr));
+		bool a=false;
+		if(x>= 10*d) a=true; 
+		for(int i=d; i<d*10; i+=d){
+			int num=x-i;
+			if( num>=0 and num%10==0) { deb(num) a=1; break; }
+		}
+		if(a) cout<<"YES\n";
+		else cout<<"NO\n";
+	}
 
-	
 }
 
 

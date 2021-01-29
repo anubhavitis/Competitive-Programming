@@ -35,14 +35,13 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	int n;
-	cin>>n;
-	vi arr(2*n);
-	for(auto &it: arr) cin>>it;
+	ll n;
+	cin >> n;
 
-	sort(all(arr));
+	while(n%2==0) n/=2;
 
-	
+	if(n>1) cout<<"YES\n";
+	else cout<<"NO\n";
 }
 
 

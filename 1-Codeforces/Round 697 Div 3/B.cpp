@@ -35,14 +35,19 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	int n;
-	cin>>n;
-	vi arr(2*n);
-	for(auto &it: arr) cin>>it;
+	ll n;
+	cin >> n;
 
-	sort(all(arr));
+	if (n % 2020 == 0 or n % 2021 == 0) {
+		cout << "YES\n";
+		return;
+	}
 
-	
+	int x = n / 2020;
+	int y = n - x * 2020;
+
+	if (y < x) cout << "YES\n";
+	else cout << "NO\n";
 }
 
 

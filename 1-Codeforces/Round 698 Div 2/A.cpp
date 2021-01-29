@@ -35,14 +35,18 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	int n;
-	cin>>n;
-	vi arr(2*n);
-	for(auto &it: arr) cin>>it;
+	ll n;
+	cin >> n;
+	vi num(101, 0);
+	for(int i=0; i<n; ++i){
+		int x;
+		cin>>x;
+		num[x]++;
+	}
+	int ans=0;
+	for(auto it: num) ans=max(ans, it);
+		cout<<ans<<endl;
 
-	sort(all(arr));
-
-	
 }
 
 

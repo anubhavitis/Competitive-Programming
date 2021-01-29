@@ -35,14 +35,17 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	int n;
-	cin>>n;
-	vi arr(2*n);
-	for(auto &it: arr) cin>>it;
+	int a, b, k;
+	cin >> a >> b >> k;
 
-	sort(all(arr));
+	vpi p(k);
+	for (auto &it : p) cin >> it.first;
+	for (auto &it : p) cin >> it.second;
 
+	sort(all(p));
 	
+
+
 }
 
 
