@@ -13,9 +13,7 @@ int find(int n) {
 	return dad[n] = find(dad[n]);
 }
 
-/********************************** nCr ***************************************/
-vi fact, inv;
-
+/********************************** Power ***************************************/
 ll power( ll a, ll b, ll c) {
 	if (!b) return 1;
 
@@ -29,6 +27,8 @@ ll power( ll a, ll b, ll c) {
 	return res;
 }
 
+/********************************** nCr ***************************************/
+vi fact, inv;
 void preprocess(int n) {
 	fact.resize(n + 1);
 	inv.resize(n + 1);
@@ -38,4 +38,20 @@ void preprocess(int n) {
 		fact[i] = (fact[i - 1] * i) % M;
 		inv[i] = power(fact[i], M - 1, M);
 	}
+}
+
+/********************************** SOE ***************************************/
+vi SOE(int n)
+{
+    vector<bool> prime(n+1, true);
+    for (int p = 2; p * p <= n; p++)
+    	if (prime[p] == true)
+    		for (int i = p * p; i <= n; i += p)
+                prime[i] = false;
+ 
+    vi res;
+    for (int p = 2; p <= n; p++)
+        if (prime[p])
+            res.pb(p);
+    return res;
 }
