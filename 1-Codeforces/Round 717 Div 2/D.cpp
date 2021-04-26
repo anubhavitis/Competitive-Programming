@@ -1,4 +1,4 @@
-//Mark XXXIV
+//Mark XXXV
 #include<bits/stdc++.h>
 
 #define ll              long long
@@ -11,6 +11,7 @@
 
 #define sp              fixed<<setprecision
 #define vi              vector<int>
+#define vll				vector<ll>
 #define vvi             vector<vi>
 #define pi              pair<int,int>
 #define vpi             vector<pi>
