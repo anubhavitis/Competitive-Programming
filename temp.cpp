@@ -59,65 +59,63 @@ vi SOE(int n)
 /********************************** SEGMENT TREE *********************************/
 struct segTree {
 	int sz;
-	vll sums;
+	ll noOp = -1;
+	vll vals, ops;
 
 	void init(int n) {
 		sz = 1;
 		while (sz < n) sz *= 2;
-		sums.assign(2 * sz, 0);
+		ops.assign(2 * sz, 0);
+		vals.assign(2 * sz, 0);
 	}
 
-	void combine(int x) {
-		sums[x] = sums[2 * x + 1] + sums[2 * x + 2];
+	void lazyP(int x, int lx, int rx) {
+		if (rx - lx > 1 and ops[x] != noOp) {
+			int lc = 2 * x + 1, rc = lc + 1;
+			ops[lc] = ops[x];
+			ops[rc] = ops[x];
+		}
+		if (ops[x] != noOp) vals[x] = (rx - lx) * ops[x];
+		ops[x] = -1;
 	}
 
-	void build(vi &a, int x, int lx, int rx ) {
-		if (rx - lx == 1) {
-			if (lx < a.size()) {
-				sums[x] = a[lx];
-				return;
-			}
+	void update(int l, int r, ll v, int x, int lx, int rx) {
+		lazyP(x, lx, rx);
+		if (l >= rx or lx >= r) return;
+		if (lx >= l and rx <= r) {
+			ops[x] = v;
+			lazyP(x, lx, rx);
 			return;
 		}
 
-		int m = (lx + rx) >> 1;
-		build(a, 2 * x + 1, lx, m);
-		build(a, 2 * x + 2, m, rx);
+		int m = (lx + rx) >> 1, lc = 2 * x + 1, rc = lc + 1;
 
+		update(l, r, v, lc, lx, m);
+		update(l, r, v, rc, m, rx);
+
+		vals[x] = vals[lc] + vals[rc];
 	}
 
-	void build(vi &a) {
-		build(a, 0, 0, sz);
-	}
-
-	void set(vi &a, int i, int v, int x, int lx, int rx) {
-		if (rx - lx == 1) {
-			a[i] = sums[x] = v;
-			return;
-		}
-
-		int m = (lx + rx) >> 1;
-		if (i < m) set(a, i, v, 2 * x + 1, lx, m);
-		else set(a, i, v, 2 * x + 2, m, rx);
-
-		combine(x);
-	}
-	void set(vi &a, int i, int v) {
-		set(a, i, v, 0, 0, sz);
+	void update(int l, int r, ll v) {
+		update(l, r, v, 0, 0, sz);
 	}
 
 
-	ll sum(int t, int l, int r, int tl, int tr) {
-		if (r <= tl or l >= tr) return 0;
-		if (tl >= l and tr <= r) return sums[t];
+	ll find(int l, int r, int x, int lx, int rx) {
+		lazyP(x, lx, rx);
 
-		int m = (tl + tr) >> 1;
-		ll s1 = sum(2 * t + 1, l, r, tl, m);
-		ll s2 = sum(2 * t + 2, l, r, m, tr);
-		return  s1 + s2;
+		if (l >= rx or lx >= r) return 0;
+		if (lx >= l and rx <= r) return vals[x];
+
+		int m = (lx + rx) >> 1, lc = 2 * x + 1, rc = lc + 1;
+
+		ll s1 = find(l, r, lc, lx, m);
+		ll s2 = find(l, r, rc, m, rx);
+		vals[x] = vals[lc] + vals[rc];
+		return s1 + s2;
 	}
 
-	ll sum(int x, int y) {
-		return sum(0, x, y, 0, sz);
+	ll find(int l, int r) {
+		return find( l, r, 0, 0, sz);
 	}
 };

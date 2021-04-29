@@ -21,7 +21,6 @@
 
 // #define endl            "\n"
 #define PI              3.14159265
-// #define M               100000000
 #define LINF            LONG_MAX
 #define NL              LONG_MIN
 #define INF             INT_MAX
@@ -34,107 +33,69 @@
 #define rrep(i,b,c)     for(i=b; i>=c; --i)
 
 using namespace std;
+ll M = 1e9 + 7;
 //Code begins from here!!
 
 struct segTree {
 	int sz;
-	vector<vll> sums;
-	vll inv;
+	ll noOp = -1;
+	vll vals, ops;
 
 	void init(int n) {
 		sz = 1;
 		while (sz < n) sz *= 2;
-		sums.assign(2 * sz, vll(41, 0));
-		inv.assign(2 * sz, 0);
+		ops.assign(2 * sz, 0);
+		vals.assign(2 * sz, 0);
 	}
 
-	ll combineINV(int x) {
-		vll pl(41);
-		for (int i = 1; i < 41; ++i)
-			pl[i] = pl[i - 1] + sums[2 * x + 1][i];
-
-		ll res = inv[2 * x + 1] + inv[2 * x + 2];
-		for (int i = 1; i < 40; ++i) {
-			res += sums[2 * x + 2][i] * (pl[40] - pl[i]);
+	void lazyP(int x, int lx, int rx) {
+		if (rx - lx > 1 and ops[x] != noOp) {
+			int lc = 2 * x + 1, rc = lc + 1;
+			ops[lc] = ops[x];
+			ops[rc] = ops[x];
 		}
-
-		return res;
+		if (ops[x] != noOp) vals[x] = (rx - lx) * ops[x];
+		ops[x] = -1;
 	}
 
-	vll combineS(int x) {
-		vll res(41);
-		for (int i = 1; i < 41; ++i)
-			res[i] = sums[2 * x + 1][i] + sums[2 * x + 2][i];
-		return res;
-	}
-
-	void build(vi &a, int x, int lx, int rx ) {
-		if (rx - lx == 1) {
-			if (lx < a.size()) {
-				sums[x][a[lx]] = 1;
-				return;
-			}
+	void update(int l, int r, ll v, int x, int lx, int rx) {
+		lazyP(x, lx, rx);
+		if (l >= rx or lx >= r) return;
+		if (lx >= l and rx <= r) {
+			ops[x] = v;
+			lazyP(x, lx, rx);
 			return;
 		}
 
-		int m = (lx + rx) >> 1;
-		build(a, 2 * x + 1, lx, m);
-		build(a, 2 * x + 2, m, rx);
+		int m = (lx + rx) >> 1, lc = 2 * x + 1, rc = lc + 1;
 
-		inv[x] = combineINV(x);
-		sums[x] = combineS(x);
+		update(l, r, v, lc, lx, m);
+		update(l, r, v, rc, m, rx);
+
+		vals[x] = vals[lc] + vals[rc];
 	}
 
-	void build(vi &a) {
-		build(a, 0, 0, sz);
-	}
-
-	void set(vi &a, int i, int v, int x, int lx, int rx) {
-		if (rx - lx == 1) {
-			sums[x][a[i]] = 0;
-			a[i] = v;
-			sums[x][v] = 1;
-			return;
-		}
-
-		int m = (lx + rx) >> 1;
-		if (i < m) set(a, i, v, 2 * x + 1, lx, m);
-		else set(a, i, v, 2 * x + 2, m, rx);
-
-		inv[x] = combineINV(x);
-		sums[x] = combineS(x);
-	}
-	void set(vi &a, int i, int v) {
-		set(a, i, v, 0, 0, sz);
+	void update(int l, int r, ll v) {
+		update(l, r, v, 0, 0, sz);
 	}
 
 
-	pair< vll, ll> sum(int t, int l, int r, int tl, int tr) {
-		if (r <= tl or l >= tr) return { vll(40, 0), 0};
-		if (tl >= l and tr <= r) return { sums[t], inv[t] };
+	ll find(int l, int r, int x, int lx, int rx) {
+		lazyP(x, lx, rx);
 
-		int m = (tl + tr) >> 1;
-		auto [v1, a1] = sum(2 * t + 1, l, r, tl, m);
-		auto [v2, a2] = sum(2 * t + 2, l, r, m, tr);
+		if (l >= rx or lx >= r) return 0;
+		if (lx >= l and rx <= r) return vals[x];
 
-		vll res(41);
-		for (int i = 1; i < 41; ++i) res[i] = v1[i] + v2[i];
+		int m = (lx + rx) >> 1, lc = 2 * x + 1, rc = lc + 1;
 
-		vll pl(41);
-		for (int i = 1; i < 41; ++i)
-			pl[i] = pl[i - 1] + v1[i];
-
-		ll ans = a1 + a2;
-		for (int i = 1; i < 40; ++i) {
-			ans += v2[i] * (pl[40] - pl[i]);
-		}
-
-		return  {res, ans};
+		ll s1 = find(l, r, lc, lx, m);
+		ll s2 = find(l, r, rc, m, rx);
+		vals[x] = vals[lc] + vals[rc];
+		return s1 + s2;
 	}
 
-	ll sum(int x, int y) {
-		auto [v, res] = sum(0, x, y, 0, sz);
-		return res;
+	ll find(int l, int r) {
+		return find( l, r, 0, 0, sz);
 	}
 };
 
@@ -146,20 +107,31 @@ signed main() {
 #endif
 	IOS()
 
-	int n, q;
-	cin >> n >> q;
-
-	vi v(n);
-	for (auto &it : v) cin >> it;
+	int n, m;
+	cin >> n >> m;
 
 	segTree st;
 	st.init(n);
-	st.build(v);
 
-	while (q--) {
-		int t, x, y; cin >> t >> x >> y;
-		if (t & 1) cout << st.sum(x - 1, y) << endl;
-		else st.set(v, x - 1, y);
+	while (m--) {
+		int t; cin >> t;
+
+		if (t == 1) {
+			int l, r, v; cin >> l >> r >> v;
+			st.update(l, r, v);
+			// cerr << "\n";
+			// deball(st.ops)
+			// deball(st.vals)
+		}
+		else {
+			int l, r;
+			cin >> l >> r;
+			// cerr << l << " " << r << ": " << endl;
+			cout << st.find(l, r) << endl;
+			// cerr << "\n";
+			// deball(st.ops)
+			// deball(st.vals)
+		}
 	}
 }
 
