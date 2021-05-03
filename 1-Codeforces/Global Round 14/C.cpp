@@ -12,12 +12,13 @@
 #define sp              fixed<<setprecision
 #define vi              vector<int>
 #define vvi             vector<vi>
+#define vll				vector<ll>
 #define pi              pair<int,int>
 #define vpi             vector<pi>
 #define F               first
 #define S               second
 
-#define endl            "\n"
+// #define endl            "\n"
 #define PI              3.14159265
 // #define M               100000000
 #define LINF            LONG_MAX
@@ -35,14 +36,51 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	ll r, b, d;
-	cin >> r >> b >> d;
+	int n, m, x;
+	cin >> n >> m >> x;
+	vi ans(n);
+	vpi a(n);
 
-	if (r > b) swap(r, b);
+	for (int i = 0; i < n; ++i) {
+		cin >> a[i].F;
+		a[i].S = i;
+	}
 
-	ll x = ceil(b / (double)r);
-	if ((x - 1) <= d) cout << "YES\n";
-	else cout << "NO\n";
+	priority_queue< pi> pq;
+	sort(all(a), big(pi));
+
+	for (int i = 0; i < m; ++i) {
+		pq.push({ -a[i].F, i + 1});
+		ans[a[i].S] = i + 1 ;
+	}
+
+	for (int i = m; i < n; ++i) {
+		auto [u, v] = pq.top();
+		pq.pop();
+
+		u -= a[i].F;
+		ans[a[i].S] = v;
+
+		pq.push({u, v});
+	}
+
+	int mx = -1, mm = INF;
+
+	while (!pq.empty()) {
+		auto [u, v] = pq.top();
+		pq.pop();
+		u = -u;
+
+		mx = max(mx, u);
+		mm = min(mm, u);
+	}
+
+	if (mx - mm > x) cout << "NO\n";
+	else {
+		cout << "YES\n";
+		for (auto it : ans) cout << it << " ";
+		cout << endl;
+	}
 }
 
 signed main() {

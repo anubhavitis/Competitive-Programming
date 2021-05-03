@@ -39,26 +39,44 @@ ll M = 1e9 + 7;
 struct segTree {
 	int sz;
 	ll noOp = -1;
-	vll vals, ops;
+	vll ops, adup, vals;
 
 	void init(int n) {
 		sz = 1;
 		while (sz < n) sz *= 2;
-		ops.assign(2 * sz, 0);
 		vals.assign(2 * sz, 0);
+		ops.assign(2 * sz, noOp);
+		adup.assign(2 * sz, noOp);
 	}
 
 	void lazyP(int x, int lx, int rx) {
-		if (rx - lx > 1 and ops[x] != noOp) {
-			int lc = 2 * x + 1, rc = lc + 1;
-			ops[lc] = ops[x];
-			ops[rc] = ops[x];
+		if (ops[x] != noOp)
+		{
+			if (rx - lx > 1) {
+				int lc = 2 * x + 1, rc = lc + 1;
+				ops[lc] = ops[rc] = ops[x];
+			}
+
+			vals[x] = (rx - lx) * ops[x];
+			ops[x] = noOp;
 		}
-		if (ops[x] != noOp) vals[x] = (rx - lx) * ops[x];
-		ops[x] = -1;
+
+		if (adup[x] != noOp) {
+			if (rx - lx > 1) {
+				int lc = 2 * x + 1, rc = lc + 1;
+				adup[lc] = adup[rc] = adup[x];
+			}
+
+			vals[x] += (rx - lx) * adup[x];
+			adup[x] = noOp;
+		}
 	}
 
-	void update(int l, int r, ll v, int x, int lx, int rx) {
+	void combine(int x, int lc, int rc) {
+		vals[x] = vals[lc] + vals[rc];
+	}
+
+	void newVal(int l, int r, ll v, int x, int lx, int rx) {
 		lazyP(x, lx, rx);
 		if (l >= rx or lx >= r) return;
 		if (lx >= l and rx <= r) {
@@ -69,28 +87,47 @@ struct segTree {
 
 		int m = (lx + rx) >> 1, lc = 2 * x + 1, rc = lc + 1;
 
-		update(l, r, v, lc, lx, m);
-		update(l, r, v, rc, m, rx);
+		newVal(l, r, v, lc, lx, m);
+		newVal(l, r, v, rc, m, rx);
 
-		vals[x] = vals[lc] + vals[rc];
+		combine(x, lc, rc);
 	}
 
-	void update(int l, int r, ll v) {
-		update(l, r, v, 0, 0, sz);
+	void newVal(int l, int r, int v) {
+		newVal(l, r, v, 0, 0, sz);
 	}
 
-
-	ll find(int l, int r, int x, int lx, int rx) {
+	void modify(int l, int r, ll v, int x, int lx, int rx) {
 		lazyP(x, lx, rx);
-
-		if (l >= rx or lx >= r) return 0;
-		if (lx >= l and rx <= r) return vals[x];
+		if (l >= rx or lx >= r) return;
+		if (lx >= l and rx <= r) {
+			adup[x] = v;
+			lazyP(x, lx, rx);
+			return;
+		}
 
 		int m = (lx + rx) >> 1, lc = 2 * x + 1, rc = lc + 1;
 
+		modify(l, r, v, lc, lx, m);
+		modify(l, r, v, rc, m, rx);
+
+		combine(x, lc, rc);
+	}
+
+	void modify(int l, int r, int v) {
+		modify(l, r, v, 0, 0, sz);
+	}
+
+	ll find(int l, int r, int x, int lx, int rx) {
+		lazyP(x, lx, rx);
+		if (l >= rx or lx >= r) return 0;
+		if (lx >= l and rx <= r) return vals[x];
+
+		int m = (lx + rx) >> 1, lc = 2 * x + 1, rc = lx + 1;
 		ll s1 = find(l, r, lc, lx, m);
 		ll s2 = find(l, r, rc, m, rx);
-		vals[x] = vals[lc] + vals[rc];
+		combine(x, lc, rc);
+
 		return s1 + s2;
 	}
 
@@ -114,24 +151,30 @@ signed main() {
 	st.init(n);
 
 	while (m--) {
-		int t; cin >> t;
-
+		int t;
+		cin >> t;
 		if (t == 1) {
-			int l, r, v; cin >> l >> r >> v;
-			st.update(l, r, v);
-			// cerr << "\n";
-			// deball(st.ops)
-			// deball(st.vals)
+			int l, r, v;
+			cin >> l >> r >> v;
+			st.newVal(l, r, v);
+
+		}
+		else if (t == 2) {
+			int l, r, v;
+			cin >> l >> r >> v;
+			st.modify(l, r, v);
+
 		}
 		else {
 			int l, r;
 			cin >> l >> r;
-			// cerr << l << " " << r << ": " << endl;
 			cout << st.find(l, r) << endl;
-			// cerr << "\n";
-			// deball(st.ops)
-			// deball(st.vals)
 		}
+
+		deball(st.vals)
+		deball(st.ops)
+		deball(st.adup)
+		cerr << endl;
 	}
 }
 

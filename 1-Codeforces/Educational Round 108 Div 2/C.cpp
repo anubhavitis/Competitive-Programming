@@ -1,7 +1,7 @@
 //Mark XXXIV
 #include<bits/stdc++.h>
 
-#define ll              long long
+#define int              long long
 #define mp              make_pair
 #define pb              push_back
 #define lb              lower_bound
@@ -12,12 +12,13 @@
 #define sp              fixed<<setprecision
 #define vi              vector<int>
 #define vvi             vector<vi>
+#define vll				vector<ll>
 #define pi              pair<int,int>
 #define vpi             vector<pi>
 #define F               first
 #define S               second
 
-#define endl            "\n"
+// #define endl            "\n"
 #define PI              3.14159265
 // #define M               100000000
 #define LINF            LONG_MAX
@@ -35,14 +36,67 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	ll r, b, d;
-	cin >> r >> b >> d;
+	int n;
+	cin >> n;
+	vi univ(n), skill(n);
 
-	if (r > b) swap(r, b);
+	for (auto &it : univ) cin >> it;
+	for (auto &it : skill) cin >> it;
 
-	ll x = ceil(b / (double)r);
-	if ((x - 1) <= d) cout << "YES\n";
-	else cout << "NO\n";
+	set<int> st;
+	for (auto it : univ) st.insert(it);
+
+	int x = 1;
+	unordered_map<int, int> mp;
+	for (int i = 0 ; i < n ; i++)
+		if (mp.find(univ[i]) == mp.end())
+			mp[univ[i]] = x++;
+
+	int sz = mp.size();
+
+	vi adj[sz + 1];
+	for (int i = 0 ; i < n ; i++)
+		adj[mp[univ[i]]].pb(skill[i]);
+
+	for (int i = 1 ; i <= sz ; i++) sort(all(adj[i]), big(int));
+
+	for (int i = 1 ; i <= sz ; i++) {
+		vi v = adj[i];
+		int n1 = v.size();
+		vi pref(n1);
+		pref[0] = v[0];
+		for (int i = 1 ; i < n1 ; i++) pref[i] += v[i] + pref[i - 1];
+		adj[i] = pref;
+	}
+
+	vi dp(sz + 1);
+	for (int i = 1 ; i <= sz ; i++) dp[i] = adj[i].size();
+
+	int srt = 1;
+	bool D = false;
+	for (int i = 0 ; i < n ; i++) {
+		int ans = 0;
+		D = false;
+		for (int i = 1 ; i <= sz ; i++) {
+			if (srt > dp[i]) continue;
+			if (dp[i] % srt == 0) ans += adj[i][dp[i] - 1];
+			else {
+				int m = dp[i] - (dp[i] % srt);
+				ans += adj[i][m - 1];
+			}
+			D = true;
+		}
+		if (!D) {
+			for (int j = i ; j < n ; j++) {
+				cout << 0 << " ";
+			}
+			break;
+		}
+		++srt;
+		cout << ans << " ";
+	}
+
+	cout << endl;
 }
 
 signed main() {

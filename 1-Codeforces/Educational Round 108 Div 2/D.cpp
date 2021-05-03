@@ -12,12 +12,13 @@
 #define sp              fixed<<setprecision
 #define vi              vector<int>
 #define vvi             vector<vi>
+#define vll				vector<ll>
 #define pi              pair<int,int>
 #define vpi             vector<pi>
 #define F               first
 #define S               second
 
-#define endl            "\n"
+// #define endl            "\n"
 #define PI              3.14159265
 // #define M               100000000
 #define LINF            LONG_MAX
@@ -33,16 +34,35 @@
 
 using namespace std;
 //Code begins from here!!
+int n;
 
 void solve() {
-	ll r, b, d;
-	cin >> r >> b >> d;
+	cin >> n;
+	vector<vll> dp(n, vll(n));
 
-	if (r > b) swap(r, b);
+	vll a(n), b(n);
+	for (ll& it : a) cin >> it;
+	for (ll& it : b) cin >> it;
 
-	ll x = ceil(b / (double)r);
-	if ((x - 1) <= d) cout << "YES\n";
-	else cout << "NO\n";
+
+	vll pref(n + 1);
+	ll p = 0;
+	for (int i = 0; i < n; ++i) {
+		p += a[i] * b[i];
+		pref[i + 1] = p;
+	}
+
+	ll ans = pref[n - 1];
+	for (int i = 0; i < n; ++i) {
+		for (int j = 0; j + i < n; ++j) {
+			if (!i) dp[j][j] = a[j] * b[j];
+			else dp[j][j + i] = a[j] * b[j + i] + a[j + i] * b[j] + dp[j + 1][i + j - 1];
+
+			ans = max(ans, pref[n] - (pref[i + j + 1] - pref[j]) + dp[j][i + j]);
+		}
+	}
+
+	cout << ans << endl;
 }
 
 signed main() {
@@ -53,7 +73,7 @@ signed main() {
 #endif
 	IOS()
 	int t = 1;
-	cin >> t;
+	// cin >> t;
 
 	for (int i = 0; i < t; ++i)
 		solve();

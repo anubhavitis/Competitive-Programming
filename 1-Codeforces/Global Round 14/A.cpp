@@ -12,12 +12,13 @@
 #define sp              fixed<<setprecision
 #define vi              vector<int>
 #define vvi             vector<vi>
+#define vll				vector<ll>
 #define pi              pair<int,int>
 #define vpi             vector<pi>
 #define F               first
 #define S               second
 
-#define endl            "\n"
+// #define endl            "\n"
 #define PI              3.14159265
 // #define M               100000000
 #define LINF            LONG_MAX
@@ -35,14 +36,27 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	ll r, b, d;
-	cin >> r >> b >> d;
+	int n, x;
+	cin >> n >> x;
 
-	if (r > b) swap(r, b);
+	vi v(n);
+	for(auto &it: v) cin>>it;
 
-	ll x = ceil(b / (double)r);
-	if ((x - 1) <= d) cout << "YES\n";
-	else cout << "NO\n";
+	sort(all(v));
+
+	if(accumulate(all(v), 0)==x) cout<<"NO\n";
+	else{
+		int sum=0;
+		cout<<"YES\n";
+		for(int i=0; i<n; ++i){
+			sum+=v[i];
+			if(sum==x) swap(v[i], v[i+1]);
+
+			cout<<v[i]<<" ";
+		}
+		cout<<endl;
+	}
+
 }
 
 signed main() {

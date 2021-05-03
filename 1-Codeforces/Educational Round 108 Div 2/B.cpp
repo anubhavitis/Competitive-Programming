@@ -35,13 +35,36 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	ll r, b, d;
-	cin >> r >> b >> d;
+	int n, m, k;
+	cin >> n >> m >> k;
 
-	if (r > b) swap(r, b);
+	int dp[n + 1][m + 1] = {};
 
-	ll x = ceil(b / (double)r);
-	if ((x - 1) <= d) cout << "YES\n";
+	for (int i = 1; i <= n; ++i) {
+		for (int j = 1; j <= m; ++j) {
+			if (i == 1 and j == 1) continue;
+			int cost = INF;
+			if (j - 1 >= 1) cost = min(cost, dp[i][j - 1] + i);
+			if (i - 1 >= 1) cost = min(cost, dp[i - 1][j] + j);
+			dp[i][j] = cost;
+
+		}
+	}
+
+	int dp2[n + 1][m + 1] = {};
+
+	for (int i = 1; i <= n; ++i) {
+		for (int j = 1; j <= m; ++j) {
+			if (i == 1 and j == 1) continue;
+			int cost = 0;
+			if (j - 1 >= 1) cost = max(cost, dp[i][j - 1] + i);
+			if (i - 1 >= 1) cost = max(cost, dp[i - 1][j] + j);
+			dp2[i][j] = cost;
+		}
+	}
+
+
+	if (k >= dp[n][m] and k <= dp2[n][m]) cout << "YES\n";
 	else cout << "NO\n";
 }
 

@@ -12,12 +12,13 @@
 #define sp              fixed<<setprecision
 #define vi              vector<int>
 #define vvi             vector<vi>
+#define vll				vector<ll>
 #define pi              pair<int,int>
 #define vpi             vector<pi>
 #define F               first
 #define S               second
 
-#define endl            "\n"
+// #define endl            "\n"
 #define PI              3.14159265
 // #define M               100000000
 #define LINF            LONG_MAX
@@ -34,15 +35,22 @@
 using namespace std;
 //Code begins from here!!
 
+void pre() {
+
+}
+
+bool check(int n) {
+	int d = pow(n, 0.5);
+	return d * d == n;
+}
+
 void solve() {
-	ll r, b, d;
-	cin >> r >> b >> d;
+	ll n;
+	cin >> n;
 
-	if (r > b) swap(r, b);
-
-	ll x = ceil(b / (double)r);
-	if ((x - 1) <= d) cout << "YES\n";
+	if ((!(n % 2) and check(n / 2)) or (!(n % 4) and check(n / 4))) cout << "YES\n";
 	else cout << "NO\n";
+
 }
 
 signed main() {
@@ -55,6 +63,7 @@ signed main() {
 	int t = 1;
 	cin >> t;
 
+	pre();
 	for (int i = 0; i < t; ++i)
 		solve();
 }
