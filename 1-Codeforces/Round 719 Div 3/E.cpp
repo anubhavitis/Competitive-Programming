@@ -35,53 +35,45 @@
 using namespace std;
 //Code begins from here!!
 
+ll check(string s, int n) {
+	ll cnt = 0, ans = 0, temp = 0;
+
+	for (int i = 0; i < n; ++i) {
+		if (s[i] == '*') {
+			ans += temp;
+			cnt++;
+			temp = 0;
+		}
+		else {
+			temp += cnt;
+		}
+	}
+	ans += temp;
+	return ans;
+}
+
 void solve() {
-	int n, m, x;
-	cin >> n >> m >> x;
-	vi a(n), ans(n);
-	vpi v;
+	int n;
+	string s;
+	cin >> n >> s;
 
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		v.pb({a[i], i});
+	vi ind;
+	for (int i = 0; i < n; ++i)
+		if (s[i] == '*') ind.pb(i);
+
+	int m = ind.size();
+
+	if (m <= 1) {
+		cout << "0\n";
+		return;
 	}
 
-	sort(all(v));
-	priority_queue<pi> pq;
-
-	for (int i = 0; i < n; ++i) {
-		if (i < m) {
-			pq.push({ -v[i].first, i + 1});
-			ans[v[i].second] = i + 1;
-		}
-		else {
-			auto z = pq.top();
-			pq.pop();
-			int h = abs(z.F), ind = z.S;
-			h += v[i].F;
-			ans[v[i].S] = ind;
-			pq.push({ -h, ind});
-		}
-	}
-
-	int mi = 0;
-	while (!pq.empty()) {
-		auto z = pq.top();
-		pq.pop();
-
-		if (!mi) mi = abs(z.F);
-		else {
-			if (abs(z.F) - mi > x) {
-				cout << "NO" << endl;
-				return;
-			}
-			else mi = min(mi, abs(z.F));
-		}
-	}
-
-	cout << "YES" << endl;
-	for (int i = 0; i < n; ++i) cout << ans[i] << " ";
-	cout << endl;
+	int mid = ind[m / 2];
+	string s1 = s.substr(0, mid + 1);
+	string s2 = s.substr(mid + 1);
+	reverse(all(s2));
+	
+	cout << check(s1, s1.size()) + check(s2, s2.size()) << endl;
 
 }
 

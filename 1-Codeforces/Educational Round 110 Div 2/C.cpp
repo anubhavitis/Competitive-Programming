@@ -1,7 +1,7 @@
 //Mark XXXIV
 #include<bits/stdc++.h>
 
-#define ll              long long
+#define ll             long long
 #define mp              make_pair
 #define pb              push_back
 #define lb              lower_bound
@@ -33,56 +33,38 @@
 #define rrep(i,b,c)     for(i=b; i>=c; --i)
 
 using namespace std;
+
 //Code begins from here!!
 
 void solve() {
-	int n, m, x;
-	cin >> n >> m >> x;
-	vi a(n), ans(n);
-	vpi v;
+	string s;
+	cin >> s;
+	int pos0 = -1, pos1 = -1, n = s.size(), j = 0;
+	ll ans = 0;
 
 	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		v.pb({a[i], i});
-	}
-
-	sort(all(v));
-	priority_queue<pi> pq;
-
-	for (int i = 0; i < n; ++i) {
-		if (i < m) {
-			pq.push({ -v[i].first, i + 1});
-			ans[v[i].second] = i + 1;
-		}
-		else {
-			auto z = pq.top();
-			pq.pop();
-			int h = abs(z.F), ind = z.S;
-			h += v[i].F;
-			ans[v[i].S] = ind;
-			pq.push({ -h, ind});
-		}
-	}
-
-	int mi = 0;
-	while (!pq.empty()) {
-		auto z = pq.top();
-		pq.pop();
-
-		if (!mi) mi = abs(z.F);
-		else {
-			if (abs(z.F) - mi > x) {
-				cout << "NO" << endl;
-				return;
+		if (s[i] == '0') {
+			if (pos0 > pos1) {
+				if ((i - pos0 + 1) % 2 == 0) j = pos0 + 1;
 			}
-			else mi = min(mi, abs(z.F));
+			else {
+				if (pos1 != -1 && (i - pos1 + 1) % 2 != 0) j = pos1 + 1;
+			}
+			pos0 = i;
 		}
+		else if (s[i] == '1') {
+			if (pos0 > pos1) {
+				if ((i - pos0 + 1) % 2 != 0) j = pos0 + 1;
+			}
+			else {
+				if (pos1 != -1 && (i - pos1 + 1) % 2 == 0) j = pos1 + 1;
+			}
+			pos1 = i;
+		}
+		ans += i - j + 1;
 	}
 
-	cout << "YES" << endl;
-	for (int i = 0; i < n; ++i) cout << ans[i] << " ";
-	cout << endl;
-
+	cout << ans << endl;
 }
 
 signed main() {
@@ -99,3 +81,13 @@ signed main() {
 		solve();
 }
 
+/*
+				0 1 0 1 0 1
+			0 1 1 0 0 0 1 1 0 0
+				|       |				
+				  |       |
+
+			Ans1: 3, 3, 1, 3, 3 
+			Ans0: 2, 2, 4, 2, 2
+
+*/

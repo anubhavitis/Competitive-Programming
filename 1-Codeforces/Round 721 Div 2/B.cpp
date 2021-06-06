@@ -1,7 +1,7 @@
 //Mark XXXIV
 #include<bits/stdc++.h>
 
-#define ll              long long
+#define int             long long
 #define mp              make_pair
 #define pb              push_back
 #define lb              lower_bound
@@ -33,56 +33,50 @@
 #define rrep(i,b,c)     for(i=b; i>=c; --i)
 
 using namespace std;
+
 //Code begins from here!!
+map<string, pair<int, int> > dp;
+
+pi help(string s, int al, int bo, int cnt) {
+	if (dp[s].F != 0 and dp[s].S != 0)  return dp[s];
+	if (!cnt) return dp[s] = {0, 0};
+
+	pi res = {INF, INF};
+	for (int i = 0; i < s.size(); ++i)
+		if (s[i] == '0') {
+			s[i] = 1;
+			pi nres;
+			if (al) nres = help(s, 0, 1, cnt - 1);
+			else nres = help(s, 1, 0, cnt - 1);
+			s[i] = '0';
+
+			res = min(res, nres);
+		}
+
+	if (al) res.F++;
+	else res.S++;
+
+	return res;
+}
 
 void solve() {
-	int n, m, x;
-	cin >> n >> m >> x;
-	vi a(n), ans(n);
-	vpi v;
+	int n;
+	string s;
+	cin >> n >> s;
 
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		v.pb({a[i], i});
+	int cnt = 0;
+	for (auto it : s) cnt += (it == '0');
+		deb(cnt)
+	if (!cnt) {
+		cout << "DRAW\n";
+		return;
 	}
 
-	sort(all(v));
-	priority_queue<pi> pq;
-
-	for (int i = 0; i < n; ++i) {
-		if (i < m) {
-			pq.push({ -v[i].first, i + 1});
-			ans[v[i].second] = i + 1;
-		}
-		else {
-			auto z = pq.top();
-			pq.pop();
-			int h = abs(z.F), ind = z.S;
-			h += v[i].F;
-			ans[v[i].S] = ind;
-			pq.push({ -h, ind});
-		}
-	}
-
-	int mi = 0;
-	while (!pq.empty()) {
-		auto z = pq.top();
-		pq.pop();
-
-		if (!mi) mi = abs(z.F);
-		else {
-			if (abs(z.F) - mi > x) {
-				cout << "NO" << endl;
-				return;
-			}
-			else mi = min(mi, abs(z.F));
-		}
-	}
-
-	cout << "YES" << endl;
-	for (int i = 0; i < n; ++i) cout << ans[i] << " ";
-	cout << endl;
-
+	auto [al, bo] = help(s, 1, 0, cnt);
+	cerr << al << " " << bo << endl;
+	if (al == bo) cout << "DRAW\n";
+	else if (al > bo) cout << "BOB\n";
+	else cout << "ALICE\n";
 }
 
 signed main() {

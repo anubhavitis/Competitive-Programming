@@ -36,53 +36,37 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	int n, m, x;
-	cin >> n >> m >> x;
-	vi a(n), ans(n);
-	vpi v;
+	int n;
+	cin >> n;
 
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		v.pb({a[i], i});
-	}
+	int arr[n][n];
 
-	sort(all(v));
-	priority_queue<pi> pq;
-
-	for (int i = 0; i < n; ++i) {
-		if (i < m) {
-			pq.push({ -v[i].first, i + 1});
-			ans[v[i].second] = i + 1;
+	int x = 1;
+	for (int i = 0; i < n; ++i)
+		for (int j = 0; j < n; ++j) {
+			arr[i][j] = x;
+			x += 2;
+			if (x > n * n) x = 2;
 		}
-		else {
-			auto z = pq.top();
-			pq.pop();
-			int h = abs(z.F), ind = z.S;
-			h += v[i].F;
-			ans[v[i].S] = ind;
-			pq.push({ -h, ind});
+
+	bool ans = true;
+	for (int i = 0; i < n and ans; ++i)
+		for (int j = 0; j < n and ans; ++j) {
+			if (i and abs(arr[i - 1][j] - arr[i][j]) == 1) ans = false;
+			if (j and abs(arr[i][j - 1] - arr[i][j]) == 1) ans = false;
+			if (i != n - 1 and abs(arr[i + 1][j] - arr[i][j]) == 1) ans = false;
+			if (j != n - 1 and abs(arr[i][j + 1] - arr[i][j]) == 1) ans = false;
 		}
-	}
 
-	int mi = 0;
-	while (!pq.empty()) {
-		auto z = pq.top();
-		pq.pop();
-
-		if (!mi) mi = abs(z.F);
-		else {
-			if (abs(z.F) - mi > x) {
-				cout << "NO" << endl;
-				return;
+	if (ans) {
+		for (int i = 0; i < n and ans; ++i) {
+			for (int j = 0; j < n and ans; ++j) {
+				cout << arr[i][j] << " ";
 			}
-			else mi = min(mi, abs(z.F));
+			cout << endl;
 		}
 	}
-
-	cout << "YES" << endl;
-	for (int i = 0; i < n; ++i) cout << ans[i] << " ";
-	cout << endl;
-
+	else cout << "-1\n";
 }
 
 signed main() {

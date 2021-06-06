@@ -1,7 +1,7 @@
 //Mark XXXIV
 #include<bits/stdc++.h>
 
-#define ll              long long
+#define ll             long long
 #define mp              make_pair
 #define pb              push_back
 #define lb              lower_bound
@@ -33,56 +33,28 @@
 #define rrep(i,b,c)     for(i=b; i>=c; --i)
 
 using namespace std;
+
 //Code begins from here!!
-
 void solve() {
-	int n, m, x;
-	cin >> n >> m >> x;
-	vi a(n), ans(n);
-	vpi v;
+	vector<pi> v(4);
 
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		v.pb({a[i], i});
+	for (int i = 0; i < 4; ++i) {
+		int t; cin >> t;
+		v[i] = {t, i};
 	}
 
 	sort(all(v));
-	priority_queue<pi> pq;
 
-	for (int i = 0; i < n; ++i) {
-		if (i < m) {
-			pq.push({ -v[i].first, i + 1});
-			ans[v[i].second] = i + 1;
-		}
-		else {
-			auto z = pq.top();
-			pq.pop();
-			int h = abs(z.F), ind = z.S;
-			h += v[i].F;
-			ans[v[i].S] = ind;
-			pq.push({ -h, ind});
-		}
+	if (v[3].S >= 2 and v[2].S < 2) {
+		cout << "YES\n";
+		return;
+	}
+	else if (v[2].S >= 2 and v[3].S < 2) {
+		cout << "YES\n";
+		return;
 	}
 
-	int mi = 0;
-	while (!pq.empty()) {
-		auto z = pq.top();
-		pq.pop();
-
-		if (!mi) mi = abs(z.F);
-		else {
-			if (abs(z.F) - mi > x) {
-				cout << "NO" << endl;
-				return;
-			}
-			else mi = min(mi, abs(z.F));
-		}
-	}
-
-	cout << "YES" << endl;
-	for (int i = 0; i < n; ++i) cout << ans[i] << " ";
-	cout << endl;
-
+	cout << "NO\n";	
 }
 
 signed main() {

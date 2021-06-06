@@ -1,7 +1,7 @@
 //Mark XXXIV
 #include<bits/stdc++.h>
 
-#define ll              long long
+#define ll             long long
 #define mp              make_pair
 #define pb              push_back
 #define lb              lower_bound
@@ -33,55 +33,29 @@
 #define rrep(i,b,c)     for(i=b; i>=c; --i)
 
 using namespace std;
+
 //Code begins from here!!
-
 void solve() {
-	int n, m, x;
-	cin >> n >> m >> x;
-	vi a(n), ans(n);
-	vpi v;
+	int n;
+	cin >> n;
+	vi v;
+	int cnt = 0;
+	for (int i = 0; i < n; ++i) {
+		int t; cin >> t;
+		if (t & 1) v.pb(t);
+		else cnt++;
+	}
+	int ans = cnt * n - (cnt * (cnt + 1)) / 2;
+
+	n = v.size();
 
 	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		v.pb({a[i], i});
+		for (int j = i + 1; j < n; ++j)
+			ans += (__gcd(v[i], v[j]) > 1);
 	}
 
-	sort(all(v));
-	priority_queue<pi> pq;
+	cout << ans << endl;
 
-	for (int i = 0; i < n; ++i) {
-		if (i < m) {
-			pq.push({ -v[i].first, i + 1});
-			ans[v[i].second] = i + 1;
-		}
-		else {
-			auto z = pq.top();
-			pq.pop();
-			int h = abs(z.F), ind = z.S;
-			h += v[i].F;
-			ans[v[i].S] = ind;
-			pq.push({ -h, ind});
-		}
-	}
-
-	int mi = 0;
-	while (!pq.empty()) {
-		auto z = pq.top();
-		pq.pop();
-
-		if (!mi) mi = abs(z.F);
-		else {
-			if (abs(z.F) - mi > x) {
-				cout << "NO" << endl;
-				return;
-			}
-			else mi = min(mi, abs(z.F));
-		}
-	}
-
-	cout << "YES" << endl;
-	for (int i = 0; i < n; ++i) cout << ans[i] << " ";
-	cout << endl;
 
 }
 

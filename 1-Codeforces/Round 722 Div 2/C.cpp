@@ -1,7 +1,7 @@
 //Mark XXXIV
 #include<bits/stdc++.h>
 
-#define ll              long long
+#define int             long long
 #define mp              make_pair
 #define pb              push_back
 #define lb              lower_bound
@@ -33,56 +33,52 @@
 #define rrep(i,b,c)     for(i=b; i>=c; --i)
 
 using namespace std;
+
 //Code begins from here!!
+vvi adj, dp;
+vi l, r, vis;
+
+void pre(int n) {
+	l.assign(n, 0);
+	r.assign(n, 0);
+	vis.assign(n, 0);
+	adj.assign(n, vi());
+	dp.assign(n, vi(2, 0));
+}
+
+void dfs(int node) {
+	vis[node]++;
+	for (auto child : adj[node])
+		if (!vis[child]) {
+			dfs(child);
+			dp[node][0] += max(
+			                   abs(l[node] - l[child]) + dp[child][0],
+			                   abs(l[node] - r[child]) + dp[child][1]
+			               );
+			dp[node][1] += max(
+			                   abs(r[node] - l[child]) + dp[child][0],
+			                   abs(r[node] - r[child]) + dp[child][1]
+			               );
+		}
+}
 
 void solve() {
-	int n, m, x;
-	cin >> n >> m >> x;
-	vi a(n), ans(n);
-	vpi v;
+	int n;
+	cin >> n;
+	pre(n);
 
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		v.pb({a[i], i});
+	for (int i = 0; i < n; ++i)
+		cin >> l[i] >> r[i];
+
+	for (int i = 1; i < n; ++i) {
+		int u, v;
+		cin >> u >> v;
+		adj[u - 1].pb(v - 1);
+		adj[v - 1].pb(u - 1);
 	}
 
-	sort(all(v));
-	priority_queue<pi> pq;
-
-	for (int i = 0; i < n; ++i) {
-		if (i < m) {
-			pq.push({ -v[i].first, i + 1});
-			ans[v[i].second] = i + 1;
-		}
-		else {
-			auto z = pq.top();
-			pq.pop();
-			int h = abs(z.F), ind = z.S;
-			h += v[i].F;
-			ans[v[i].S] = ind;
-			pq.push({ -h, ind});
-		}
-	}
-
-	int mi = 0;
-	while (!pq.empty()) {
-		auto z = pq.top();
-		pq.pop();
-
-		if (!mi) mi = abs(z.F);
-		else {
-			if (abs(z.F) - mi > x) {
-				cout << "NO" << endl;
-				return;
-			}
-			else mi = min(mi, abs(z.F));
-		}
-	}
-
-	cout << "YES" << endl;
-	for (int i = 0; i < n; ++i) cout << ans[i] << " ";
-	cout << endl;
-
+	dfs(0);
+	cout << max(dp[0][0], dp[0][1]) << endl;
 }
 
 signed main() {

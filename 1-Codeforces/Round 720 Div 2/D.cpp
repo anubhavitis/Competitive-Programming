@@ -34,55 +34,68 @@
 
 using namespace std;
 //Code begins from here!!
+vvi adj;
+vi depth, dia, dad, leaf;
+
+pi dfs(int node, int par, int h) {
+	depth[node] = h;
+	dad[node] = par;
+	pi res = {node, h};
+	for (auto child : adj[node])
+		if (child != par) {
+			auto [u, v] = dfs(child, node, 1 + h);
+			if (v > res.S) res = {u, v};
+		}
+	leaf[node] = res.F;
+	return res;
+}
+
+int makeDia(int n) {
+	depth.assign(n + 1, 0);
+	dad.assign(n + 1, 0);
+	leaf.assign(n + 1, 0);
+	dia.assign(n + 1, 0);
+	auto [r, de] = dfs(1, 0, 0);
+
+	cerr << r << " " << de << endl;
+	auto [root, dep] = dfs(r, 0, 0);
+
+	for (int i = root; i != 0; i = dad[i]) dia[i] = 1;
+	return root;
+}
+
+vi ed;
+
+void dfs2(int node, int par) {
+	for (auto child : adj[node])
+		if (child != par) {
+
+			if (!dia[child]) ed.pb(child);
+			else dfs2(child, node);
+		}
+}
 
 void solve() {
-	int n, m, x;
-	cin >> n >> m >> x;
-	vi a(n), ans(n);
-	vpi v;
+	int n;
+	cin >> n;
 
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		v.pb({a[i], i});
+	adj.resize(n + 1);
+	for (int i = 1; i < n; ++i) {
+		int u, v;
+		cin >> u >> v;
+
+		adj[u].pb(v);
+		adj[v].pb(u);
 	}
 
-	sort(all(v));
-	priority_queue<pi> pq;
+	int root = makeDia(n);
+	cout << root << endl;
 
-	for (int i = 0; i < n; ++i) {
-		if (i < m) {
-			pq.push({ -v[i].first, i + 1});
-			ans[v[i].second] = i + 1;
-		}
-		else {
-			auto z = pq.top();
-			pq.pop();
-			int h = abs(z.F), ind = z.S;
-			h += v[i].F;
-			ans[v[i].S] = ind;
-			pq.push({ -h, ind});
-		}
-	}
+	vvi ans;
+	ed.clear();
+	dfs2(root, 0);
 
-	int mi = 0;
-	while (!pq.empty()) {
-		auto z = pq.top();
-		pq.pop();
-
-		if (!mi) mi = abs(z.F);
-		else {
-			if (abs(z.F) - mi > x) {
-				cout << "NO" << endl;
-				return;
-			}
-			else mi = min(mi, abs(z.F));
-		}
-	}
-
-	cout << "YES" << endl;
-	for (int i = 0; i < n; ++i) cout << ans[i] << " ";
-	cout << endl;
-
+	for()
 }
 
 signed main() {

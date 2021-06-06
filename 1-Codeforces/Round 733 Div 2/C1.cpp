@@ -1,7 +1,7 @@
 //Mark XXXIV
 #include<bits/stdc++.h>
 
-#define ll              long long
+#define ll             long long
 #define mp              make_pair
 #define pb              push_back
 #define lb              lower_bound
@@ -33,56 +33,31 @@
 #define rrep(i,b,c)     for(i=b; i>=c; --i)
 
 using namespace std;
+
 //Code begins from here!!
 
 void solve() {
-	int n, m, x;
-	cin >> n >> m >> x;
-	vi a(n), ans(n);
-	vpi v;
+	ll n;
+	cin >> n;
 
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		v.pb({a[i], i});
+	vll v(n);
+	for (auto &it : v) cin >> it;
+
+	ll ans = 0, sum = 0;
+	multiset<ll> st;
+
+	for (int i = 0; i < n;  ++i) {
+		sum += v[i];
+		st.insert(v[i]);
+		while (sum < 0) {
+			sum -= *st.begin();
+			st.erase(st.begin());
+		}
+
+		ans = max(ans, (ll)st.size());
 	}
 
-	sort(all(v));
-	priority_queue<pi> pq;
-
-	for (int i = 0; i < n; ++i) {
-		if (i < m) {
-			pq.push({ -v[i].first, i + 1});
-			ans[v[i].second] = i + 1;
-		}
-		else {
-			auto z = pq.top();
-			pq.pop();
-			int h = abs(z.F), ind = z.S;
-			h += v[i].F;
-			ans[v[i].S] = ind;
-			pq.push({ -h, ind});
-		}
-	}
-
-	int mi = 0;
-	while (!pq.empty()) {
-		auto z = pq.top();
-		pq.pop();
-
-		if (!mi) mi = abs(z.F);
-		else {
-			if (abs(z.F) - mi > x) {
-				cout << "NO" << endl;
-				return;
-			}
-			else mi = min(mi, abs(z.F));
-		}
-	}
-
-	cout << "YES" << endl;
-	for (int i = 0; i < n; ++i) cout << ans[i] << " ";
-	cout << endl;
-
+	cout << ans << endl;
 }
 
 signed main() {
@@ -93,7 +68,7 @@ signed main() {
 #endif
 	IOS()
 	int t = 1;
-	cin >> t;
+	// cin >> t;
 
 	for (int i = 0; i < t; ++i)
 		solve();

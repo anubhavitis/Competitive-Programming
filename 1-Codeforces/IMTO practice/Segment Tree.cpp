@@ -39,14 +39,13 @@ ll M = 1e9 + 7;
 struct segTree {
 	int sz;
 	ll noOp = -1;
-	vll ops, adup, vals;
+	vll ops, vals;
 
 	void init(int n) {
 		sz = 1;
 		while (sz < n) sz *= 2;
 		vals.assign(2 * sz, 0);
 		ops.assign(2 * sz, noOp);
-		adup.assign(2 * sz, noOp);
 	}
 
 	void lazyP(int x, int lx, int rx) {
@@ -60,48 +59,17 @@ struct segTree {
 			vals[x] = (rx - lx) * ops[x];
 			ops[x] = noOp;
 		}
-
-		if (adup[x] != noOp) {
-			if (rx - lx > 1) {
-				int lc = 2 * x + 1, rc = lc + 1;
-				adup[lc] = adup[rc] = adup[x];
-			}
-
-			vals[x] += (rx - lx) * adup[x];
-			adup[x] = noOp;
-		}
 	}
 
 	void combine(int x, int lc, int rc) {
 		vals[x] = vals[lc] + vals[rc];
 	}
 
-	void newVal(int l, int r, ll v, int x, int lx, int rx) {
-		lazyP(x, lx, rx);
-		if (l >= rx or lx >= r) return;
-		if (lx >= l and rx <= r) {
-			ops[x] = v;
-			lazyP(x, lx, rx);
-			return;
-		}
-
-		int m = (lx + rx) >> 1, lc = 2 * x + 1, rc = lc + 1;
-
-		newVal(l, r, v, lc, lx, m);
-		newVal(l, r, v, rc, m, rx);
-
-		combine(x, lc, rc);
-	}
-
-	void newVal(int l, int r, int v) {
-		newVal(l, r, v, 0, 0, sz);
-	}
-
 	void modify(int l, int r, ll v, int x, int lx, int rx) {
 		lazyP(x, lx, rx);
 		if (l >= rx or lx >= r) return;
 		if (lx >= l and rx <= r) {
-			adup[x] = v;
+			ops[x] = v;
 			lazyP(x, lx, rx);
 			return;
 		}
@@ -117,6 +85,7 @@ struct segTree {
 	void modify(int l, int r, int v) {
 		modify(l, r, v, 0, 0, sz);
 	}
+
 
 	ll find(int l, int r, int x, int lx, int rx) {
 		lazyP(x, lx, rx);

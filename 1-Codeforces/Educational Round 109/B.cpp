@@ -36,51 +36,16 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	int n, m, x;
-	cin >> n >> m >> x;
-	vi a(n), ans(n);
-	vpi v;
+	int n; cin >> n;
+	vi num(n);
+	for (auto &it : num) cin >> it;
+	vi dup = num;
+	sort(all(dup));
 
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		v.pb({a[i], i});
-	}
-
-	sort(all(v));
-	priority_queue<pi> pq;
-
-	for (int i = 0; i < n; ++i) {
-		if (i < m) {
-			pq.push({ -v[i].first, i + 1});
-			ans[v[i].second] = i + 1;
-		}
-		else {
-			auto z = pq.top();
-			pq.pop();
-			int h = abs(z.F), ind = z.S;
-			h += v[i].F;
-			ans[v[i].S] = ind;
-			pq.push({ -h, ind});
-		}
-	}
-
-	int mi = 0;
-	while (!pq.empty()) {
-		auto z = pq.top();
-		pq.pop();
-
-		if (!mi) mi = abs(z.F);
-		else {
-			if (abs(z.F) - mi > x) {
-				cout << "NO" << endl;
-				return;
-			}
-			else mi = min(mi, abs(z.F));
-		}
-	}
-
-	cout << "YES" << endl;
-	for (int i = 0; i < n; ++i) cout << ans[i] << " ";
+	if (dup == num) cout << "0";
+	else if (dup[0] == num[0] or dup[n - 1] == num[n - 1]) cout << "1";
+	else if(dup[0]==num[n-1] and dup[n-1]==num[0]) cout<<"3";
+	else cout << "2";
 	cout << endl;
 
 }

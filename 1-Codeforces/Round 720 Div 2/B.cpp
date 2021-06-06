@@ -36,53 +36,32 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	int n, m, x;
-	cin >> n >> m >> x;
-	vi a(n), ans(n);
-	vpi v;
+	int n;
+	cin >> n;
+	vector<ll> a(n);
+	for (auto &it : a) cin >> it;
 
+	ll x = 1, mi = LLONG_MAX, ind;
 	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		v.pb({a[i], i});
-	}
-
-	sort(all(v));
-	priority_queue<pi> pq;
-
-	for (int i = 0; i < n; ++i) {
-		if (i < m) {
-			pq.push({ -v[i].first, i + 1});
-			ans[v[i].second] = i + 1;
-		}
-		else {
-			auto z = pq.top();
-			pq.pop();
-			int h = abs(z.F), ind = z.S;
-			h += v[i].F;
-			ans[v[i].S] = ind;
-			pq.push({ -h, ind});
+		if (a[i] < mi) {
+			mi = a[i];
+			ind = i;
 		}
 	}
 
-	int mi = 0;
-	while (!pq.empty()) {
-		auto z = pq.top();
-		pq.pop();
-
-		if (!mi) mi = abs(z.F);
-		else {
-			if (abs(z.F) - mi > x) {
-				cout << "NO" << endl;
-				return;
-			}
-			else mi = min(mi, abs(z.F));
-		}
+	x = mi + 1;
+	if (n == 1) {
+		cout << 0 << endl;
+		return;
 	}
 
-	cout << "YES" << endl;
-	for (int i = 0; i < n; ++i) cout << ans[i] << " ";
-	cout << endl;
+	cout << n - 1 << endl;
+	for (int i = ind + 1; i < n; ++i)
+		cout << i + 1 << " " << ind + 1 << " " << x++ << " " << mi << endl;
 
+	x = mi + 1;
+	for (int i = ind - 1; i >= 0; --i)
+		cout << i + 1 << " " << ind + 1 << " " << x++ << " " << mi << endl;
 }
 
 signed main() {

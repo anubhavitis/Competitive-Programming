@@ -36,51 +36,23 @@ using namespace std;
 //Code begins from here!!
 
 void solve() {
-	int n, m, x;
-	cin >> n >> m >> x;
-	vi a(n), ans(n);
-	vpi v;
+	ll a, b;
+	cin >> a >> b;
 
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		v.pb({a[i], i});
-	}
+	vector<ll> v;
+	v.pb(a * (2 * b - 1));
+	v.pb(a * (2 * b + 1));
+	v.pb(4 * a * b);
 
-	sort(all(v));
-	priority_queue<pi> pq;
+	int cnt = 0;
 
-	for (int i = 0; i < n; ++i) {
-		if (i < m) {
-			pq.push({ -v[i].first, i + 1});
-			ans[v[i].second] = i + 1;
-		}
-		else {
-			auto z = pq.top();
-			pq.pop();
-			int h = abs(z.F), ind = z.S;
-			h += v[i].F;
-			ans[v[i].S] = ind;
-			pq.push({ -h, ind});
-		}
-	}
+	for (int i = 0; i < 3; ++i)
+		if (v[i] % (a * b) == 0) cnt++;
 
-	int mi = 0;
-	while (!pq.empty()) {
-		auto z = pq.top();
-		pq.pop();
+	if (cnt > 1) { cout << "NO\n"; return; }
 
-		if (!mi) mi = abs(z.F);
-		else {
-			if (abs(z.F) - mi > x) {
-				cout << "NO" << endl;
-				return;
-			}
-			else mi = min(mi, abs(z.F));
-		}
-	}
-
-	cout << "YES" << endl;
-	for (int i = 0; i < n; ++i) cout << ans[i] << " ";
+	cout << "YES\n";
+	for (auto it : v) cout << it << " ";
 	cout << endl;
 
 }

@@ -21,7 +21,7 @@
 // #define endl            "\n"
 #define PI              3.14159265
 // #define M               100000000
-#define LINF            LONG_MAX
+#define LINF            1e18
 #define NL              LONG_MIN
 #define INF             INT_MAX
 #define NI              INT_MIN
@@ -35,53 +35,66 @@
 using namespace std;
 //Code begins from here!!
 
-void solve() {
-	int n, m, x;
-	cin >> n >> m >> x;
-	vi a(n), ans(n);
-	vpi v;
+int n, m;
+ll w, arr[2001][2001];
+int dx[] = {0, 1, 0, -1};
+int dy[] = {1, 0, -1, 0};
 
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		v.pb({a[i], i});
-	}
+bool is(int i, int j) {
+	return (i >= 0) and (i < n) and j >= 0 and j < m ;
+}
 
-	sort(all(v));
-	priority_queue<pi> pq;
+vector<vll> bfs(int i, int j) {
+	vector<vll> dist(n, vll(m, -1));
 
-	for (int i = 0; i < n; ++i) {
-		if (i < m) {
-			pq.push({ -v[i].first, i + 1});
-			ans[v[i].second] = i + 1;
-		}
-		else {
-			auto z = pq.top();
-			pq.pop();
-			int h = abs(z.F), ind = z.S;
-			h += v[i].F;
-			ans[v[i].S] = ind;
-			pq.push({ -h, ind});
-		}
-	}
+	queue<pi> q;
+	q.emplace(i, j);
+	dist[i][j] = 0;
 
-	int mi = 0;
-	while (!pq.empty()) {
-		auto z = pq.top();
-		pq.pop();
+	while (!q.empty()) {
+		auto &[u, v] = q.front();
+		q.pop();
 
-		if (!mi) mi = abs(z.F);
-		else {
-			if (abs(z.F) - mi > x) {
-				cout << "NO" << endl;
-				return;
+		for (int i = 0; i < 4; ++i) {
+			int x = u + dx[i], y = v + dy[i];
+			if (is(x, y) and arr[x][y] != -1 and dist[x][y] == -1) {
+				dist[x][y] = w + dist[u][v];
+				q.emplace(x, y);
 			}
-			else mi = min(mi, abs(z.F));
 		}
 	}
 
-	cout << "YES" << endl;
-	for (int i = 0; i < n; ++i) cout << ans[i] << " ";
-	cout << endl;
+	return dist;
+}
+
+void solve() {
+	cin >> n >> m >> w;
+
+	for (int i = 0; i < n; ++i)
+		for (int j = 0; j < m; ++j) cin >> arr[i][j];
+
+	auto d = bfs(0, 0), dr = bfs(n - 1, m - 1);
+	ll px = LINF, py = LINF;
+
+	for (int i = 0; i < n; ++i)
+		for (int j = 0; j < m; ++j)
+			if (arr[i][j] > 0) {
+				if (d[i][j] != -1) px = min(px, arr[i][j] + d[i][j]);
+				if (dr[i][j] != -1) py = min(py, arr[i][j] + dr[i][j]);
+			}
+
+
+	if ((px == LINF or py == LINF) and dr[0][0] == -1) {
+		cout << "-1\n";
+		return;
+	}
+
+	ll ans = LINF;
+
+	if (dr[0][0] != -1) ans = dr[0][0];
+	ans = min(ans, px + py);
+
+	cout << ans << endl;
 
 }
 
@@ -93,7 +106,7 @@ signed main() {
 #endif
 	IOS()
 	int t = 1;
-	cin >> t;
+	// cin >> t;
 
 	for (int i = 0; i < t; ++i)
 		solve();

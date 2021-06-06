@@ -35,54 +35,34 @@
 using namespace std;
 //Code begins from here!!
 
+
 void solve() {
-	int n, m, x;
-	cin >> n >> m >> x;
-	vi a(n), ans(n);
-	vpi v;
+	int n, t, k;
+	cin >> n >> t >> k;
 
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		v.pb({a[i], i});
-	}
+	bool done = false;
+	int l = 1, r = n;
 
-	sort(all(v));
-	priority_queue<pi> pq;
+	cout << "? " << l << " " << r << endl;
+	cout.flush();
+	int sum, ans; cin >> sum;
 
-	for (int i = 0; i < n; ++i) {
-		if (i < m) {
-			pq.push({ -v[i].first, i + 1});
-			ans[v[i].second] = i + 1;
-		}
+	while (l < r) {
+		int m = (l + r) >> 1;
+		cout << "? " << l << " " << m << endl;
+		cout.flush();
+
+		int x; cin >> x;
+
+		int diff = (m - l + 1) - x;
+		if (diff >= k) r = m;
 		else {
-			auto z = pq.top();
-			pq.pop();
-			int h = abs(z.F), ind = z.S;
-			h += v[i].F;
-			ans[v[i].S] = ind;
-			pq.push({ -h, ind});
+			l = m + 1;
+			k -= diff;
 		}
 	}
 
-	int mi = 0;
-	while (!pq.empty()) {
-		auto z = pq.top();
-		pq.pop();
-
-		if (!mi) mi = abs(z.F);
-		else {
-			if (abs(z.F) - mi > x) {
-				cout << "NO" << endl;
-				return;
-			}
-			else mi = min(mi, abs(z.F));
-		}
-	}
-
-	cout << "YES" << endl;
-	for (int i = 0; i < n; ++i) cout << ans[i] << " ";
-	cout << endl;
-
+	cout << "! " << l << endl;
 }
 
 signed main() {
@@ -93,7 +73,7 @@ signed main() {
 #endif
 	IOS()
 	int t = 1;
-	cin >> t;
+	// cin >> t;
 
 	for (int i = 0; i < t; ++i)
 		solve();
